@@ -1,0 +1,2 @@
+# Pamola
+RLC Circuit Modeling
