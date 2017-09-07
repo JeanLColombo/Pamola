@@ -14,7 +14,7 @@
  * @param id
  * @return int
  */
-int Circuit::getElement(int id) {
+uint32_t Circuit::getElement(uint32_t id) {
     return 0;
 }
 

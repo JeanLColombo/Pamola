@@ -15,7 +15,7 @@ public:
 	/**
 	 * @param id
 	 */
-	int getElement(int id);
+	uint32_t getElement(uint32_t id);
 	
 	Vector<PamolaObject> getElements();
 private: 

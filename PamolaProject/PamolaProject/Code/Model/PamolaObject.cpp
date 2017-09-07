@@ -4,26 +4,37 @@
 
 
 #include "PamolaObject.h"
+#include <unordered_map>
 
 /**
  * PamolaObject implementation
  */
 
+PamolaObject::PamolaObject() {
+	id = guid++;
+	std::pair<uint32_t, PamolaObject*> entry(id, this);
+	pamolaInstances.insert(entry);
+}
+
+PamolaObject::~PamolaObject()
+{
+	pamolaInstances.erase(getId());
+}
 
 /**
- * @return int
+ * @return unsign int
  */
-int PamolaObject::getId() {
-    return 0;
+uint32_t PamolaObject::getId() {
+    return id;
 }
+
 
 /**
  * @return object
  */
-static object PamolaObject::getPamolaInstances() {
-    return null;
+
+PamolaObject * PamolaObject::getPamolaInstance(uint32_t id)
+{
+	return pamolaInstances.at(id);
 }
 
-void PamolaObject::PamolaObject() {
-
-}

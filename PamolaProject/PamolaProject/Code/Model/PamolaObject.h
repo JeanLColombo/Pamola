@@ -6,18 +6,27 @@
 #ifndef _PAMOLAOBJECT_H
 #define _PAMOLAOBJECT_H
 
+#include <unordered_map>
+
 class PamolaObject {
-public: 
-	
-	int getId();
-	
-	static object getPamolaInstances();
-protected: 
-	
-	void PamolaObject();
+protected:
+
+	PamolaObject();
+	~PamolaObject();
+
 private: 
-	int id;
-	static object pamolaInstances;
+
+	uint32_t id;
+
+	static uint32_t guid;
+	static std::unordered_map<uint32_t, PamolaObject *> pamolaInstances;
+
+public:
+
+	uint32_t getId();
+
+	static PamolaObject* getPamolaInstance(uint32_t);
+	
 };
 
 #endif //_PAMOLAOBJECT_H
