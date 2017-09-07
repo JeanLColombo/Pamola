@@ -38,3 +38,7 @@ PamolaObject * PamolaObject::getPamolaInstance(uint32_t id)
 	return pamolaInstances.at(id);
 }
 
+ int PamolaObject::getDegreesOfFreedom()
+ {
+ }
+

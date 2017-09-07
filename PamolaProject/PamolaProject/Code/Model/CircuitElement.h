@@ -7,19 +7,24 @@
 #define _CIRCUITELEMENT_H
 
 #include "PamolaObject.h"
-
+#include "CircuitTerminal.h"
+#include <vector>
 
 class CircuitElement: public PamolaObject {
+protected:
+
+	CircuitElement();
+	~CircuitElement();
+	
+private:
+	
+	std::vector<CircuitTerminal*> terminals;
+	
 public: 
 	
-	CircuitTerminal getTerminals();
+	std::vector<CircuitTerminal*> getTerminals();
+	CircuitTerminal* getTerminal(int localId);
 	
-	/**
-	 * @param terminal
-	 */
-	void setTerminals(CircuitTerminal terminal);
-private: 
-	Vector<CircuitTerminal> terminals;
 };
 
 #endif //_CIRCUITELEMENT_H

@@ -7,18 +7,19 @@
 #define _CIRCUITTERMINAL_H
 
 #include "PamolaObject.h"
+#include "CircuitElement.h"
 
 
 class CircuitTerminal: public PamolaObject {
+protected:
+	CircuitTerminal();
+	~CircuitTerminal();
+
 public: 
 	
-	CircuitElement getElement();
+	CircuitElement* getElement();
 	
-	/**
-	 * @param element
-	 */
-	void setElement(CircuitElement element);
-	
+		
 	double getCurrent();
 	
 	/**
@@ -29,12 +30,12 @@ public:
 	/**
 	 * @param terminal
 	 */
-	bool connectTo(CircuitTerminal terminal);
+	bool connectTo(CircuitTerminal* terminal);
 	
 	/**
 	 * @param node
 	 */
-	bool connectTo(CircuitNode node);
+	//bool connectTo(CircuitNode node);
 	
 	double getVoltage();
 private: 

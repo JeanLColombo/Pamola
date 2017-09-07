@@ -26,6 +26,8 @@ public:
 	uint32_t getId();
 
 	static PamolaObject* getPamolaInstance(uint32_t);
+
+	virtual int getDegreesOfFreedom()=0;
 	
 };
 

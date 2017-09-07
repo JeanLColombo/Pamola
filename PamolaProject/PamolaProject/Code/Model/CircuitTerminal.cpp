@@ -10,19 +10,25 @@
  */
 
 
+CircuitTerminal::CircuitTerminal()
+{
+}
+
+CircuitTerminal::~CircuitTerminal()
+{
+}
+
 /**
  * @return CircuitElement
  */
-CircuitElement CircuitTerminal::getElement() {
-    return null;
+CircuitElement* CircuitTerminal::getElement() {
+    return nullptr;
 }
 
 /**
  * @param element
  */
-void CircuitTerminal::setElement(CircuitElement element) {
 
-}
 
 /**
  * @return double
@@ -42,7 +48,7 @@ void CircuitTerminal::setCurrent(double current) {
  * @param terminal
  * @return bool
  */
-bool CircuitTerminal::connectTo(CircuitTerminal terminal) {
+bool CircuitTerminal::connectTo(CircuitTerminal* terminal) {
     return false;
 }
 
@@ -50,9 +56,9 @@ bool CircuitTerminal::connectTo(CircuitTerminal terminal) {
  * @param node
  * @return bool
  */
-bool CircuitTerminal::connectTo(CircuitNode node) {
+/*bool CircuitTerminal::connectTo(CircuitNode node) {
     return false;
-}
+}*/
 
 /**
  * @return double
