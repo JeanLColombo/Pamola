@@ -12,8 +12,7 @@
 
 PamolaObject::PamolaObject() {
 	id = guid++;
-	std::pair<uint32_t, PamolaObject*> entry(id, this);
-	pamolaInstances.insert(entry);
+	pamolaInstances.insert({id,this});
 }
 
 PamolaObject::~PamolaObject()
