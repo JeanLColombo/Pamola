@@ -2,13 +2,7 @@
  * Project PamolaCore
  */
 
-
 #include "CircuitTerminal.h"
-
-/**
- * CircuitTerminal implementation
- */
-
 
 CircuitTerminal::CircuitTerminal()
 {
@@ -18,51 +12,59 @@ CircuitTerminal::~CircuitTerminal()
 {
 }
 
-/**
- * @return CircuitElement
- */
-CircuitElement* CircuitTerminal::getElement() {
-    return nullptr;
+CircuitElement * CircuitTerminal::getElement()
+{
+	return element;
 }
 
-/**
- * @param element
- */
-
-
-/**
- * @return double
- */
-double CircuitTerminal::getCurrent() {
-    return 0.0;
+CircuitNode * CircuitTerminal::getNode()
+{
+	return node;
 }
 
-/**
- * @param current
- */
-void CircuitTerminal::setCurrent(double current) {
-
+CircuitNode * CircuitTerminal::connectTo(CircuitTerminal *)
+{
+	//TODO: Create the connectTo Circuit Terminal Body
+	return nullptr;
 }
 
-/**
- * @param terminal
- * @return bool
- */
-bool CircuitTerminal::connectTo(CircuitTerminal* terminal) {
-    return false;
+CircuitNode * CircuitTerminal::connectTo(CircuitNode *)
+{
+	//TODO: Create the connectTo Node Body
+	return nullptr;
 }
 
-/**
- * @param node
- * @return bool
- */
-/*bool CircuitTerminal::connectTo(CircuitNode node) {
-    return false;
-}*/
+std::complex<double> CircuitTerminal::getCurrent()
+{
+	return current;
+}
 
-/**
- * @return double
- */
-double CircuitTerminal::getVoltage() {
-    return 0.0;
+std::complex<double> CircuitTerminal::getVoltage()
+{
+	if (!isConnected())
+		return std::complex<double> NAN;
+
+	return node->getVoltage();
+}
+
+bool CircuitTerminal::setCurrent(std::complex<double> value)
+{
+	current = value;
+	return true;
+}
+
+bool CircuitTerminal::disconnect()
+{
+	//TODO: Create the disconnect fucntion's body
+	return false;
+}
+
+bool CircuitTerminal::isConnected()
+{
+	return (node);
+}
+
+int CircuitTerminal::getDegreesOfFreedom()
+{
+	return 2;
 }

@@ -6,11 +6,6 @@
 #include "CircuitElement.h"
 #include <vector>
 
-/**
- * CircuitElement implementation
- */
-
-
 CircuitElement::CircuitElement()
 {
 }
@@ -23,9 +18,22 @@ CircuitElement::~CircuitElement()
 	}
 }
 
-/**
- * @return CircuitTerminal
- */
+bool CircuitElement::createTerminals(uint32_t numberOfTerminals)
+{
+	if (terminals.empty && (numberOfTerminals > 0))
+	{
+		
+		for (uint32_t i = 0; i < numberOfTerminals; i++)
+		{
+			terminals.push_back(new CircuitTerminal());
+		}
+
+		return true;
+	}	
+	return false;
+}
+
+
 std::vector<CircuitTerminal*> CircuitElement::getTerminals() {
 	return	terminals;
 }
@@ -34,7 +42,3 @@ CircuitTerminal * CircuitElement::getTerminal(int localId)
 {
 	return terminals.at(localId);
 }
-
-/**
- * @param terminal
- */
