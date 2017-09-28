@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include <vector>
 #include <iostream>
+#include <string>
 
 class foo
 {
@@ -29,7 +30,7 @@ private:
 };
 
 
-int main()
+int main1()
 {
 
 	bar* bar1 = new bar;
@@ -85,3 +86,33 @@ int main()
 	return 0;
 }
 
+int main2()
+{
+	bool A; bool B;
+		
+	std::cout << "Enter boolean A:\t";
+	std::cin >> A;
+
+	std::cout << "Enter boolean B:\t";
+	std::cin >> B;
+
+	switch (A*2 + B*1)
+	{
+	case 0: std::cout << "A = false, B = false";	break;
+	case 1: std::cout << "A = false, B = true";		break;
+	case 2: std::cout << "A = true, B = false";		break;
+	case 3: std::cout << "A = true, B = true";		break;
+	default:
+		break;
+	}
+
+	std::string loko;
+	std::cin >> loko;
+	return 0;
+}
+
+int main()
+{
+	main2();
+	return 0;
+}

@@ -22,16 +22,48 @@ CircuitNode * CircuitTerminal::getNode()
 	return node;
 }
 
-CircuitNode * CircuitTerminal::connectTo(CircuitTerminal *)
+CircuitNode * CircuitTerminal::connectTo(CircuitTerminal *terminal)
 {
-	//TODO: Create the connectTo Circuit Terminal Body
-	return nullptr;
+	switch (this->isConnected()*2+terminal->isConnected())
+	{
+	case 0:
+	{
+		CircuitNode newNode;
+		this->connectTo(&newNode);
+		terminal->connectTo(&newNode);
+		break; 
+	}
+	case 1:
+		this->connectTo(terminal->node);
+		break;
+	case 2:
+		terminal->connectTo(this->node);
+		break;
+	case 3:
+		if (this->node != terminal->node)
+			this->node->connectTo(terminal->node);
+		break;
+	default:
+		return nullptr;;
+	}
+	
+	return this->node;
 }
 
-CircuitNode * CircuitTerminal::connectTo(CircuitNode *)
+CircuitNode * CircuitTerminal::connectTo(CircuitNode *node)
 {
-	//TODO: Create the connectTo Node Body
-	return nullptr;
+	if (isConnected())
+	{
+		if (this->node==node)
+			return this->node;
+		
+		disconnect();
+	}
+
+	this->node = node;
+	this->node->terminals.push_back(this);
+
+	return this->node;
 }
 
 std::complex<double> CircuitTerminal::getCurrent()
@@ -55,8 +87,19 @@ bool CircuitTerminal::setCurrent(std::complex<double> value)
 
 bool CircuitTerminal::disconnect()
 {
-	//TODO: Create the disconnect fucntion's body
-	return false;
+	if (!isConnected())
+		return false;
+
+	std::vector<CircuitTerminal*> &myNodeTerminals = this->node->terminals;
+
+	auto element = std::find(myNodeTerminals.begin(), myNodeTerminals.end(), this);
+	myNodeTerminals.erase(element);
+
+	if (myNodeTerminals.size() == 0)
+		delete node;
+
+	node = nullptr;
+	return true;
 }
 
 bool CircuitTerminal::isConnected()

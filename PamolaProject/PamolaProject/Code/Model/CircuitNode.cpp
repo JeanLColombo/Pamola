@@ -2,38 +2,49 @@
  * Project PamolaCore
  */
 
-
 #include "CircuitNode.h"
 
-/**
- * CircuitNode implementation
- */
-
-
-/**
- * @return CircuitTerminal
- */
-CircuitTerminal CircuitNode::getTerminals() {
-    return null;
+CircuitNode::CircuitNode()
+{
 }
 
-/**
- * @param terminal
- */
-void CircuitNode::setTerminals(CircuitTerminal terminal) {
-
+CircuitNode::~CircuitNode()
+{
 }
 
-/**
- * @return double
- */
-double CircuitNode::getVoltage() {
-    return 0.0;
+CircuitNode * CircuitNode::connectTo(CircuitNode *node)
+{
+	if (this == node)
+		return this;
+	
+	std::vector<CircuitTerminal*> addedTerminals = node->getTerminals();
+
+	for each (CircuitTerminal* terminal in addedTerminals)
+	{
+		terminal->disconnect();
+		terminal->connectTo(this);
+	}
+
+	return this;
 }
 
-/**
- * @param voltage
- */
-void CircuitNode::setVoltage(double voltage) {
+std::vector<CircuitTerminal*> CircuitNode::getTerminals()
+{
+	return terminals;
+}
 
+std::complex<double> CircuitNode::getVoltage()
+{
+	return voltage;
+}
+
+bool CircuitNode::setVoltage(std::complex<double> value)
+{
+	voltage = value;
+	return true;
+}
+
+int CircuitNode::getDegreesOfFreedom()
+{
+	return (-terminals.size());
 }

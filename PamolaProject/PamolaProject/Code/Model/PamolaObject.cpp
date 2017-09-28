@@ -2,6 +2,7 @@
  * Project PamolaCore
  */
 
+ //TODO Organize this code
 
 #include "PamolaObject.h"
 #include <unordered_map>
@@ -37,7 +38,15 @@ PamolaObject * PamolaObject::getPamolaInstance(uint32_t id)
 	return pamolaInstances.at(id);
 }
 
+void PamolaObject::clear()
+{
+	BOOST_FOREACH(auto pamObject, pamolaInstances)
+	{
+		delete pamObject.second;
+	}
+	pamolaInstances.clear();
+}
+
  int PamolaObject::getDegreesOfFreedom()
  {
  }
-

@@ -2,11 +2,15 @@
  * Project PamolaCore
  */
 
-
+//TODO Organize this code
 #ifndef _PAMOLAOBJECT_H
 #define _PAMOLAOBJECT_H
 
 #include <unordered_map>
+#include <boost/foreach.hpp>
+
+//TODO change les foreaches
+
 
 class PamolaObject {
 protected:
@@ -26,6 +30,8 @@ public:
 	uint32_t getId();
 
 	static PamolaObject * getPamolaInstance(uint32_t);
+	
+	static void clear();
 
 	virtual int getDegreesOfFreedom()=0;
 	

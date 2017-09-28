@@ -2,32 +2,43 @@
  * Project PamolaCore
  */
 
-
 #ifndef _CIRCUITNODE_H
 #define _CIRCUITNODE_H
 
 #include "PamolaObject.h"
+#include "CircuitTerminal.h"
+#include <vector>
+#include <complex>
 
 
 class CircuitNode: public PamolaObject {
+
+	friend class CircuitTerminal;
+
+protected:
+
+	CircuitNode();
+	~CircuitNode();
+
+private:
+
+	std::vector<CircuitTerminal*> terminals;
+	
+	std::complex<double> voltage;
+
 public: 
+
+	CircuitNode* connectTo(CircuitNode*);
+
+	std::vector<CircuitTerminal*> getTerminals();
 	
-	CircuitTerminal getTerminals();
+	std::complex<double> getVoltage();
+
+	bool setVoltage(std::complex<double>);
 	
-	/**
-	 * @param terminal
-	 */
-	void setTerminals(CircuitTerminal terminal);
-	
-	double getVoltage();
-	
-	/**
-	 * @param voltage
-	 */
-	void setVoltage(double voltage);
-private: 
-	Vector<CircuitTerminal> terminals;
-	double voltage;
+
+	int getDegreesOfFreedom();
+
 };
 
 #endif //_CIRCUITNODE_H
