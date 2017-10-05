@@ -146,27 +146,36 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Code\Model\Circuit.h" />
-    <ClInclude Include="Code\Model\CircuitElement.h" />
-    <ClInclude Include="Code\Model\CircuitNode.h" />
-    <ClInclude Include="Code\Model\CircuitTerminal.h" />
-    <ClInclude Include="Code\Model\PamolaObject.h" />
+    <ClInclude Include="CircuitElement.h" />
+    <ClInclude Include="CircuitNode.h" />
+    <ClInclude Include="CircuitTerminal.h" />
+    <ClInclude Include="PamolaObject.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Code\Model\Circuit.cpp" />
-    <ClCompile Include="Code\Model\CircuitElement.cpp" />
-    <ClCompile Include="Code\Model\CircuitNode.cpp" />
-    <ClCompile Include="Code\Model\CircuitTerminal.cpp" />
-    <ClCompile Include="Code\Model\PamolaObject.cpp" />
+    <ClCompile Include="CircuitElement.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="CircuitNode.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="CircuitTerminal.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="dllmain.cpp" />
-    <ClCompile Include="PamolaProject.cpp" />
+    <ClCompile Include="PamolaObject.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="PamolaProject.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+      <AdditionalUsingDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(AdditionalUsingDirectories)</AdditionalUsingDirectories>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -2,6 +2,7 @@
  * Project PamolaCore
  */
 
+#include "stdafx.h"
 #include "CircuitNode.h"
 
 CircuitNode::CircuitNode()
@@ -46,5 +47,5 @@ bool CircuitNode::setVoltage(std::complex<double> value)
 
 int CircuitNode::getDegreesOfFreedom()
 {
-	return (-terminals.size());
+	return (-static_cast<int>(terminals.size()));
 }

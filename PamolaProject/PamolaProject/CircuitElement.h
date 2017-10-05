@@ -2,13 +2,13 @@
  * Project PamolaCore
  */
 
-
-#ifndef _CIRCUITELEMENT_H
-#define _CIRCUITELEMENT_H
+#pragma once
 
 #include "PamolaObject.h"
 #include "CircuitTerminal.h"
 #include <vector>
+
+class CircuitTerminal;
 
 class CircuitElement: public PamolaObject {
 protected:
@@ -28,10 +28,8 @@ public:
 	
 	std::vector<CircuitTerminal*> getTerminals();
 
-	CircuitTerminal* getTerminal(int localId);
+	CircuitTerminal* getTerminal(uint32_t);
 
 	virtual int getDegreesOfFreedom() = 0;
 	
 };
-
-#endif //_CIRCUITELEMENT_H

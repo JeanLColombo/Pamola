@@ -2,14 +2,12 @@
  * Project PamolaCore
  */
 
-#ifndef _CIRCUITNODE_H
-#define _CIRCUITNODE_H
+#pragma once
 
 #include "PamolaObject.h"
 #include "CircuitTerminal.h"
 #include <vector>
 #include <complex>
-
 
 class CircuitNode: public PamolaObject {
 
@@ -34,11 +32,8 @@ public:
 	
 	std::complex<double> getVoltage();
 
-	bool setVoltage(std::complex<double>);
-	
+	bool setVoltage(std::complex<double>);	
 
 	int getDegreesOfFreedom();
 
 };
-
-#endif //_CIRCUITNODE_H

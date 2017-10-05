@@ -2,14 +2,14 @@
  * Project PamolaCore
  */
 
-#ifndef _CIRCUITTERMINAL_H
-#define _CIRCUITTERMINAL_H
+#pragma once
 
 #include "PamolaObject.h"
 #include "CircuitElement.h"
 #include "CircuitNode.h"
 #include <complex>
 
+class CircuitNode;
 
 class CircuitTerminal: public PamolaObject {
 
@@ -23,6 +23,7 @@ protected:
 private:
 
 	CircuitElement *element;
+
 	CircuitNode *node = nullptr;
 
 	std::complex<double> current = 0.0;
@@ -30,6 +31,7 @@ private:
 public: 
 	
 	CircuitElement* getElement();
+
 	CircuitNode* getNode();
 	CircuitNode* connectTo(CircuitTerminal*);
 	CircuitNode* connectTo(CircuitNode*);
@@ -44,4 +46,3 @@ public:
 	int getDegreesOfFreedom();
 
 };
-#endif //_CIRCUITTERMINAL_H

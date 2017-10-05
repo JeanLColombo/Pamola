@@ -24,19 +24,16 @@
     <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Code\Model\Circuit.h">
+    <ClInclude Include="CircuitElement.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Code\Model\CircuitElement.h">
+    <ClInclude Include="CircuitNode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Code\Model\CircuitNode.h">
+    <ClInclude Include="CircuitTerminal.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Code\Model\CircuitTerminal.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Code\Model\PamolaObject.h">
+    <ClInclude Include="PamolaObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -50,19 +47,16 @@
     <ClCompile Include="dllmain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Code\Model\CircuitNode.cpp">
+    <ClCompile Include="CircuitNode.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Code\Model\CircuitTerminal.cpp">
+    <ClCompile Include="CircuitTerminal.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Code\Model\PamolaObject.cpp">
+    <ClCompile Include="CircuitElement.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Code\Model\Circuit.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Code\Model\CircuitElement.cpp">
+    <ClCompile Include="PamolaObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

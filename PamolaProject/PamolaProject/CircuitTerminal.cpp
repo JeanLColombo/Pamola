@@ -2,6 +2,7 @@
  * Project PamolaCore
  */
 
+#include "stdafx.h"
 #include "CircuitTerminal.h"
 
 CircuitTerminal::CircuitTerminal()
@@ -10,6 +11,7 @@ CircuitTerminal::CircuitTerminal()
 
 CircuitTerminal::~CircuitTerminal()
 {
+	disconnect();
 }
 
 CircuitElement * CircuitTerminal::getElement()
