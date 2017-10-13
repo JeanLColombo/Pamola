@@ -24,6 +24,8 @@ private:
 
 public:
 
+	static const std::unordered_map<uint32_t, PamolaObject *> getPamolaInstances();
+
 	static PamolaObject * getPamolaInstance(uint32_t);
 
 	static void clear();

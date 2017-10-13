@@ -18,6 +18,11 @@ PamolaObject::~PamolaObject()
 	pamolaInstances.erase(getId());
 }
 
+const std::unordered_map<uint32_t, PamolaObject*> PamolaObject::getPamolaInstances()
+{
+	return pamolaInstances;
+}
+
 PamolaObject * PamolaObject::getPamolaInstance(uint32_t id)
 {
 	return pamolaInstances.at(id);
@@ -25,9 +30,10 @@ PamolaObject * PamolaObject::getPamolaInstance(uint32_t id)
 
 void PamolaObject::clear()
 {
-	for each (auto pamObject in pamolaInstances)
+	for each (std::pair<const uint32_t,PamolaObject*> pamObject in pamolaInstances)
 	{
-		delete pamObject.second;
+		PamolaObject *temporaryPamola = pamObject.second;
+		delete temporaryPamola;
 	}
 	pamolaInstances.clear();
 }

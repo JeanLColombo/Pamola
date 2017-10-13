@@ -30,9 +30,9 @@ CircuitNode * CircuitTerminal::connectTo(CircuitTerminal *terminal)
 	{
 	case 0:
 	{
-		CircuitNode newNode;
-		this->connectTo(&newNode);
-		terminal->connectTo(&newNode);
+		CircuitNode * newNode = new CircuitNode;
+		this->connectTo(newNode);
+		terminal->connectTo(newNode);
 		break; 
 	}
 	case 1:
