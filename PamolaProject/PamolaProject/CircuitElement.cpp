@@ -19,6 +19,7 @@ CircuitElement::~CircuitElement()
 
 bool CircuitElement::createTerminals(uint32_t numberOfTerminals)
 {
+	//TODO: Check this line
 	//if (terminals.empty && (numberOfTerminals > 0))
 	if (numberOfTerminals > 0)
 	{
@@ -41,4 +42,9 @@ std::vector<CircuitTerminal*> CircuitElement::getTerminals() {
 CircuitTerminal * CircuitElement::getTerminal(uint32_t localId)
 {
 	return terminals.at(localId);
+}
+
+PamolaType CircuitElement::getPamolaType()
+{
+	return PamolaType::CircuitElement;
 }

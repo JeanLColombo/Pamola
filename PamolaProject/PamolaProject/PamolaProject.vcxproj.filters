@@ -36,6 +36,9 @@
     <ClInclude Include="PamolaObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="PamolaTypes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

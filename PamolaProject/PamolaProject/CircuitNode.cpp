@@ -45,6 +45,11 @@ bool CircuitNode::setVoltage(std::complex<double> value)
 	return true;
 }
 
+PamolaType CircuitNode::getPamolaType()
+{
+	return PamolaType::CircuitNode;
+}
+
 int CircuitNode::getDegreesOfFreedom()
 {
 	return (-static_cast<int>(terminals.size()));

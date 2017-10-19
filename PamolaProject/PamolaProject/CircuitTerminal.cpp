@@ -109,6 +109,11 @@ bool CircuitTerminal::isConnected()
 	return (node);
 }
 
+PamolaType CircuitTerminal::getPamolaType()
+{
+	return PamolaType::CircuitTerminal;
+}
+
 int CircuitTerminal::getDegreesOfFreedom()
 {
 	return 2;

@@ -14,6 +14,9 @@ class CircuitElement: public PamolaObject {
 protected:
 
 	CircuitElement();
+
+public:
+
 	~CircuitElement();
 
 private:
@@ -29,6 +32,8 @@ public:
 	std::vector<CircuitTerminal*> getTerminals();
 
 	CircuitTerminal* getTerminal(uint32_t);
+
+	PamolaType getPamolaType();
 
 	virtual int getDegreesOfFreedom() = 0;
 	

@@ -43,6 +43,8 @@ public:
 	bool disconnect();
 	bool isConnected();
 
+	PamolaType getPamolaType();
+
 	int getDegreesOfFreedom();
 
 };

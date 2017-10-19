@@ -34,6 +34,8 @@ public:
 
 	bool setVoltage(std::complex<double>);	
 
+	PamolaType getPamolaType();
+
 	int getDegreesOfFreedom();
 
 };
