@@ -43,6 +43,8 @@ public:
 	bool disconnect();
 	bool isConnected();
 
+	std::vector<PamolaObject*> getAdjacentComponents();
+
 	PamolaType getPamolaType();
 
 	int getDegreesOfFreedom();

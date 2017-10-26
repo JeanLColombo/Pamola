@@ -33,6 +33,8 @@ public:
 
 	CircuitTerminal* getTerminal(uint32_t);
 
+	std::vector<PamolaObject*> getAdjacentComponents();
+
 	PamolaType getPamolaType();
 
 	virtual int getDegreesOfFreedom() = 0;

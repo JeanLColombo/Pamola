@@ -10,6 +10,7 @@ int main()
 	printAllPamolas();
 
 	Resistor *R1 = new Resistor;
+	R1 = new Resistor;
 	std::cout << "Creating resistor R1.\n" << std::endl;
 
 	printAllPamolas();
@@ -21,6 +22,11 @@ int main()
 
 	R1->getRight()->connectTo(R2->getLeft());
 	std::cout << "Connecting R1 right terminal, to R2 left terminal.\n" << std::endl;
+
+	printAllPamolas();
+
+	std::cout << "Disconnect R1 from R2" << std::endl;
+	R1->getRight()->disconnect();
 
 	printAllPamolas();
 

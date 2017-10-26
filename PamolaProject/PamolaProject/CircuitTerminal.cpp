@@ -97,8 +97,11 @@ bool CircuitTerminal::disconnect()
 	auto element = std::find(myNodeTerminals.begin(), myNodeTerminals.end(), this);
 	myNodeTerminals.erase(element);
 
-	if (myNodeTerminals.size() == 0)
+	if (myNodeTerminals.size() == 1)
+		myNodeTerminals.at(0)->disconnect();
+	else if (myNodeTerminals.size() == 0)
 		delete node;
+
 
 	node = nullptr;
 	return true;
@@ -107,6 +110,18 @@ bool CircuitTerminal::disconnect()
 bool CircuitTerminal::isConnected()
 {
 	return (node);
+}
+
+std::vector<PamolaObject*> CircuitTerminal::getAdjacentComponents()
+{
+	std::vector<PamolaObject*> result(1 + isConnected());
+
+	result.at(0) = static_cast<PamolaObject*>(getElement());
+
+	if (isConnected())
+		result.at(1) = static_cast<PamolaObject*>(getNode());
+
+	return result;
 }
 
 PamolaType CircuitTerminal::getPamolaType()

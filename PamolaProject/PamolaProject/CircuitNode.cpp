@@ -45,6 +45,17 @@ bool CircuitNode::setVoltage(std::complex<double> value)
 	return true;
 }
 
+std::vector<PamolaObject*> CircuitNode::getAdjacentComponents()
+{
+	using namespace cpplinq;
+	auto result =
+		from(terminals)
+		>> select([](CircuitTerminal* c) {return static_cast<PamolaObject*>(c); })
+		>> to_vector;
+
+	return result;
+}
+
 PamolaType CircuitNode::getPamolaType()
 {
 	return PamolaType::CircuitNode;

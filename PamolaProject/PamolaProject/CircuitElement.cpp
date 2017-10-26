@@ -44,6 +44,17 @@ CircuitTerminal * CircuitElement::getTerminal(uint32_t localId)
 	return terminals.at(localId);
 }
 
+std::vector<PamolaObject*> CircuitElement::getAdjacentComponents()
+{
+	using namespace cpplinq;
+	auto result =
+		from(terminals)
+		>> select([](CircuitTerminal* c) {return static_cast<PamolaObject*>(c); })
+		>> to_vector;
+
+	return result;
+}
+
 PamolaType CircuitElement::getPamolaType()
 {
 	return PamolaType::CircuitElement;

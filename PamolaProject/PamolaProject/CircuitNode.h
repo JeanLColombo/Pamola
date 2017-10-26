@@ -34,6 +34,8 @@ public:
 
 	bool setVoltage(std::complex<double>);	
 
+	std::vector<PamolaObject*> getAdjacentComponents();
+
 	PamolaType getPamolaType();
 
 	int getDegreesOfFreedom();
