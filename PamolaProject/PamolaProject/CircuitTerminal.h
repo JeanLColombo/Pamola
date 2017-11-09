@@ -4,15 +4,15 @@
 
 #pragma once
 
+#include "CircuitNode.h"
 #include "PamolaObject.h"
 #include "CircuitElement.h"
-#include "CircuitNode.h"
 #include <complex>
 
 class CircuitNode;
 
-class CircuitTerminal: public PamolaObject {
-
+class CircuitTerminal: public PamolaObject , private std::enable_shared_from_this<CircuitTerminal>
+{
 	friend class CircuitElement;
 
 protected:
@@ -22,19 +22,20 @@ protected:
 	
 private:
 
-	CircuitElement *element;
+	std::weak_ptr<CircuitElement> element;
 
-	CircuitNode *node = nullptr;
+	std::shared_ptr<CircuitNode> node = nullptr;
 
 	std::complex<double> current = 0.0;
 
 public: 
 	
-	CircuitElement* getElement();
+	const std::shared_ptr<CircuitElement> getElement();
 
-	CircuitNode* getNode();
-	CircuitNode* connectTo(CircuitTerminal*);
-	CircuitNode* connectTo(CircuitNode*);
+	const std::shared_ptr<CircuitNode> getNode();
+
+	CircuitNode & connectTo(CircuitTerminal &);
+	CircuitNode & connectTo(CircuitNode &);
 
 	std::complex<double> getCurrent();
 	std::complex<double> getVoltage();
@@ -43,7 +44,7 @@ public:
 	bool disconnect();
 	bool isConnected();
 
-	std::vector<PamolaObject*> getAdjacentComponents();
+	const std::vector<std::shared_ptr<PamolaObject>> getAdjacentComponents();
 
 	PamolaType getPamolaType();
 

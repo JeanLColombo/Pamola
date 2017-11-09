@@ -4,16 +4,19 @@
 
 #pragma once
 
-#include <unordered_map>
-#include <cpplinq.hpp>
-#include <vector>
-#include "PamolaTypes.h"
 #include "Circuit.h"
+#include "PamolaTypes.h"
 #include <set>
+#include <vector>
+#include <memory>
+#include <cassert>
+#include <cpplinq.hpp>
+#include <unordered_map>
+
 
 class Circuit;
 
-class PamolaObject {
+class PamolaObject : private std::enable_shared_from_this<PamolaObject> {
 protected:
 
 	PamolaObject();
@@ -24,7 +27,7 @@ public:
 
 private: 
 
-	static std::unordered_map<uint32_t, PamolaObject *> pamolaInstances;
+	static std::unordered_map<uint32_t, std::weak_ptr<PamolaObject>> pamolaInstances;
 
 	static uint32_t guid;	
 
@@ -35,21 +38,15 @@ private:
 
 public:
 
-	static const std::unordered_map<uint32_t, PamolaObject *> getPamolaInstances();
+	static const std::unordered_map<uint32_t, std::weak_ptr<PamolaObject>> & getPamolaInstances();
+	
+	static std::weak_ptr<PamolaObject> getPamolaInstance(uint32_t);
 
-	static std::vector<PamolaObject *> getCircuitElements();
-
-	static std::set<PamolaObject*> 
-
-	static PamolaObject * getPamolaInstance(uint32_t);
-
-	static void clear();
-
-	Circuit* getCircuit();
+	std::shared_ptr<Circuit> getCircuit();
 
 	uint32_t getId();
 
-	virtual std::vector<PamolaObject*> getAdjacentComponents() = 0;
+	virtual const std::vector<std::shared_ptr<PamolaObject>> getAdjacentComponents() = 0;
 
 	virtual PamolaType getPamolaType() = 0;
 

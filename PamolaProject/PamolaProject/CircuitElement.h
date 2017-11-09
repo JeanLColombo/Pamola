@@ -21,7 +21,7 @@ public:
 
 private:
 	
-	std::vector<CircuitTerminal*> terminals;
+	std::vector<std::shared_ptr<CircuitTerminal>> terminals;
 
 protected:
 
@@ -29,11 +29,11 @@ protected:
 
 public: 
 	
-	std::vector<CircuitTerminal*> getTerminals();
+	const std::vector<std::shared_ptr<CircuitTerminal>> getTerminals();
 
-	CircuitTerminal* getTerminal(uint32_t);
+	const std::shared_ptr<CircuitTerminal> getTerminal(uint32_t);
 
-	std::vector<PamolaObject*> getAdjacentComponents();
+	const std::vector<std::shared_ptr<PamolaObject>> getAdjacentComponents();
 
 	PamolaType getPamolaType();
 

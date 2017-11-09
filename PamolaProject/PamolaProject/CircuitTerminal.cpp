@@ -14,58 +14,56 @@ CircuitTerminal::~CircuitTerminal()
 	disconnect();
 }
 
-CircuitElement * CircuitTerminal::getElement()
+const std::shared_ptr<CircuitElement> CircuitTerminal::getElement()
 {
-	return element;
+	return element.lock();
 }
 
-CircuitNode * CircuitTerminal::getNode()
+const std::shared_ptr<CircuitNode> CircuitTerminal::getNode()
 {
 	return node;
 }
 
-CircuitNode * CircuitTerminal::connectTo(CircuitTerminal *terminal)
+CircuitNode & CircuitTerminal::connectTo(CircuitTerminal &terminal)
 {
-	switch (this->isConnected()*2+terminal->isConnected())
+	switch (isConnected()*2+terminal.isConnected())
 	{
 	case 0:
 	{
-		CircuitNode * newNode = new CircuitNode;
-		this->connectTo(newNode);
-		terminal->connectTo(newNode);
+		terminal.connectTo(connectTo(*std::make_shared<CircuitNode>()));
 		break; 
 	}
 	case 1:
-		this->connectTo(terminal->node);
+		connectTo(*terminal.getNode());
 		break;
 	case 2:
-		terminal->connectTo(this->node);
+		terminal.connectTo(*getNode());
 		break;
 	case 3:
-		if (this->node != terminal->node)
-			this->node->connectTo(terminal->node);
+		if (getNode() != terminal.getNode())
+			getNode()->connectTo(*terminal.getNode());
 		break;
 	default:
-		return nullptr;;
+		assert("Impossible value on terminal connection");
 	}
 	
-	return this->node;
+	return *getNode();
 }
 
-CircuitNode * CircuitTerminal::connectTo(CircuitNode *node)
+CircuitNode & CircuitTerminal::connectTo(CircuitNode &node)
 {
 	if (isConnected())
 	{
-		if (this->node==node)
-			return this->node;
-		
+		if (getNode() == std::make_shared<CircuitNode>(&node))
+			return node;
+
 		disconnect();
 	}
 
-	this->node = node;
-	this->node->terminals.push_back(this);
+	this->node = std::make_shared<CircuitNode>(node);
+	node.terminals.push_back(std::make_shared<CircuitTerminal>(this));
 
-	return this->node;
+	return node;
 }
 
 std::complex<double> CircuitTerminal::getCurrent()
@@ -92,34 +90,31 @@ bool CircuitTerminal::disconnect()
 	if (!isConnected())
 		return false;
 
-	std::vector<CircuitTerminal*> &myNodeTerminals = this->node->terminals;
+	auto myNodeTerminals = getNode()->getTerminals();
 
 	auto element = std::find(myNodeTerminals.begin(), myNodeTerminals.end(), this);
 	myNodeTerminals.erase(element);
 
 	if (myNodeTerminals.size() == 1)
 		myNodeTerminals.at(0)->disconnect();
-	else if (myNodeTerminals.size() == 0)
-		delete node;
-
-
+	
 	node = nullptr;
 	return true;
 }
 
 bool CircuitTerminal::isConnected()
 {
-	return (node);
+	return static_cast<bool>(getNode());
 }
 
-std::vector<PamolaObject*> CircuitTerminal::getAdjacentComponents()
+const std::vector<std::shared_ptr<PamolaObject>> CircuitTerminal::getAdjacentComponents()
 {
-	std::vector<PamolaObject*> result(1 + isConnected());
-
-	result.at(0) = static_cast<PamolaObject*>(getElement());
+	std::vector<std::shared_ptr<PamolaObject>> result(1 + isConnected());
+	
+	result.at(0) = element.lock();
 
 	if (isConnected())
-		result.at(1) = static_cast<PamolaObject*>(getNode());
+		result.at(1) = node;
 
 	return result;
 }

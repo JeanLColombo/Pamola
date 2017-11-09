@@ -20,24 +20,23 @@ protected:
 
 private:
 
-	std::vector<CircuitTerminal*> terminals;
+	std::vector<std::weak_ptr<CircuitTerminal>> terminals;
 	
 	std::complex<double> voltage;
 
 public: 
 
-	CircuitNode* connectTo(CircuitNode*);
+	CircuitNode & connectTo(CircuitNode &);
 
-	std::vector<CircuitTerminal*> getTerminals();
+	const std::vector<std::shared_ptr<CircuitTerminal>> getTerminals();
 	
 	std::complex<double> getVoltage();
 
 	bool setVoltage(std::complex<double>);	
 
-	std::vector<PamolaObject*> getAdjacentComponents();
+	const std::vector<std::shared_ptr<PamolaObject>> getAdjacentComponents();
 
 	PamolaType getPamolaType();
 
 	int getDegreesOfFreedom();
-
 };

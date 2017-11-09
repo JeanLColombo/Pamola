@@ -11,45 +11,37 @@ CircuitElement::CircuitElement()
 
 CircuitElement::~CircuitElement()
 {
-	for each (CircuitTerminal* terminal in getTerminals())
-	{
-		delete terminal;
-	}
 }
 
 bool CircuitElement::createTerminals(uint32_t numberOfTerminals)
 {
-	//TODO: Check this line
-	//if (terminals.empty && (numberOfTerminals > 0))
 	if (numberOfTerminals > 0)
 	{
-		
+		//TODO: Check if the terminals were created.
 		for (uint32_t i = 0; i < numberOfTerminals; i++)
-		{
-			terminals.push_back(new CircuitTerminal());
-		}
+			terminals.push_back(std::make_shared<CircuitTerminal>());
 
 		return true;
 	}	
 	return false;
 }
 
-
-std::vector<CircuitTerminal*> CircuitElement::getTerminals() {
+const std::vector<std::shared_ptr<CircuitTerminal>> CircuitElement::getTerminals()
+{
 	return	terminals;
 }
 
-CircuitTerminal * CircuitElement::getTerminal(uint32_t localId)
+const std::shared_ptr<CircuitTerminal> CircuitElement::getTerminal(uint32_t localId)
 {
 	return terminals.at(localId);
 }
 
-std::vector<PamolaObject*> CircuitElement::getAdjacentComponents()
+const std::vector<std::shared_ptr<PamolaObject>> CircuitElement::getAdjacentComponents()
 {
 	using namespace cpplinq;
 	auto result =
 		from(terminals)
-		>> select([](CircuitTerminal* c) {return static_cast<PamolaObject*>(c); })
+		>> select([](std::shared_ptr<CircuitTerminal> c) {return static_cast<std::shared_ptr<PamolaObject>>(c); })
 		>> to_vector;
 
 	return result;
