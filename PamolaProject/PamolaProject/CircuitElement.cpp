@@ -2,7 +2,9 @@
  * Project PamolaCore
  */
 
+#ifndef __GNUC__
 #include "stdafx.h"
+#endif
 #include "CircuitElement.h"
 
 CircuitElement::CircuitElement()
@@ -11,7 +13,11 @@ CircuitElement::CircuitElement()
 
 CircuitElement::~CircuitElement()
 {
+#ifdef __GNUC__
+	for(CircuitTerminal* terminal: getTerminals())
+#else
 	for each (CircuitTerminal* terminal in getTerminals())
+#endif
 	{
 		delete terminal;
 	}

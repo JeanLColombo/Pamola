@@ -10,6 +10,7 @@
 #include <complex>
 
 class CircuitNode;
+class CircuitElement;
 
 class CircuitTerminal: public PamolaObject {
 
