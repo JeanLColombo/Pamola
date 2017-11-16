@@ -2,7 +2,9 @@
  * Project PamolaCore
  */
 
+#ifndef __GNUC__
 #include "stdafx.h"
+#endif
 #include "CircuitNode.h"
 
 CircuitNode::CircuitNode()
@@ -20,7 +22,11 @@ CircuitNode * CircuitNode::connectTo(CircuitNode *node)
 	
 	std::vector<CircuitTerminal*> addedTerminals = node->getTerminals();
 
+#ifdef __GNUC__
+	for (CircuitTerminal* terminal : addedTerminals)
+#else
 	for each (CircuitTerminal* terminal in addedTerminals)
+#endif
 	{
 		terminal->disconnect();
 		terminal->connectTo(this);

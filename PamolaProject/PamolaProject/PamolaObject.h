@@ -5,7 +5,6 @@
 #pragma once
 
 #include <unordered_map>
-#include <cpplinq.hpp>
 #include <vector>
 #include "PamolaTypes.h"
 

@@ -2,7 +2,10 @@
  * Project PamolaCore
  */
 
+#ifndef __GNUC__
 #include "stdafx.h"
+#endif
+#include "cpplinq.hpp"
 #include "PamolaObject.h"
 
 std::unordered_map<uint32_t, PamolaObject *> PamolaObject::pamolaInstances = {};
@@ -42,7 +45,11 @@ PamolaObject * PamolaObject::getPamolaInstance(uint32_t id)
 
 void PamolaObject::clear()
 {
+#ifdef __GNUC__
+	for (auto element : PamolaObject::getCircuitElements())
+#else
 	for each (auto element in PamolaObject::getCircuitElements())
+#endif
 	{
 		delete element;
 	}

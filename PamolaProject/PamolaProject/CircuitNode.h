@@ -9,6 +9,8 @@
 #include <vector>
 #include <complex>
 
+class CircuitTerminal;
+
 class CircuitNode: public PamolaObject {
 
 	friend class CircuitTerminal;
