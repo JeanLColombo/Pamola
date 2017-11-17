@@ -32,10 +32,10 @@ CircuitNode & CircuitNode::connectTo(CircuitNode &node)
 const std::vector<std::shared_ptr<CircuitTerminal>> CircuitNode::getTerminals()
 {
 	using namespace cpplinq;
-	auto result =
+	auto result = 
 		from(terminals)
 		>> select([](std::weak_ptr<CircuitTerminal> t) {return t.lock(); })
-		>> to_vector;
+		>> to_vector();
 
 	return result;
 }
@@ -56,8 +56,8 @@ const std::vector<std::shared_ptr<PamolaObject>> CircuitNode::getAdjacentCompone
 	using namespace cpplinq;
 	auto result =
 		from(terminals)
-		>> select([](std::weak_ptr<CircuitTerminal> t) {return std::make_shared<PamolaObject>(t); })
-		>> to_vector;
+		>> select([](std::weak_ptr<CircuitTerminal> t) {return static_cast<std::shared_ptr<PamolaObject>>(t.lock()); })
+		>> to_vector();
 
 	return result;
 }

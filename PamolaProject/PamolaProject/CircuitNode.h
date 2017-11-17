@@ -9,13 +9,18 @@
 #include <vector>
 #include <complex>
 
-class CircuitNode: public PamolaObject {
+class CircuitTerminal;
 
+class CircuitNode: public PamolaObject, virtual public std::enable_shared_from_this<CircuitNode> 
+{
 	friend class CircuitTerminal;
 
-protected:
+public:
 
 	CircuitNode();
+
+public:
+
 	~CircuitNode();
 
 private:

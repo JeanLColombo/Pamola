@@ -18,8 +18,8 @@ bool CircuitElement::createTerminals(uint32_t numberOfTerminals)
 	if (numberOfTerminals > 0)
 	{
 		//TODO: Check if the terminals were created.
-		for (uint32_t i = 0; i < numberOfTerminals; i++)
-			terminals.push_back(std::make_shared<CircuitTerminal>());
+		//for (uint32_t i = 0; i < numberOfTerminals; i++)
+			//terminals.push_back(std::make_shared<CircuitTerminal>());
 
 		return true;
 	}	
@@ -42,7 +42,7 @@ const std::vector<std::shared_ptr<PamolaObject>> CircuitElement::getAdjacentComp
 	auto result =
 		from(terminals)
 		>> select([](std::shared_ptr<CircuitTerminal> c) {return static_cast<std::shared_ptr<PamolaObject>>(c); })
-		>> to_vector;
+		>> to_vector();
 
 	return result;
 }

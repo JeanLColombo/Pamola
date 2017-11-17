@@ -14,12 +14,12 @@ CircuitTerminal::~CircuitTerminal()
 	disconnect();
 }
 
-const std::shared_ptr<CircuitElement> CircuitTerminal::getElement()
+std::shared_ptr<CircuitElement> CircuitTerminal::getElement()
 {
 	return element.lock();
 }
 
-const std::shared_ptr<CircuitNode> CircuitTerminal::getNode()
+std::shared_ptr<CircuitNode> CircuitTerminal::getNode()
 {
 	return node;
 }
@@ -30,7 +30,7 @@ CircuitNode & CircuitTerminal::connectTo(CircuitTerminal &terminal)
 	{
 	case 0:
 	{
-		terminal.connectTo(connectTo(*std::make_shared<CircuitNode>()));
+		//terminal.connectTo(connectTo(*std::make_shared<CircuitNode>().get()));
 		break; 
 	}
 	case 1:
@@ -52,16 +52,18 @@ CircuitNode & CircuitTerminal::connectTo(CircuitTerminal &terminal)
 
 CircuitNode & CircuitTerminal::connectTo(CircuitNode &node)
 {
-	if (isConnected())
+	/*if (isConnected())
 	{
-		if (getNode() == std::make_shared<CircuitNode>(&node))
+		if (&node == getNode().get())
 			return node;
 
 		disconnect();
 	}
-
-	this->node = std::make_shared<CircuitNode>(node);
-	node.terminals.push_back(std::make_shared<CircuitTerminal>(this));
+*/
+	//this->node = std::make_shared<CircuitNode>(&node);
+	//node.terminals.push_back(std::make_shared<CircuitTerminal>(*this));
+	//TODO: Fix shared_from_this multiple inheritance
+	//node.terminals.push_back(shared_from_this());
 
 	return node;
 }

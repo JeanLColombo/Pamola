@@ -14,9 +14,10 @@
 #include <unordered_map>
 
 
-class Circuit;
+//class Circuit;
 
-class PamolaObject : private std::enable_shared_from_this<PamolaObject> {
+class PamolaObject : virtual public std::enable_shared_from_this<PamolaObject> 
+{
 protected:
 
 	PamolaObject();
@@ -42,7 +43,7 @@ public:
 	
 	static std::weak_ptr<PamolaObject> getPamolaInstance(uint32_t);
 
-	std::shared_ptr<Circuit> getCircuit();
+	//std::shared_ptr<Circuit> getCircuit();
 
 	uint32_t getId();
 

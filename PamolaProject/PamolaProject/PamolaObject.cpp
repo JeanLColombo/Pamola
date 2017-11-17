@@ -52,17 +52,17 @@ std::weak_ptr<PamolaObject> PamolaObject::getPamolaInstance(uint32_t id)
 	return getPamolaInstances().at(id);
 }
 
-std::shared_ptr<Circuit> PamolaObject::getCircuit()
-{
-	//TODO: Check if it is going to remain a shared_ptr
-
-	//TODO: std::vector of components
-	
-	//TODO: Instantiate a new circuit object with std::vector of components
-
-	//TODO: Return pointer to circuit object
-	return nullptr;
-}
+//std::shared_ptr<Circuit> PamolaObject::getCircuit()
+//{
+//	//TODO: Check if it is going to remain a shared_ptr
+//
+//	//TODO: std::vector of components
+//	
+//	//TODO: Instantiate a new circuit object with std::vector of components
+//
+//	//TODO: Return pointer to circuit object
+//	return nullptr;
+//}
 
 uint32_t PamolaObject::getId() {
 	return id;

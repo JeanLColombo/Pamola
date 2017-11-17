@@ -11,13 +11,16 @@
 
 class CircuitNode;
 
-class CircuitTerminal: public PamolaObject , private std::enable_shared_from_this<CircuitTerminal>
+class CircuitTerminal: public PamolaObject , virtual public std::enable_shared_from_this<CircuitTerminal>
 {
 	friend class CircuitElement;
 
-protected:
+public:
 
 	CircuitTerminal();
+	
+public:
+	
 	~CircuitTerminal();
 	
 private:
@@ -30,9 +33,9 @@ private:
 
 public: 
 	
-	const std::shared_ptr<CircuitElement> getElement();
+	std::shared_ptr<CircuitElement> getElement();
 
-	const std::shared_ptr<CircuitNode> getNode();
+	std::shared_ptr<CircuitNode> getNode();
 
 	CircuitNode & connectTo(CircuitTerminal &);
 	CircuitNode & connectTo(CircuitNode &);

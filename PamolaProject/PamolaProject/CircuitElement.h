@@ -10,7 +10,8 @@
 
 class CircuitTerminal;
 
-class CircuitElement: public PamolaObject {
+class CircuitElement: public PamolaObject, virtual public std::enable_shared_from_this<CircuitElement> 
+{
 protected:
 
 	CircuitElement();
