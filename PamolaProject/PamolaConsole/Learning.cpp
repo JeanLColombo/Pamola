@@ -58,11 +58,8 @@ int main1()
 	std::cout << "Length of X:\t" << x.size() << std::endl;
 
 	std::cout << "x = [";
-#ifdef __GNUC__
+  
 	for (foo* var : x)
-#else
-	for each (foo* var in x)
-#endif
 	{
 		std::cout << " " << var->a;
 	}
@@ -74,11 +71,8 @@ int main1()
 	std::cout << "Length of X:\t" << x.size() << std::endl;
 
 	std::cout << "x = [";
-#ifdef __GNUC__
+
 	for (foo* var : x)
-#else
-	for each (foo* var in x)
-#endif
 	{
 		std::cout << " " << var->a;
 	}
@@ -87,11 +81,7 @@ int main1()
 	std::cout << "Length of Foos:\t" << bar1->foos.size() << std::endl;
 
 	std::cout << "bar1.foos = [";
-#ifdef __GNUC__
 	for (foo* var : bar1->foos)
-#else
-	for each (foo* var in bar1->foos)
-#endif
 	{
 		std::cout << " " << var->a;
 	}
@@ -132,11 +122,8 @@ int main2()
 
 void printAllPamolas()
 {
-#ifdef __GNUC__
 	for (const auto &instance : PamolaObject::getPamolaInstances())
-#else
-	for each (const auto &instance in PamolaObject::getPamolaInstances())
-#endif
+
 	{
 		std::cout << "guid:	" << instance.first << '\t' << printPamola(instance.second) << std::endl;
 	}

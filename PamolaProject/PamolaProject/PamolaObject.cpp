@@ -8,12 +8,12 @@
 #include "cpplinq.hpp"
 #include "PamolaObject.h"
 
-std::unordered_map<uint32_t, PamolaObject *> PamolaObject::pamolaInstances = {};
+std::unordered_map<uint32_t, std::weak_ptr<PamolaObject>> PamolaObject::pamolaInstances = {};
 uint32_t PamolaObject::guid = 0;
 
 PamolaObject::PamolaObject() {
 	id = guid++;
-	pamolaInstances.insert({id,this});
+	pamolaInstances.insert({ id,shared_from_this() });
 }
 
 PamolaObject::~PamolaObject()
@@ -21,40 +21,51 @@ PamolaObject::~PamolaObject()
 	pamolaInstances.erase(getId());
 }
 
-const std::unordered_map<uint32_t, PamolaObject*> PamolaObject::getPamolaInstances()
+std::set<uint32_t> PamolaObject::getConnectedComponents()
+{
+	//TODO: But how?
+
+	std::set<uint32_t> componentList{ id };
+	
+	for (auto component : getAdjacentComponents())
+	{
+		if (componentList.find(component->getId()) != componentList.end())
+		{
+
+		}
+		componentList.insert(component->getId());
+	}
+
+
+	return std::set<uint32_t>();
+}
+
+std::set<uint32_t> PamolaObject::getConnectedComponents(std::set<uint32_t>)
+{
+	return std::set<uint32_t>();
+}
+
+const std::unordered_map<uint32_t, std::weak_ptr<PamolaObject>> & PamolaObject::getPamolaInstances()
 {
 	return pamolaInstances;
 }
 
-std::vector<PamolaObject*> PamolaObject::getCircuitElements()
+std::weak_ptr<PamolaObject> PamolaObject::getPamolaInstance(uint32_t id)
 {
-	auto result =
-		cpplinq::from(getPamolaInstances())
-		>> cpplinq::where([](std::pair<uint32_t, PamolaObject*> const & kv) {return kv.second->getPamolaType() == PamolaType::CircuitElement; })
-		>> cpplinq::select([](std::pair<uint32_t, PamolaObject*> const & kv) {return kv.second; })
-		>> cpplinq::to_vector()
-		;
-
-	return result;
+	return getPamolaInstances().at(id);
 }
 
-PamolaObject * PamolaObject::getPamolaInstance(uint32_t id)
-{
-	return pamolaInstances.at(id);
-}
-
-void PamolaObject::clear()
-{
-#ifdef __GNUC__
-	for (auto element : PamolaObject::getCircuitElements())
-#else
-	for each (auto element in PamolaObject::getCircuitElements())
-#endif
-	{
-		delete element;
-	}
-}
-
+//std::shared_ptr<Circuit> PamolaObject::getCircuit()
+//{
+//	//TODO: Check if it is going to remain a shared_ptr
+//
+//	//TODO: std::vector of components
+//	
+//	//TODO: Instantiate a new circuit object with std::vector of components
+//
+//	//TODO: Return pointer to circuit object
+//	return nullptr;
+//}
 
 uint32_t PamolaObject::getId() {
 	return id;

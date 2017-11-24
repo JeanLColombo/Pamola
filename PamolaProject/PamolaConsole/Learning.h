@@ -7,6 +7,8 @@
 #include "CircuitNode.h"
 #include <cpplinq.hpp>
 
+// Testing GitHub issues 
+
 class Learning
 {
 public:

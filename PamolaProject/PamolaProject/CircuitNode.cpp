@@ -6,6 +6,7 @@
 #include "stdafx.h"
 #endif
 #include "CircuitNode.h"
+#include "CircuitTerminal.h"
 
 CircuitNode::CircuitNode()
 {
@@ -15,29 +16,32 @@ CircuitNode::~CircuitNode()
 {
 }
 
-CircuitNode * CircuitNode::connectTo(CircuitNode *node)
+CircuitNode & CircuitNode::connectTo(CircuitNode &node)
 {
-	if (this == node)
-		return this;
+	if (this == &node)
+		return node;
 	
-	std::vector<CircuitTerminal*> addedTerminals = node->getTerminals();
+	const std::vector<std::shared_ptr<CircuitTerminal>> addedTerminals = node.getTerminals();
 
-#ifdef __GNUC__
-	for (CircuitTerminal* terminal : addedTerminals)
-#else
-	for each (CircuitTerminal* terminal in addedTerminals)
-#endif
+	for (auto terminal : addedTerminals)
+
 	{
 		terminal->disconnect();
-		terminal->connectTo(this);
+		terminal->connectTo(*this);
 	}
 
-	return this;
+	return *this;
 }
 
-std::vector<CircuitTerminal*> CircuitNode::getTerminals()
+const std::vector<std::shared_ptr<CircuitTerminal>> CircuitNode::getTerminals()
 {
-	return terminals;
+	using namespace cpplinq;
+	auto result = 
+		from(terminals)
+		>> select([](std::weak_ptr<CircuitTerminal> t) {return t.lock(); })
+		>> to_vector();
+
+	return result;
 }
 
 std::complex<double> CircuitNode::getVoltage()
@@ -49,6 +53,17 @@ bool CircuitNode::setVoltage(std::complex<double> value)
 {
 	voltage = value;
 	return true;
+}
+
+const std::vector<std::shared_ptr<PamolaObject>> CircuitNode::getAdjacentComponents()
+{
+	using namespace cpplinq;
+	auto result =
+		from(terminals)
+		>> select([](std::weak_ptr<CircuitTerminal> t) {return static_cast<std::shared_ptr<PamolaObject>>(t.lock()); })
+		>> to_vector();
+
+	return result;
 }
 
 PamolaType CircuitNode::getPamolaType()
