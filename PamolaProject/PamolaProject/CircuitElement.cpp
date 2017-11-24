@@ -19,7 +19,7 @@ bool CircuitElement::createTerminals(uint32_t numberOfTerminals)
 	{
 		//TODO: Check if the terminals were created.
 		for (uint32_t i = 0; i < numberOfTerminals; i++)
-			terminals.push_back(CircuitTerminal().shared_from_this());
+			terminals.push_back(CircuitTerminal(this).shared_from_this());
 		
 		return true;
 	}	

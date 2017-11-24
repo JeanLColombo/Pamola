@@ -12,6 +12,8 @@ class CircuitTerminal;
 
 class CircuitElement: public PamolaObject, public std::enable_shared_from_this<CircuitElement> 
 {
+public:
+
 	using std::enable_shared_from_this<CircuitElement>::shared_from_this;
 
 protected:
