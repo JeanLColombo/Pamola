@@ -4,6 +4,7 @@
 
 #include "stdafx.h"
 #include "CircuitNode.h"
+#include "CircuitTerminal.h"
 
 CircuitNode::CircuitNode()
 {

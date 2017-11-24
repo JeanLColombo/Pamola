@@ -30,7 +30,7 @@ CircuitNode & CircuitTerminal::connectTo(CircuitTerminal &terminal)
 	{
 	case 0:
 	{
-		//terminal.connectTo(connectTo(*std::make_shared<CircuitNode>().get()));
+		terminal.connectTo(connectTo(CircuitNode()));
 		break; 
 	}
 	case 1:
@@ -52,18 +52,16 @@ CircuitNode & CircuitTerminal::connectTo(CircuitTerminal &terminal)
 
 CircuitNode & CircuitTerminal::connectTo(CircuitNode &node)
 {
-	/*if (isConnected())
+	if (isConnected())
 	{
 		if (&node == getNode().get())
 			return node;
 
 		disconnect();
 	}
-*/
-	//this->node = std::make_shared<CircuitNode>(&node);
-	//node.terminals.push_back(std::make_shared<CircuitTerminal>(*this));
-	//TODO: Fix shared_from_this multiple inheritance
-	//node.terminals.push_back(shared_from_this());
+	
+	this->node = node.shared_from_this();
+	node.terminals.push_back(shared_from_this());
 
 	return node;
 }
@@ -93,8 +91,8 @@ bool CircuitTerminal::disconnect()
 		return false;
 
 	auto myNodeTerminals = getNode()->getTerminals();
-
-	auto element = std::find(myNodeTerminals.begin(), myNodeTerminals.end(), this);
+	
+	auto element = std::find(myNodeTerminals.begin(), myNodeTerminals.end(), shared_from_this());
 	myNodeTerminals.erase(element);
 
 	if (myNodeTerminals.size() == 1)

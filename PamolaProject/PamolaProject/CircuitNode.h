@@ -5,14 +5,15 @@
 #pragma once
 
 #include "PamolaObject.h"
-#include "CircuitTerminal.h"
 #include <vector>
 #include <complex>
 
 class CircuitTerminal;
 
-class CircuitNode: public PamolaObject, virtual public std::enable_shared_from_this<CircuitNode> 
+class CircuitNode: public PamolaObject, public std::enable_shared_from_this<CircuitNode> 
 {
+	using std::enable_shared_from_this<CircuitNode>::shared_from_this;
+
 	friend class CircuitTerminal;
 
 public:

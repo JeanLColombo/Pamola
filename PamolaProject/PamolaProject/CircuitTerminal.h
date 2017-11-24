@@ -9,10 +9,10 @@
 #include "CircuitElement.h"
 #include <complex>
 
-class CircuitNode;
-
-class CircuitTerminal: public PamolaObject , virtual public std::enable_shared_from_this<CircuitTerminal>
+class CircuitTerminal: public PamolaObject , public std::enable_shared_from_this<CircuitTerminal>
 {
+	using std::enable_shared_from_this<CircuitTerminal>::shared_from_this;
+	
 	friend class CircuitElement;
 
 public:
