@@ -1,4 +1,6 @@
+#ifndef __GNUC__
 #include "stdafx.h"
+#endif
 #include "Learning.h"
 
 
@@ -56,6 +58,7 @@ int main1()
 	std::cout << "Length of X:\t" << x.size() << std::endl;
 
 	std::cout << "x = [";
+  
 	for (foo* var : x)
 	{
 		std::cout << " " << var->a;
@@ -68,6 +71,7 @@ int main1()
 	std::cout << "Length of X:\t" << x.size() << std::endl;
 
 	std::cout << "x = [";
+
 	for (foo* var : x)
 	{
 		std::cout << " " << var->a;
@@ -119,6 +123,7 @@ int main2()
 void printAllPamolas()
 {
 	for (const auto &instance : PamolaObject::getPamolaInstances())
+
 	{
 		std::cout << "guid:	" << instance.first << '\t' << printPamola(instance.second) << std::endl;
 	}

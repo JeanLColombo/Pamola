@@ -2,7 +2,9 @@
  * Project PamolaCore
  */
 
+#ifndef __GNUC__
 #include "stdafx.h"
+#endif
 #include "CircuitNode.h"
 #include "CircuitTerminal.h"
 
@@ -22,6 +24,7 @@ CircuitNode & CircuitNode::connectTo(CircuitNode &node)
 	const std::vector<std::shared_ptr<CircuitTerminal>> addedTerminals = node.getTerminals();
 
 	for (auto terminal : addedTerminals)
+
 	{
 		terminal->disconnect();
 		terminal->connectTo(*this);
