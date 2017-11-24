@@ -21,7 +21,7 @@ CircuitNode & CircuitNode::connectTo(CircuitNode &node)
 	
 	const std::vector<std::shared_ptr<CircuitTerminal>> addedTerminals = node.getTerminals();
 
-	for each (auto terminal in addedTerminals)
+	for (auto terminal : addedTerminals)
 	{
 		terminal->disconnect();
 		terminal->connectTo(*this);

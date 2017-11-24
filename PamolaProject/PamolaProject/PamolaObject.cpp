@@ -24,7 +24,7 @@ std::set<uint32_t> PamolaObject::getConnectedComponents()
 
 	std::set<uint32_t> componentList{ id };
 	
-	for each (auto component in getAdjacentComponents())
+	for (auto component : getAdjacentComponents())
 	{
 		if (componentList.find(component->getId()) != componentList.end())
 		{

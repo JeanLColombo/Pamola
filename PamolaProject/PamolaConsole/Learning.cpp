@@ -56,7 +56,7 @@ int main1()
 	std::cout << "Length of X:\t" << x.size() << std::endl;
 
 	std::cout << "x = [";
-	for each (foo* var in x)
+	for (foo* var : x)
 	{
 		std::cout << " " << var->a;
 	}
@@ -68,7 +68,7 @@ int main1()
 	std::cout << "Length of X:\t" << x.size() << std::endl;
 
 	std::cout << "x = [";
-	for each (foo* var in x)
+	for (foo* var : x)
 	{
 		std::cout << " " << var->a;
 	}
@@ -77,7 +77,7 @@ int main1()
 	std::cout << "Length of Foos:\t" << bar1->foos.size() << std::endl;
 
 	std::cout << "bar1.foos = [";
-	for each (foo* var in bar1->foos)
+	for (foo* var : bar1->foos)
 	{
 		std::cout << " " << var->a;
 	}
@@ -118,7 +118,7 @@ int main2()
 
 void printAllPamolas()
 {
-	for each (const auto &instance in PamolaObject::getPamolaInstances())
+	for (const auto &instance : PamolaObject::getPamolaInstances())
 	{
 		std::cout << "guid:	" << instance.first << '\t' << printPamola(instance.second) << std::endl;
 	}

@@ -8,7 +8,7 @@
 
 void printVector(std::vector<int> vec)
 {
-	for each (auto ele in vec)
+	for (auto ele : vec)
 		std::cout << ele << " ";
 
 	std::cout << std::endl;
