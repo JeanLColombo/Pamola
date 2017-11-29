@@ -7,8 +7,8 @@ public:
 	CircuitElementHolder();
 	~CircuitElementHolder();
 
-	std::shared_ptr<CircuitTerminal> getLeft();
-	std::shared_ptr<CircuitTerminal> getRight();
+	/*std::shared_ptr<CircuitTerminal> getLeft();
+	std::shared_ptr<CircuitTerminal> getRight();*/
 
 	int getDegreesOfFreedom();
 };

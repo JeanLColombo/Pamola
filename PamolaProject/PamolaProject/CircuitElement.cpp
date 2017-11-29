@@ -17,9 +17,11 @@ bool CircuitElement::createTerminals(uint32_t numberOfTerminals)
 {
 	if (numberOfTerminals > 0)
 	{
-		//TODO: Check if the terminals were created.
 		for (uint32_t i = 0; i < numberOfTerminals; i++)
-			terminals.push_back(CircuitTerminal(this).shared_from_this());
+		{
+			std::shared_ptr<CircuitTerminal> terminalInstance{ new CircuitTerminal(this) };
+			terminals.push_back(terminalInstance);
+		}			
 		
 		return true;
 	}	

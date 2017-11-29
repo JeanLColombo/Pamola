@@ -20,19 +20,17 @@ public:
 
 private:
 
-	CircuitTerminal(CircuitElement*);
-	
+	CircuitTerminal(CircuitElement *const);
+
 public:
 
 	~CircuitTerminal();
 	
 private:
-
-	//std::weak_ptr<CircuitElement> element;
-
+	
 	std::shared_ptr<CircuitNode> node = nullptr;
 
-	CircuitElement* element;
+	CircuitElement *const element;
 
 	std::complex<double> current = 0.0;
 

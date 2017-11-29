@@ -5,7 +5,7 @@
 #include "stdafx.h"
 #include "CircuitTerminal.h"
 
-CircuitTerminal::CircuitTerminal(CircuitElement *ownerElement)
+CircuitTerminal::CircuitTerminal(CircuitElement *const ownerElement)
 	: element(ownerElement)
 {
 }
@@ -17,8 +17,8 @@ CircuitTerminal::~CircuitTerminal()
 
 std::shared_ptr<CircuitElement> CircuitTerminal::getElement()
 {
-	//return element.lock();
-	return element->shared_from_this();
+	auto tempElement = (*element).shared_from_this();
+	return tempElement;
 }
 
 std::shared_ptr<CircuitNode> CircuitTerminal::getNode()
