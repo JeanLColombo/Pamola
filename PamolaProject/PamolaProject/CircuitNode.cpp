@@ -2,9 +2,7 @@
  * Project PamolaCore
  */
 
-#ifndef __GNUC__
 #include "stdafx.h"
-#endif
 #include "CircuitNode.h"
 #include "CircuitTerminal.h"
 
@@ -31,6 +29,11 @@ CircuitNode & CircuitNode::connectTo(CircuitNode &node)
 	}
 
 	return *this;
+}
+
+CircuitNode & CircuitNode::connectTo(std::shared_ptr<CircuitNode> node)
+{
+	return connectTo(*node);
 }
 
 const std::vector<std::shared_ptr<CircuitTerminal>> CircuitNode::getTerminals()

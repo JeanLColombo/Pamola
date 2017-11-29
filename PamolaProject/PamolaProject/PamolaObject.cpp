@@ -2,9 +2,8 @@
  * Project PamolaCore
  */
 
-#ifndef __GNUC__
+
 #include "stdafx.h"
-#endif
 #include "cpplinq.hpp"
 #include "PamolaObject.h"
 

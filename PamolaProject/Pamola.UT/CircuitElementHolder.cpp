@@ -10,15 +10,15 @@ CircuitElementHolder::~CircuitElementHolder()
 {
 }
 
-//std::shared_ptr<CircuitTerminal> CircuitElementHolder::getLeft()
-//{
-//	return getTerminal(0);
-//}
-//
-//std::shared_ptr<CircuitTerminal> CircuitElementHolder::getRight()
-//{
-//	return getTerminal(1);
-//}
+std::shared_ptr<CircuitTerminal> CircuitElementHolder::getLeft()
+{
+	return getTerminal(0);
+}
+
+std::shared_ptr<CircuitTerminal> CircuitElementHolder::getRight()
+{
+	return getTerminal(1);
+}
 
 int CircuitElementHolder::getDegreesOfFreedom()
 {

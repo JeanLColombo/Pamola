@@ -17,9 +17,7 @@ class CircuitTerminal: public PamolaObject , public std::enable_shared_from_this
 public:
 
 	using std::enable_shared_from_this<CircuitTerminal>::shared_from_this;
-
-private:
-
+	
 	CircuitTerminal(CircuitElement *const);
 
 public:
@@ -41,7 +39,9 @@ public:
 	std::shared_ptr<CircuitNode> getNode();
 
 	CircuitNode & connectTo(CircuitTerminal &);
+	CircuitNode & connectTo(std::shared_ptr<CircuitTerminal>);
 	CircuitNode & connectTo(CircuitNode &);
+	CircuitNode & connectTo(std::shared_ptr<CircuitNode>);
 
 	std::complex<double> getCurrent();
 	std::complex<double> getVoltage();

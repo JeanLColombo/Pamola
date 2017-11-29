@@ -2,9 +2,7 @@
  * Project PamolaCore
  */
 
-#ifndef __GNUC__
 #include "stdafx.h"
-#endif
 #include "CircuitElement.h"
 
 CircuitElement::CircuitElement()
@@ -21,7 +19,8 @@ bool CircuitElement::createTerminals(uint32_t numberOfTerminals)
 	{
 		for (uint32_t i = 0; i < numberOfTerminals; i++)
 		{
-			std::shared_ptr<CircuitTerminal> terminalInstance{ new CircuitTerminal(this) };
+			//std::shared_ptr<CircuitTerminal> terminalInstance{ new CircuitTerminal(this) };
+			auto terminalInstance = std::make_shared<CircuitTerminal>(this);
 			terminals.push_back(terminalInstance);
 		}			
 		
