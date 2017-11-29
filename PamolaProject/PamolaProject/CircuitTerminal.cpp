@@ -9,7 +9,8 @@
 #endif
 #include "CircuitTerminal.h"
 
-CircuitTerminal::CircuitTerminal()
+CircuitTerminal::CircuitTerminal(CircuitElement *const ownerElement)
+	: element(ownerElement)
 {
 }
 
@@ -20,7 +21,8 @@ CircuitTerminal::~CircuitTerminal()
 
 std::shared_ptr<CircuitElement> CircuitTerminal::getElement()
 {
-	return element.lock();
+	auto tempElement = (*element).shared_from_this();
+	return tempElement;
 }
 
 std::shared_ptr<CircuitNode> CircuitTerminal::getNode()
@@ -115,7 +117,7 @@ const std::vector<std::shared_ptr<PamolaObject>> CircuitTerminal::getAdjacentCom
 {
 	std::vector<std::shared_ptr<PamolaObject>> result(1 + isConnected());
 	
-	result.at(0) = element.lock();
+	result.at(0) = static_cast<std::shared_ptr<PamolaObject>>(getElement());
 
 	if (isConnected())
 		result.at(1) = node;
