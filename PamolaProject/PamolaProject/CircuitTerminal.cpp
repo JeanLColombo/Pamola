@@ -2,7 +2,11 @@
  * Project PamolaCore
  */
 
+#ifndef __GNUC__
 #include "stdafx.h"
+#else
+#include <algorithm>
+#endif
 #include "CircuitTerminal.h"
 
 CircuitTerminal::CircuitTerminal(CircuitElement *const ownerElement)

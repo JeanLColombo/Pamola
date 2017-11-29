@@ -14,6 +14,7 @@ class CircuitNode: public PamolaObject, public std::enable_shared_from_this<Circ
 {
 	using std::enable_shared_from_this<CircuitNode>::shared_from_this;
 
+
 	friend class CircuitTerminal;
 
 public:
@@ -45,4 +46,5 @@ public:
 	PamolaType getPamolaType();
 
 	int getDegreesOfFreedom();
+
 };

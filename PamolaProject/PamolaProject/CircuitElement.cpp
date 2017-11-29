@@ -2,7 +2,9 @@
  * Project PamolaCore
  */
 
+#ifndef __GNUC__
 #include "stdafx.h"
+#endif
 #include "CircuitElement.h"
 
 CircuitElement::CircuitElement()

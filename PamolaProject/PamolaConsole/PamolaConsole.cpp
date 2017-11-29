@@ -1,7 +1,9 @@
 // PamolaConsole.cpp : Defines the entry point for the console application.
 //
 
+#ifndef __GNUC__
 #include "stdafx.h"
+#endif
 #include "Learning.h"
 #include <iostream>
 #include <memory>
