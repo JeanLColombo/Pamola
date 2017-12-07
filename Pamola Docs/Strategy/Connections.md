@@ -58,6 +58,16 @@ Since [CircuitElement][Ele] is a virtual class, a new user defined element class
 
 ##### [CircuitNode][Nod] class
 
-Something
+[CircuitTerminal][Ter] and [CircuitNode][Nod] classes have an aggregation-like relationship, in which the terminal object can either have a node object or not. It's aggregation-like because the [CircuitTerminal][Ter] class is responsible for creating/destroying the node object, whereas the terminal object is not necessarily responsible for creating/destroying the node objects. The following characteristics dictates this relationship:
+- The [CircuitTerminal][Ter] class is responsible for handling creation/destruction of node objects;
+- A terminal object has a aggregation relationship with the node object. Multiple terminal objects can have the same node object;
+- A terminal can either have no node objects (disconnected), or a single node object (connected). This ownership is modeled throught a ```shared_ptr```;
+- If it has a node object, the terminal object knows it has it, and thus knows its existance;
+- A node object can belong to at least two terminal objects. This ownership is modeled through a ```std::vector``` container of ```weak_ptr```'s;
+- The node object knows it belongs to its terminal objects, and thus knows their existances; 
+- When a terminal object detects the presence of a node object belonging to only one terminal object, it issues the node object's destruction;
+- Because node objects are accessed throuht ```shared_ptr```'s, when no other terminal objects point to them, their count reference is set to *0*, and the node objects are automatically destroyed, avoiding leaks.  
+
+The construction/destruction of node objects is issued by connecting and disconnecting terminals. The following example ilustrates this process:  
 
 ---
