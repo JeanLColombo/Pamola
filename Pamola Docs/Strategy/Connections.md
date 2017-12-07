@@ -36,7 +36,28 @@ This automaticaly ensures the [CircuitTerminal][Ter] destructor is called when t
 
 The terminal object creation is handled by the ```createTerminals()``` method, belonging to [CircuitElement][Ele], which creates *n* terminal objects belonging to the element object:
 
+```cpp
+bool CircuitElement::createTerminals(uint32_t numberOfTerminals)
+{
+	if (numberOfTerminals > 0)
+	{
+		for (uint32_t i = 0; i < numberOfTerminals; i++)
+		{
+			//std::shared_ptr<CircuitTerminal> terminalInstance{ new CircuitTerminal(this) };
+			auto terminalInstance = std::make_shared<CircuitTerminal>(this);
+			terminals.push_back(terminalInstance);
+		}			
+		
+		return true;
+	}	
+	return false;
+}
+```
+
 Since [CircuitElement][Ele] is a virtual class, a new user defined element class must inherit it to be able to be properly use ```createTerminals()```. The inheritance procedure, alongside the appropriate usege of ```createTerminals()``` are described in [Extending](Extending/README.md).
 
+##### [CircuitNode][Nod] class
+
+Something
 
 ---
