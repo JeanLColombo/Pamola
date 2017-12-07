@@ -22,3 +22,11 @@
   
   ![Example of circuit assembly connection](https://image.ibb.co/jyRHxm/Circuit_Example.png)
   ![Example of circuit entities connection](https://image.ibb.co/h0oGOR/Montage_Example.png)
+
+
+## CMake and gnu g++ compatibility
+
+	* If no internet put the file cpplinq.hpp from https://cpplinq.codeplex.com/ at PamolaProject/PamolaProject/cpplinq.hpp
+	* ```cmake PamolaProject && make```
+
+
