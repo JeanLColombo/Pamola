@@ -3,9 +3,9 @@
 
   - ### <a name="StrCon">Connections
 
-[Ter]: ../PamolaProject/PamolaProject/CircuitTerminal.h
-[Nod]: ../PamolaProject/PamolaProject/CircuitNode.h
-[Ele]: ../PamolaProject/PamolaProject/CircuitElement.h
+[Ter]: ../../PamolaProject/PamolaProject/CircuitTerminal.h
+[Nod]: ../../PamolaProject/PamolaProject/CircuitNode.h
+[Ele]: ../../PamolaProject/PamolaProject/CircuitElement.h
 
 ---
 #### Introduction
