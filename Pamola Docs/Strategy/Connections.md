@@ -4,6 +4,7 @@
   - ### <a name="StrCon">Connections
 
 [Ter]: ../../PamolaProject/PamolaProject/CircuitTerminal.h
+[TerCpp]: ../../PamolaProject/PamolaProject/CircuitTerminal.cpp
 [Nod]: ../../PamolaProject/PamolaProject/CircuitNode.h
 [Ele]: ../../PamolaProject/PamolaProject/CircuitElement.h
 
@@ -29,6 +30,8 @@ This connections are handled by the [CircuitTerminal][Ter] and [CircuitNode][Nod
 The terminals are stored in the [CircuitElement][Ele] class via a ```std::vector``` container:
 
 ```cpp
+#include <vector>
+
 std::vector<CircuitTerminal> terminals;
 ```
 
@@ -68,6 +71,92 @@ Since [CircuitElement][Ele] is a virtual class, a new user defined element class
 - When a terminal object detects the presence of a node object belonging to only one terminal object, it issues the node object's destruction;
 - Because node objects are accessed throuht ```shared_ptr```'s, when no other terminal objects point to them, their count reference is set to *0*, and the node objects are automatically destroyed, avoiding leaks.  
 
-The construction/destruction of node objects is issued by connecting and disconnecting terminals. The following example ilustrates this process:  
+In the [CircuitTerminal][Ter] class, the node object's address is stored as a member with a ```nullptr``` default value:
 
+```cpp
+#include <memory>
+
+std::shared_ptr<CircuitNode> node = nullptr;
+```
+
+In the [CircuitNode][Nod] class, the terminal objects's addresses are stored in a container, with no default values:
+
+```cpp
+#include <vector>
+#include <memory>
+
+std::vector<std::weak_ptr<CircuitTerminal>> terminals;
+```
+The construction/destruction of node objects is issued by connecting and disconnecting terminals, through the [CircuitTerminal][Ter]'s methods ```connectTo()``` and ```disconnect()```: 
+
+```cpp
+CircuitNode & CircuitTerminal::connectTo(CircuitTerminal &terminal)
+{
+	switch (isConnected()*2+terminal.isConnected())
+	{
+	case 0:
+	{
+		terminal.connectTo(connectTo(CircuitNode()));
+		break; 
+	}
+	case 1:
+		connectTo(*terminal.getNode());
+		break;
+	case 2:
+		terminal.connectTo(*getNode());
+		break;
+	case 3:
+		if (getNode() != terminal.getNode())
+			getNode()->connectTo(*terminal.getNode());
+		break;
+	default:
+		assert("Impossible value on terminal connection");
+	}
+	
+	return *getNode();
+}
+```
+
+```cpp
+CircuitNode & CircuitTerminal::connectTo(CircuitNode &node)
+{
+	if (isConnected())
+	{
+		if (&node == getNode().get())
+			return node;
+
+		disconnect();
+	}
+	
+	this->node = node.shared_from_this();
+	node.terminals.push_back(shared_from_this());
+
+	return node;
+}
+```
+
+```cpp
+bool CircuitTerminal::disconnect()
+{
+	if (!isConnected())
+		return false;
+
+	auto myNodeTerminals = getNode()->getTerminals();
+	
+	auto element = std::find(myNodeTerminals.begin(), myNodeTerminals.end(), shared_from_this());
+	myNodeTerminals.erase(element);
+
+	if (myNodeTerminals.size() == 1)
+		myNodeTerminals.at(0)->disconnect();
+	
+	node = nullptr;
+	return true;
+}
+```
+
+The following example ilustrates this process:
+
+--
+Consider two terminal objects, T1 and T2, disconnected. The user calls ```T1.connectTo(T2)```. Since both are disconnected, T1 creates a new node object N, and stores its reference.
+--
 ---
