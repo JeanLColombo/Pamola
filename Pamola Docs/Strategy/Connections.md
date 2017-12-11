@@ -57,7 +57,7 @@ bool CircuitElement::createTerminals(uint32_t numberOfTerminals)
 }
 ```
 
-Since [CircuitElement][Ele] is a virtual class, a new user defined element class must inherit it to be able to be properly use ```createTerminals()```. The inheritance procedure, alongside the appropriate usege of ```createTerminals()``` are described in [Extending](Extending/README.md).
+Since [CircuitElement][Ele] is a virtual class, a new user defined element class must inherit it to be able to be properly use ```createTerminals()```. The inheritance procedure, alongside the appropriate usege of ```createTerminals()``` are described in [Extending](../Extending/README.md).
 
 ##### [CircuitNode][Nod] class
 
@@ -87,76 +87,18 @@ In the [CircuitNode][Nod] class, the terminal objects's addresses are stored in 
 
 std::vector<std::weak_ptr<CircuitTerminal>> terminals;
 ```
-The construction/destruction of node objects is issued by connecting and disconnecting terminals, through the [CircuitTerminal][Ter]'s methods ```connectTo()``` and ```disconnect()```: 
+The construction/destruction of node objects is issued by connecting and disconnecting terminals, through the [CircuitTerminal][Ter]'s methods [```connectTo()```][TerCpp] and [```disconnect()```][TerCpp]. The proper usage of these methods is explained in [Using](../Using/Connections.md), though the following example ilustrates this process:
 
-```cpp
-CircuitNode & CircuitTerminal::connectTo(CircuitTerminal &terminal)
-{
-	switch (isConnected()*2+terminal.isConnected())
-	{
-	case 0:
-	{
-		terminal.connectTo(connectTo(CircuitNode()));
-		break; 
-	}
-	case 1:
-		connectTo(*terminal.getNode());
-		break;
-	case 2:
-		terminal.connectTo(*getNode());
-		break;
-	case 3:
-		if (getNode() != terminal.getNode())
-			getNode()->connectTo(*terminal.getNode());
-		break;
-	default:
-		assert("Impossible value on terminal connection");
-	}
-	
-	return *getNode();
-}
-```
+---
 
-```cpp
-CircuitNode & CircuitTerminal::connectTo(CircuitNode &node)
-{
-	if (isConnected())
-	{
-		if (&node == getNode().get())
-			return node;
+***Example:*** 
 
-		disconnect();
-	}
-	
-	this->node = node.shared_from_this();
-	node.terminals.push_back(shared_from_this());
+Consider two terminal objects, **T1** and **T2**, disconnected. The user calls ```T1.connectTo(T2)```. Since both are disconnected, **T1** creates a new node object **N**, and stores its reference. **T1** and **T2** then connect to **N**, making **T2** store a reference to **N**, while **N** stores weak references to **T1** and **T2**.
 
-	return node;
-}
-```
+Later, the user calls ```T1.disconnect()```. This causes **T1** to loose the reference to **N**. Since the terminal reference in **N** is set to *1*, ```T1.disconnect()``` calls ```T2.disconnect()```. This causes **T2** to loose the reference to terminal **N**. Since no more terminals reference node **N**, and since this was issued by a method in terminal **T2**, this leads to **T2** destroying **N**, even though **N** was not created by it.  
 
-```cpp
-bool CircuitTerminal::disconnect()
-{
-	if (!isConnected())
-		return false;
+---
 
-	auto myNodeTerminals = getNode()->getTerminals();
-	
-	auto element = std::find(myNodeTerminals.begin(), myNodeTerminals.end(), shared_from_this());
-	myNodeTerminals.erase(element);
+Something here
 
-	if (myNodeTerminals.size() == 1)
-		myNodeTerminals.at(0)->disconnect();
-	
-	node = nullptr;
-	return true;
-}
-```
-
-The following example ilustrates this process:
-
---
-Consider two terminal objects, T1 and T2, disconnected. The user calls ```T1.connectTo(T2)```. Since both are disconnected, T1 creates a new node object N, and stores its reference.
---
 ---
