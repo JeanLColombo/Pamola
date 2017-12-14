@@ -2,17 +2,17 @@
 #include "cpplinq.hpp"
 #include "PamolaObject.h"
 
-std::unordered_map<uint32_t, PamolaObject*> PamolaObject::pamolaInstances = {};
 uint32_t PamolaObject::guid = 0;
 
-PamolaObject::PamolaObject() {
+PamolaObject::PamolaObject() 
+{
 	id = guid++;
-	//pamolaInstances.insert({ id,this });
+	PamolaEngine::getLocalEngine()->localObjects.insert(this);
 }
 
 PamolaObject::~PamolaObject()
 {
-	//pamolaInstances.erase(getId());
+	PamolaEngine::getLocalEngine()->localObjects.erase(this);
 }
 
 std::set<uint32_t> PamolaObject::getConnectedComponents()
@@ -37,16 +37,6 @@ std::set<uint32_t> PamolaObject::getConnectedComponents()
 std::set<uint32_t> PamolaObject::getConnectedComponents(std::set<uint32_t>)
 {
 	return std::set<uint32_t>();
-}
-
-const std::unordered_map<uint32_t, PamolaObject*> & PamolaObject::getPamolaInstances()
-{
-	return pamolaInstances;
-}
-
-PamolaObject* PamolaObject::getPamolaInstance(uint32_t id)
-{
-	return getPamolaInstances().at(id);
 }
 
 //std::shared_ptr<Circuit> PamolaObject::getCircuit()
