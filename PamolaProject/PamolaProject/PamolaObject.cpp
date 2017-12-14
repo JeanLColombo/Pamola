@@ -1,10 +1,4 @@
-/**
- * Project PamolaCore
- */
-
-#ifndef __GNUC__
 #include "stdafx.h"
-#endif
 #include "cpplinq.hpp"
 #include "PamolaObject.h"
 
@@ -13,12 +7,12 @@ uint32_t PamolaObject::guid = 0;
 
 PamolaObject::PamolaObject() {
 	id = guid++;
-	pamolaInstances.insert({ id,this });
+	//pamolaInstances.insert({ id,this });
 }
 
 PamolaObject::~PamolaObject()
 {
-	pamolaInstances.erase(getId());
+	//pamolaInstances.erase(getId());
 }
 
 std::set<uint32_t> PamolaObject::getConnectedComponents()

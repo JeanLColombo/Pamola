@@ -1,7 +1,3 @@
-/**
- * Project PamolaCore
- */
-
 #pragma once
 
 #include "Circuit.h"
@@ -18,6 +14,7 @@
 
 class PamolaObject : public std::enable_shared_from_this<PamolaObject> 
 {
+	// TODO: Check enable_shared_from_thiss usage
 	using std::enable_shared_from_this<PamolaObject>::enable_shared_from_this;
 
 protected:

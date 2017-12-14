@@ -2,9 +2,7 @@
  * Project PamolaCore
  */
 
-#ifndef __GNUC__
 #include "stdafx.h"
-#endif
 #include "CircuitElement.h"
 
 CircuitElement::CircuitElement()
@@ -21,8 +19,9 @@ bool CircuitElement::createTerminals(uint32_t numberOfTerminals)
 	{
 		for (uint32_t i = 0; i < numberOfTerminals; i++)
 		{
-			std::shared_ptr<CircuitTerminal> terminalInstance{ new CircuitTerminal(this) };
-			terminals.push_back(terminalInstance);
+			//std::shared_ptr<CircuitTerminal> terminalInstance{ new CircuitTerminal(this) };
+			//auto terminalInstance = std::make_shared<CircuitTerminal>(this);
+			terminals.push_back(CircuitTerminal(this));
 		}			
 		
 		return true;
@@ -30,12 +29,14 @@ bool CircuitElement::createTerminals(uint32_t numberOfTerminals)
 	return false;
 }
 
-const std::vector<std::shared_ptr<CircuitTerminal>> CircuitElement::getTerminals()
+//const std::vector<std::shared_ptr<CircuitTerminal>> CircuitElement::getTerminals()
+const std::vector<CircuitTerminal &> CircuitElement::getTerminals()
 {
-	return	terminals;
+	return terminals;
 }
 
-const std::shared_ptr<CircuitTerminal> CircuitElement::getTerminal(uint32_t localId)
+//const std::shared_ptr<CircuitTerminal> CircuitElement::getTerminal(uint32_t localId)
+CircuitTerminal & CircuitElement::getTerminal(uint32_t localId)
 {
 	return terminals.at(localId);
 }
@@ -45,7 +46,7 @@ const std::vector<std::shared_ptr<PamolaObject>> CircuitElement::getAdjacentComp
 	using namespace cpplinq;
 	auto result =
 		from(terminals)
-		>> select([](std::shared_ptr<CircuitTerminal> c) {return static_cast<std::shared_ptr<PamolaObject>>(c); })
+		>> select([](CircuitTerminal &t) {return static_cast<std::shared_ptr<PamolaObject>>(t.shared_from_this()); })
 		>> to_vector();
 	
 	auto x1 = shared_from_this();

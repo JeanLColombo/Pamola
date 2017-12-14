@@ -2,11 +2,7 @@
  * Project PamolaCore
  */
 
-#ifndef __GNUC__
 #include "stdafx.h"
-#else
-#include <algorithm>
-#endif
 #include "CircuitTerminal.h"
 
 CircuitTerminal::CircuitTerminal(CircuitElement *const ownerElement)
@@ -36,18 +32,20 @@ CircuitNode & CircuitTerminal::connectTo(CircuitTerminal &terminal)
 	{
 	case 0:
 	{
-		terminal.connectTo(connectTo(CircuitNode()));
+		//std::shared_ptr<CircuitNode> nodeInstance{ new CircuitNode() };
+		auto nodeInstance = std::make_shared<CircuitNode>();
+		terminal.connectTo(connectTo(nodeInstance));
 		break; 
 	}
 	case 1:
-		connectTo(*terminal.getNode());
+		connectTo(terminal.getNode());
 		break;
 	case 2:
-		terminal.connectTo(*getNode());
+		terminal.connectTo(getNode());
 		break;
 	case 3:
 		if (getNode() != terminal.getNode())
-			getNode()->connectTo(*terminal.getNode());
+			getNode()->connectTo(terminal.getNode());
 		break;
 	default:
 		assert("Impossible value on terminal connection");
@@ -56,20 +54,45 @@ CircuitNode & CircuitTerminal::connectTo(CircuitTerminal &terminal)
 	return *getNode();
 }
 
+CircuitNode & CircuitTerminal::connectTo(std::shared_ptr<CircuitTerminal> terminal)
+{
+	return NULL;
+	//return connectTo(*terminal);
+}
+
 CircuitNode & CircuitTerminal::connectTo(CircuitNode &node)
 {
+	//if (isConnected())
+	//{
+	//	if (&node == getNode().get())
+	//		return node;
+
+	//	disconnect();
+	//}
+	//
+	//this->node = node.shared_from_this();
+	//node.terminals.push_back(shared_from_this());
+
+	//return node;
+	return connectTo(node.shared_from_this());
+}
+
+CircuitNode & CircuitTerminal::connectTo(std::shared_ptr<CircuitNode> node)
+{
+	//return connectTo(*node);
+
 	if (isConnected())
 	{
-		if (&node == getNode().get())
-			return node;
+		if (node == getNode())
+			return *node;
 
 		disconnect();
 	}
-	
-	this->node = node.shared_from_this();
-	node.terminals.push_back(shared_from_this());
 
-	return node;
+	this->node = node;
+	node->terminals.push_back(this->shared_from_this());
+
+	return *node;
 }
 
 std::complex<double> CircuitTerminal::getCurrent()

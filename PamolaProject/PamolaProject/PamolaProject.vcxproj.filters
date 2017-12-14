@@ -42,6 +42,9 @@
     <ClInclude Include="Circuit.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="PamolaEngine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -66,6 +69,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Circuit.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PamolaEngine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

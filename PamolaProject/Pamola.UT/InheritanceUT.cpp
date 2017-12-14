@@ -20,6 +20,11 @@ namespace PamolaUT
 		{
 			CircuitElementHolder obj{};
 		}
+		TEST_METHOD(RawEmptyElementCreationDestruction)
+		{
+			EmptyCircuitElementHolder *obj = new EmptyCircuitElementHolder();
+			delete obj;
+		}
 		TEST_METHOD(ScopedEmptyElementCreationDestruction)
 		{
 			EmptyCircuitElementHolder obj;
@@ -35,6 +40,19 @@ namespace PamolaUT
 		TEST_METHOD(ScopedCreationDestruction)
 		{
 			PamolaObjectHolder obj{};
+		}
+	};
+	TEST_CLASS(Connections)
+	{
+		TEST_METHOD(RawConnection)
+		{
+			CircuitElementHolder *ele1 = new CircuitElementHolder();
+			CircuitElementHolder *ele2 = new CircuitElementHolder();
+
+			ele1->getLeft()->connectTo(ele2->getRight());
+
+			delete ele1;
+			delete ele2;
 		}
 	};
 }
