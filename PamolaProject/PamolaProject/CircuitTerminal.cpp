@@ -56,7 +56,8 @@ CircuitNode & CircuitTerminal::connectTo(CircuitTerminal &terminal)
 
 CircuitNode & CircuitTerminal::connectTo(std::shared_ptr<CircuitTerminal> terminal)
 {
-	return connectTo(*terminal);
+	return NULL;
+	//return connectTo(*terminal);
 }
 
 CircuitNode & CircuitTerminal::connectTo(CircuitNode &node)

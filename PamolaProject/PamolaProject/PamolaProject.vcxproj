@@ -155,6 +155,7 @@
     <ClInclude Include="CircuitElement.h" />
     <ClInclude Include="CircuitNode.h" />
     <ClInclude Include="CircuitTerminal.h" />
+    <ClInclude Include="PamolaEngine.h" />
     <ClInclude Include="PamolaObject.h" />
     <ClInclude Include="PamolaTypes.h" />
     <ClInclude Include="stdafx.h" />
@@ -172,6 +173,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="PamolaEngine.cpp" />
     <ClCompile Include="PamolaObject.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
     </ClCompile>

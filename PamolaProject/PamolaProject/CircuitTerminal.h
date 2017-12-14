@@ -18,6 +18,8 @@ public:
 
 	using std::enable_shared_from_this<CircuitTerminal>::shared_from_this;
 	
+private:
+
 	CircuitTerminal(CircuitElement *const);
 
 public:
