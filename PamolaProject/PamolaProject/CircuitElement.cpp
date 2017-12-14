@@ -4,8 +4,13 @@
 
 CircuitElement::CircuitElement(uint32_t numberOfTerminals)
 {
+	const std::shared_ptr<CircuitElement> myElement(this);
 	for (uint32_t index = 0; index < numberOfTerminals; index++)
-		terminals.push_back(std::shared_ptr<CircuitTerminal>(new CircuitTerminal(std::shared_ptr<CircuitElement>(this))));
+	{
+		std::shared_ptr<CircuitTerminal> terminalInstance(new CircuitTerminal(myElement));
+		terminals.push_back(std::shared_ptr<CircuitTerminal>(terminalInstance));
+	}
+
 }
 
 CircuitElement::~CircuitElement()
