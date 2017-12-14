@@ -1,7 +1,3 @@
-/**
- * Project PamolaCore
- */
-
 #include "stdafx.h"
 #include "CircuitNode.h"
 #include "CircuitTerminal.h"
@@ -14,34 +10,27 @@ CircuitNode::~CircuitNode()
 {
 }
 
-CircuitNode & CircuitNode::connectTo(CircuitNode &node)
+std::shared_ptr<CircuitNode> CircuitNode::connectTo(std::shared_ptr<CircuitNode> node)
 {
-	if (this == &node)
+	if (shared_from_this() == node)
 		return node;
 	
-	const std::vector<std::shared_ptr<CircuitTerminal>> addedTerminals = node.getTerminals();
+	const std::vector<std::shared_ptr<CircuitTerminal>> addedTerminals = node->getTerminals();
 
 	for (auto terminal : addedTerminals)
-
 	{
 		terminal->disconnect();
-		terminal->connectTo(*this);
+		terminal->connectTo(shared_from_this());
 	}
 
-	return *this;
-}
-
-CircuitNode & CircuitNode::connectTo(std::shared_ptr<CircuitNode> node)
-{
-	return connectTo(*node);
+	return shared_from_this();
 }
 
 const std::vector<std::shared_ptr<CircuitTerminal>> CircuitNode::getTerminals()
 {
 	using namespace cpplinq;
-	auto result = 
+	auto result =
 		from(terminals)
-		>> select([](std::weak_ptr<CircuitTerminal> t) {return t.lock(); })
 		>> to_vector();
 
 	return result;

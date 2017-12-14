@@ -1,7 +1,3 @@
-/**
- * Project PamolaCore
- */
-
 #pragma once
 
 #include "PamolaObject.h"
@@ -16,32 +12,23 @@ public:
 
 	using std::enable_shared_from_this<CircuitElement>::shared_from_this;
 
+private:
+	
+	std::vector<std::shared_ptr<CircuitTerminal>> terminals;
+
 protected:
 
-	CircuitElement();
+	CircuitElement(uint32_t = 0);
 
 public:
 
 	~CircuitElement();
 
-private:
-	
-	//std::vector<std::shared_ptr<CircuitTerminal>> terminals;
-	std::vector<CircuitTerminal &> terminals;
-
-protected:
-
-	bool createTerminals(uint32_t);
-
 public: 
 	
-	//const std::vector<std::shared_ptr<CircuitTerminal>> getTerminals();
+	const std::vector<std::shared_ptr<CircuitTerminal>> getTerminals();
 
-	const std::vector<CircuitTerminal &> getTerminals();
-
-	// const std::shared_ptr<CircuitTerminal> getTerminal(uint32_t);
-
-	CircuitTerminal & getTerminal(uint32_t);
+	const std::shared_ptr<CircuitTerminal> getTerminal(uint32_t);
 
 	const std::vector<std::shared_ptr<PamolaObject>> getAdjacentComponents();
 

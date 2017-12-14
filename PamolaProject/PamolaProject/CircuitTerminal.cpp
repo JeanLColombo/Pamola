@@ -1,11 +1,8 @@
-/**
- * Project PamolaCore
- */
 
 #include "stdafx.h"
 #include "CircuitTerminal.h"
 
-CircuitTerminal::CircuitTerminal(CircuitElement *const ownerElement)
+CircuitTerminal::CircuitTerminal(std::weak_ptr<CircuitElement> ownerElement)
 	: element(ownerElement)
 {
 }
@@ -15,10 +12,9 @@ CircuitTerminal::~CircuitTerminal()
 	disconnect();
 }
 
-std::shared_ptr<CircuitElement> CircuitTerminal::getElement()
+const std::shared_ptr<CircuitElement> CircuitTerminal::getElement()
 {
-	auto tempElement = (*element).shared_from_this();
-	return tempElement;
+	return element.lock();
 }
 
 std::shared_ptr<CircuitNode> CircuitTerminal::getNode()
@@ -26,73 +22,46 @@ std::shared_ptr<CircuitNode> CircuitTerminal::getNode()
 	return node;
 }
 
-CircuitNode & CircuitTerminal::connectTo(CircuitTerminal &terminal)
+std::shared_ptr<CircuitNode> CircuitTerminal::connectTo(std::shared_ptr<CircuitTerminal> terminal)
 {
-	switch (isConnected()*2+terminal.isConnected())
+	switch (isConnected()*2+terminal->isConnected())
 	{
 	case 0:
 	{
-		//std::shared_ptr<CircuitNode> nodeInstance{ new CircuitNode() };
-		auto nodeInstance = std::make_shared<CircuitNode>();
-		terminal.connectTo(connectTo(nodeInstance));
+		terminal->connectTo(connectTo(std::shared_ptr<CircuitNode>(new CircuitNode)));
 		break; 
 	}
 	case 1:
-		connectTo(terminal.getNode());
+		connectTo(terminal->getNode());
 		break;
 	case 2:
-		terminal.connectTo(getNode());
+		terminal->connectTo(getNode());
 		break;
 	case 3:
-		if (getNode() != terminal.getNode())
-			getNode()->connectTo(terminal.getNode());
+		if (getNode() != terminal->getNode())
+			getNode()->connectTo(terminal->getNode());
 		break;
 	default:
 		assert("Impossible value on terminal connection");
 	}
 	
-	return *getNode();
+	return getNode();
 }
 
-CircuitNode & CircuitTerminal::connectTo(std::shared_ptr<CircuitTerminal> terminal)
+std::shared_ptr<CircuitNode> CircuitTerminal::connectTo(std::shared_ptr<CircuitNode> node)
 {
-	return NULL;
-	//return connectTo(*terminal);
-}
-
-CircuitNode & CircuitTerminal::connectTo(CircuitNode &node)
-{
-	//if (isConnected())
-	//{
-	//	if (&node == getNode().get())
-	//		return node;
-
-	//	disconnect();
-	//}
-	//
-	//this->node = node.shared_from_this();
-	//node.terminals.push_back(shared_from_this());
-
-	//return node;
-	return connectTo(node.shared_from_this());
-}
-
-CircuitNode & CircuitTerminal::connectTo(std::shared_ptr<CircuitNode> node)
-{
-	//return connectTo(*node);
-
 	if (isConnected())
 	{
 		if (node == getNode())
-			return *node;
+			return node;
 
 		disconnect();
 	}
 
 	this->node = node;
-	node->terminals.push_back(this->shared_from_this());
+	node->terminals.insert(shared_from_this());
 
-	return *node;
+	return node;
 }
 
 std::complex<double> CircuitTerminal::getCurrent()
@@ -119,13 +88,10 @@ bool CircuitTerminal::disconnect()
 	if (!isConnected())
 		return false;
 
-	auto myNodeTerminals = getNode()->getTerminals();
+	getNode()->terminals.erase(shared_from_this());
 	
-	auto element = std::find(myNodeTerminals.begin(), myNodeTerminals.end(), shared_from_this());
-	myNodeTerminals.erase(element);
-
-	if (myNodeTerminals.size() == 1)
-		myNodeTerminals.at(0)->disconnect();
+	if (getNode()->getTerminals().size() == 1)
+		getNode()->getTerminals().at(0)->disconnect();
 	
 	node = nullptr;
 	return true;

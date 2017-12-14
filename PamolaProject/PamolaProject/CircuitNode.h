@@ -1,11 +1,7 @@
-/**
- * Project PamolaCore
- */
-
 #pragma once
 
 #include "PamolaObject.h"
-#include <vector>
+#include <set>
 #include <complex>
 
 class CircuitTerminal;
@@ -16,7 +12,11 @@ class CircuitNode: public PamolaObject, public std::enable_shared_from_this<Circ
 	
 	friend class CircuitTerminal;
 
-public:
+private:
+
+	std::set<std::shared_ptr<CircuitTerminal>> terminals;
+	
+	std::complex<double> voltage;
 
 	CircuitNode();
 
@@ -24,16 +24,9 @@ public:
 
 	~CircuitNode();
 
-private:
-
-	std::vector<std::weak_ptr<CircuitTerminal>> terminals;
-	
-	std::complex<double> voltage;
-
 public: 
 
-	CircuitNode & connectTo(CircuitNode &);
-	CircuitNode & connectTo(std::shared_ptr<CircuitNode>);
+	std::shared_ptr<CircuitNode> connectTo(std::shared_ptr<CircuitNode>);
 
 	const std::vector<std::shared_ptr<CircuitTerminal>> getTerminals();
 	

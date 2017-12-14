@@ -1,18 +1,18 @@
 #pragma once
-#include <memory>
-#include <vector>
 #include "PamolaObject.h"
+#include <memory>
+#include <set>
 
 class PamolaEngine
 {
 
-	friend PamolaObject;
+	friend class PamolaObject;
 
 private:
 
 	static const std::shared_ptr<PamolaEngine> localEngine;
 
-	std::vector<PamolaObject*> localObjects;
+	std::set<PamolaObject*> localObjects;
 
 protected:
 
@@ -24,6 +24,6 @@ public:
 
 	static const std::shared_ptr<PamolaEngine> getLocalEngine();
 
-	const std::vector<PamolaObject*> getLocalObjects();
+	const std::set<PamolaObject*> getLocalObjects();
 };
 
