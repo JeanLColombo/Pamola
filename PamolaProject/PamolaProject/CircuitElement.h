@@ -22,7 +22,7 @@ protected:
 
 public:
 
-	~CircuitElement();
+	virtual ~CircuitElement();
 
 public: 
 	

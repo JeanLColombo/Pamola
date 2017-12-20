@@ -16,6 +16,14 @@ namespace PamolaUT
 			CircuitElementHolder *obj = new CircuitElementHolder();
 			delete obj;
 		}
+		TEST_METHOD(SmartCreationDestruction)
+		{
+			std::unique_ptr<CircuitElementHolder> obj(new CircuitElementHolder());
+		}
+		TEST_METHOD(SmartEmptyCreationDestruction)
+		{
+			std::unique_ptr<EmptyCircuitElementHolder> obj(new EmptyCircuitElementHolder());
+		}
 		TEST_METHOD(ScopedCreationDestruction)
 		{
 			CircuitElementHolder obj{};
