@@ -1,43 +1,46 @@
 #pragma once
 
 #include "PamolaObject.h"
-#include <set>
+#include <vector>
 #include <complex>
 
-class CircuitTerminal;
-
-class CircuitNode: public PamolaObject, public std::enable_shared_from_this<CircuitNode> 
+namespace Pamola
 {
-	using std::enable_shared_from_this<CircuitNode>::shared_from_this;
-	
-	friend class CircuitTerminal;
+	class CircuitTerminal;
 
-private:
+	class CircuitNode : public Object, public std::enable_shared_from_this<CircuitNode>
+	{
+		using std::enable_shared_from_this<CircuitNode>::shared_from_this;
 
-	std::set<std::shared_ptr<CircuitTerminal>> terminals;
-	
-	std::complex<double> voltage;
+		friend class CircuitTerminal;
 
-	CircuitNode();
+	private:
 
-public:
+		std::vector<std::weak_ptr<CircuitTerminal>> terminals;
 
-	~CircuitNode();
+		std::complex<double> voltage;
 
-public: 
+		CircuitNode();
 
-	std::shared_ptr<CircuitNode> connectTo(std::shared_ptr<CircuitNode>);
+	public:
 
-	const std::vector<std::shared_ptr<CircuitTerminal>> getTerminals();
-	
-	std::complex<double> getVoltage();
+		~CircuitNode();
 
-	bool setVoltage(std::complex<double>);	
+	public:
 
-	const std::vector<std::shared_ptr<PamolaObject>> getAdjacentComponents();
+		std::shared_ptr<CircuitNode> connectTo(std::shared_ptr<CircuitNode>);
 
-	PamolaType getPamolaType();
+		const std::vector<std::shared_ptr<CircuitTerminal>> getTerminals();
 
-	int getDegreesOfFreedom();
+		std::complex<double> getVoltage();
 
-};
+		bool setVoltage(std::complex<double>);
+
+		const std::vector<std::shared_ptr<Object>> getAdjacentComponents();
+
+		Type getPamolaType();
+
+		int getDegreesOfFreedom();
+
+	};
+}

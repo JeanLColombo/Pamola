@@ -1,22 +1,31 @@
 #include "stdafx.h"
 #include "PamolaEngine.h"
 
-const std::shared_ptr<PamolaEngine> PamolaEngine::localEngine(new PamolaEngine());
-
-PamolaEngine::PamolaEngine()
+namespace Pamola
 {
-}
+	const std::shared_ptr<Engine> Engine::localEngine(new Engine());
 
-PamolaEngine::~PamolaEngine()
-{
-}
+	Engine::Engine()
+	{
+	}
 
-const std::shared_ptr<PamolaEngine> PamolaEngine::getLocalEngine()
-{
-	return localEngine;
-}
+	Engine::~Engine()
+	{
+	}
 
-const std::set<PamolaObject*> PamolaEngine::getLocalObjects()
-{
-	return localObjects;
+	const std::shared_ptr<Engine> Engine::getLocalEngine()
+	{
+		return localEngine;
+	}
+
+	const std::set<Object*> Engine::getLocalObjects()
+	{
+		return localObjects;
+	}
+	Object * Engine::getLocalObject(uint32_t id)
+	{
+		for (auto object : localObjects)
+			if (object->getId() == id)
+				return object;
+	}
 }

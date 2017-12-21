@@ -2,60 +2,63 @@
 #include "cpplinq.hpp"
 #include "PamolaObject.h"
 
-uint32_t PamolaObject::guid = 0;
-
-PamolaObject::PamolaObject() 
+namespace Pamola
 {
-	id = guid++;
-	PamolaEngine::getLocalEngine()->localObjects.insert(this);
-}
+	uint32_t Object::guid = 0;
 
-PamolaObject::~PamolaObject()
-{
-	PamolaEngine::getLocalEngine()->localObjects.erase(this);
-}
-
-std::set<uint32_t> PamolaObject::getConnectedComponents()
-{
-	//TODO: But how?
-
-	std::set<uint32_t> componentList{ id };
-	
-	for (auto component : getAdjacentComponents())
+	Object::Object()
 	{
-		if (componentList.find(component->getId()) != componentList.end())
-		{
-
-		}
-		componentList.insert(component->getId());
+		id = guid++;
+		Engine::getLocalEngine()->localObjects.insert(this);
 	}
 
+	Object::~Object()
+	{
+		Engine::getLocalEngine()->localObjects.erase(this);
+	}
 
-	return std::set<uint32_t>();
-}
+	std::set<uint32_t> Object::getConnectedComponents()
+	{
+		//TODO: But how?
 
-std::set<uint32_t> PamolaObject::getConnectedComponents(std::set<uint32_t>)
-{
-	return std::set<uint32_t>();
-}
+		std::set<uint32_t> componentList{ id };
 
-//std::shared_ptr<Circuit> PamolaObject::getCircuit()
-//{
-//	//TODO: Check if it is going to remain a shared_ptr
-//
-//	//TODO: std::vector of components
-//	
-//	//TODO: Instantiate a new circuit object with std::vector of components
-//
-//	//TODO: Return pointer to circuit object
-//	return nullptr;
-//}
+		for (auto component : getAdjacentComponents())
+		{
+			if (componentList.find(component->getId()) != componentList.end())
+			{
 
-uint32_t PamolaObject::getId() {
-	return id;
-}
+			}
+			componentList.insert(component->getId());
+		}
 
-PamolaType PamolaObject::getPamolaType()
-{
-	return PamolaType::Other;
+
+		return std::set<uint32_t>();
+	}
+
+	std::set<uint32_t> Object::getConnectedComponents(std::set<uint32_t>)
+	{
+		return std::set<uint32_t>();
+	}
+
+	//std::shared_ptr<Circuit> PamolaObject::getCircuit()
+	//{
+	//	//TODO: Check if it is going to remain a shared_ptr
+	//
+	//	//TODO: std::vector of components
+	//	
+	//	//TODO: Instantiate a new circuit object with std::vector of components
+	//
+	//	//TODO: Return pointer to circuit object
+	//	return nullptr;
+	//}
+
+	uint32_t Object::getId() {
+		return id;
+	}
+
+	Type Object::getPamolaType()
+	{
+		return Type::Other;
+	}
 }

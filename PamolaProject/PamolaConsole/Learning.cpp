@@ -122,7 +122,7 @@ int main2()
 
 void printAllPamolas()
 {
-	for (const auto &instance : PamolaObject::getPamolaInstances())
+	for (const auto &instance : Object::getPamolaInstances())
 
 	{
 		std::cout << "guid:	" << instance.first << '\t' << printPamola(instance.second) << std::endl;
@@ -131,7 +131,7 @@ void printAllPamolas()
 	std::cout << '\n' << std::endl;
 }
 
-std::string printPamola(PamolaObject *object)
+std::string printPamola(Object *object)
 {
 	if (dynamic_cast<CircuitTerminal*>(object) != NULL)
 		return printPamola(dynamic_cast<CircuitTerminal*>(object));

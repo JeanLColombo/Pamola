@@ -11,31 +11,15 @@ namespace PamolaUT
 	TEST_CLASS(CircuitElementInheritance)
 	{
 	public:		
-		TEST_METHOD(RawCreationDestruction)
+		TEST_METHOD(CreationDestruction)
 		{
-			CircuitElementHolder *obj = new CircuitElementHolder();
-			delete obj;
+			using namespace Pamola;
+			auto obj = createElement<CircuitElementHolder>;
 		}
-		TEST_METHOD(SmartCreationDestruction)
+		TEST_METHOD(EmptyCreationDestruction)
 		{
-			std::unique_ptr<CircuitElementHolder> obj(new CircuitElementHolder());
-		}
-		TEST_METHOD(SmartEmptyCreationDestruction)
-		{
-			std::unique_ptr<EmptyCircuitElementHolder> obj(new EmptyCircuitElementHolder());
-		}
-		TEST_METHOD(ScopedCreationDestruction)
-		{
-			CircuitElementHolder obj{};
-		}
-		TEST_METHOD(RawEmptyElementCreationDestruction)
-		{
-			EmptyCircuitElementHolder *obj = new EmptyCircuitElementHolder();
-			delete obj;
-		}
-		TEST_METHOD(ScopedEmptyElementCreationDestruction)
-		{
-			EmptyCircuitElementHolder obj;
+			using namespace Pamola;
+			auto obj = createElement<EmptyCircuitElementHolder>;
 		}
 	};
 	TEST_CLASS(PamolaObjectInheritance)
@@ -52,15 +36,26 @@ namespace PamolaUT
 	};
 	TEST_CLASS(Connections)
 	{
-		TEST_METHOD(RawConnection)
+		TEST_METHOD(Connection)
 		{
-			CircuitElementHolder *ele1 = new CircuitElementHolder();
-			CircuitElementHolder *ele2 = new CircuitElementHolder();
+			using namespace Pamola;
+			auto ele1 = createElement<CircuitElementHolder>();
+			auto ele2 = createElement<CircuitElementHolder>();
 
 			ele1->getLeft()->connectTo(ele2->getRight());
+			Assert::AreEqual(2,
+				int(ele1->getLeft()->getNode()->getTerminals().size()),
+				L"Connection fail - terminals count wrong",
+				LINE_INFO());
+		}
+		TEST_METHOD(Disconnection)
+		{
+			using namespace Pamola;
+			auto ele1 = createElement<CircuitElementHolder>();
+			auto ele2 = createElement<CircuitElementHolder>();
 
-			delete ele1;
-			delete ele2;
+			ele1->getLeft()->connectTo(ele2->getRight());
+			ele1->getLeft()->disconnect();
 		}
 	};
 }

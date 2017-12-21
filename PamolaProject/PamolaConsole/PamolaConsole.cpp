@@ -58,7 +58,7 @@ int main()
 	printAllPamolas();
 	
 	std::cout << "Clear all Pamolas" << std::endl;
-	PamolaObject::cleanse();
+	Object::cleanse();
 
 	printAllPamolas();
 

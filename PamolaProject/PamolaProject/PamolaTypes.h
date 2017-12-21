@@ -4,12 +4,15 @@
 #include "stdafx.h"
 #endif
 
-enum class PamolaType
+namespace Pamola
 {
-	CircuitElement,
-	CircuitTerminal,
-	CircuitNode,
-	Circut,
-	Other,
-	Error
-};
+	enum class Type
+	{
+		CircuitElement,
+		CircuitTerminal,
+		CircuitNode,
+		Circut,
+		Other,
+		Error
+	};
+}
