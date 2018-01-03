@@ -1,6 +1,7 @@
 #pragma once
 #include "..\PamolaProject\CircuitElement.h"
-class EmptyCircuitElementHolder : public CircuitElement
+
+class EmptyCircuitElementHolder : public Pamola::CircuitElement
 {
 public:
 	EmptyCircuitElementHolder();
@@ -8,4 +9,3 @@ public:
 
 	int getDegreesOfFreedom();
 };
-

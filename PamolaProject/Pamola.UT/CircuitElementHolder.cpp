@@ -10,12 +10,12 @@ CircuitElementHolder::~CircuitElementHolder()
 {
 }
 
-std::shared_ptr<CircuitTerminal> CircuitElementHolder::getLeft()
+std::shared_ptr<Pamola::CircuitTerminal> CircuitElementHolder::getLeft()
 {
 	return getTerminal(0);
 }
 
-std::shared_ptr<CircuitTerminal> CircuitElementHolder::getRight()
+std::shared_ptr<Pamola::CircuitTerminal> CircuitElementHolder::getRight()
 {
 	return getTerminal(1);
 }

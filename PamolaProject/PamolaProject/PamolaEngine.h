@@ -4,42 +4,54 @@
 #include <set>
 #include <cassert>
 
-class PamolaEngine
+
+namespace Pamola
 {
+	class Engine
+	{
 
-	friend class PamolaObject;
+		friend class Object;
 
-private:
+	private:
 
-	static const std::shared_ptr<PamolaEngine> localEngine;
+		static const std::shared_ptr<Engine> localEngine;
 
-	std::set<PamolaObject*> localObjects;
+		std::set<Object*> localObjects;
 
-protected:
+	protected:
 
-	PamolaEngine();
+		Engine();
 
-public:
+	public:
 
-	~PamolaEngine();
+		~Engine();
 
-	static const std::shared_ptr<PamolaEngine> getLocalEngine();
+		static const std::shared_ptr<Engine> getLocalEngine();
 
-	const std::set<PamolaObject*> getLocalObjects();
+		const std::set<Object*> getLocalObjects();
 
-	template <class TCircuitElement> std::shared_ptr<TCircuitElement> createElement();
-};
+		Object* getLocalObject(uint32_t);
 
-template<class TCircuitElement>
-inline std::shared_ptr<TCircuitElement> PamolaEngine::createElement()
-{
-	std::shared_ptr<TCircuitElement> newElement(new TCircuitElement());
-	assert(dynamic_cast<std::shared_ptr<CircuitElement>>(newElement) && "TCircuitElement must inherit from CircuitElement");
+		template <class TCircuitElement> std::shared_ptr<TCircuitElement> createElement();
+	};
 
-	std::shared_ptr<CircuitElement> newCircuitElement = newElement;
-	
-	for (uint32_t i = 0; i < newCircuitElement->getNumberOfTerminals(); i++)
-		newCircuitElement->terminals.push_back(std::shared_ptr<CircuitTerminal>(new CircuitTerminal(newCircuitElement)));
+	template<class TCircuitElement>
+	inline std::shared_ptr<TCircuitElement> Engine::createElement()
+	{
+		std::shared_ptr<TCircuitElement> newElement(new TCircuitElement());
+		assert(static_cast<std::shared_ptr<CircuitElement>>(newElement) && "TCircuitElement must inherit from CircuitElement");
 
-	return newElement;
+		std::shared_ptr<CircuitElement> newCircuitElement = newElement;
+
+		for (uint32_t i = 0; i < newCircuitElement->getNumberOfTerminals(); i++)
+			newCircuitElement->terminals.push_back(std::shared_ptr<CircuitTerminal>(new CircuitTerminal(newCircuitElement)));
+
+		return newElement;
+	}
+
+	template<class TCircuitElement>
+	std::shared_ptr<TCircuitElement> createElement()
+	{
+		return Engine::getLocalEngine()->createElement<TCircuitElement>();
+	}
 }

@@ -9,14 +9,14 @@ PamolaObjectHolder::~PamolaObjectHolder()
 {
 }
 
-const std::vector<std::shared_ptr<PamolaObject>> PamolaObjectHolder::getAdjacentComponents()
+const std::vector<std::shared_ptr<Pamola::Object>> PamolaObjectHolder::getAdjacentComponents()
 {
 	return { nullptr };
 }
 
-PamolaType PamolaObjectHolder::getPamolaType()
+Pamola::Type PamolaObjectHolder::getPamolaType()
 {
-	return PamolaType::Other;
+	return Pamola::Type::Other;
 }
 
 int PamolaObjectHolder::getDegreesOfFreedom()

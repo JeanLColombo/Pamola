@@ -9,36 +9,40 @@
 #include <cassert>
 #include <cpplinq.hpp>
 
-class PamolaObject : public std::enable_shared_from_this<PamolaObject> 
+
+namespace Pamola
 {
-	// TODO: Check enable_shared_from_thiss usage
-	using std::enable_shared_from_this<PamolaObject>::enable_shared_from_this;
+	class Object : public std::enable_shared_from_this<Object>
+	{
+		// TODO: Check enable_shared_from_thiss usage
+		using std::enable_shared_from_this<Object>::enable_shared_from_this;
 
-private: 
+	private:
 
-	static uint32_t guid;	
+		static uint32_t guid;
 
-	uint32_t id;
+		uint32_t id;
 
-protected:
+	protected:
 
-	PamolaObject();
+		Object();
 
-public:
+	public:
 
-	virtual ~PamolaObject();
+		virtual ~Object();
 
-	std::set<uint32_t> getConnectedComponents();
-	std::set<uint32_t> getConnectedComponents(std::set<uint32_t>);
+		std::set<uint32_t> getConnectedComponents();
+		std::set<uint32_t> getConnectedComponents(std::set<uint32_t>);
 
-public:
-	
-	uint32_t getId();
+	public:
 
-	virtual const std::vector<std::shared_ptr<PamolaObject>> getAdjacentComponents() = 0;
+		uint32_t getId();
 
-	virtual PamolaType getPamolaType() = 0;
+		virtual const std::vector<std::shared_ptr<Object>> getAdjacentComponents() = 0;
 
-	virtual int getDegreesOfFreedom() = 0;
-	
-};
+		virtual Type getPamolaType() = 0;
+
+		virtual int getDegreesOfFreedom() = 0;
+
+	};
+}
