@@ -40,7 +40,7 @@ public:
 
 void printAllPamolas();
 
-std::string printPamola(PamolaObject *);
+std::string printPamola(Object *);
 
 std::string printPamola(CircuitElement *);
 

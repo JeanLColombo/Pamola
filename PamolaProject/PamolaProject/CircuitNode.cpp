@@ -1,80 +1,78 @@
-/**
- * Project PamolaCore
- */
-
 #include "stdafx.h"
 #include "CircuitNode.h"
 #include "CircuitTerminal.h"
 
-CircuitNode::CircuitNode()
+namespace Pamola
 {
-}
-
-CircuitNode::~CircuitNode()
-{
-}
-
-CircuitNode & CircuitNode::connectTo(CircuitNode &node)
-{
-	if (this == &node)
-		return node;
-	
-	const std::vector<std::shared_ptr<CircuitTerminal>> addedTerminals = node.getTerminals();
-
-	for (auto terminal : addedTerminals)
-
+	CircuitNode::CircuitNode()
 	{
-		terminal->disconnect();
-		terminal->connectTo(*this);
 	}
 
-	return *this;
-}
+	CircuitNode::~CircuitNode()
+	{
+	}
 
-CircuitNode & CircuitNode::connectTo(std::shared_ptr<CircuitNode> node)
-{
-	return connectTo(*node);
-}
+	std::shared_ptr<CircuitNode> CircuitNode::connectTo(std::shared_ptr<CircuitNode> node)
+	{
+		if (shared_from_this() == node)
+			return node;
 
-const std::vector<std::shared_ptr<CircuitTerminal>> CircuitNode::getTerminals()
-{
-	using namespace cpplinq;
-	auto result = 
-		from(terminals)
-		>> select([](std::weak_ptr<CircuitTerminal> t) {return t.lock(); })
-		>> to_vector();
+		const std::vector<std::shared_ptr<CircuitTerminal>> addedTerminals = node->getTerminals();
 
-	return result;
-}
+		for (auto terminal : addedTerminals)
+		{
+			terminal->disconnect();
+			terminal->connectTo(shared_from_this());
+		}
 
-std::complex<double> CircuitNode::getVoltage()
-{
-	return voltage;
-}
+		return shared_from_this();
+	}
 
-bool CircuitNode::setVoltage(std::complex<double> value)
-{
-	voltage = value;
-	return true;
-}
+	const std::vector<std::shared_ptr<CircuitTerminal>> CircuitNode::getTerminals()
+	{
+		using namespace cpplinq;
+		terminals =
+			from(terminals)
+			>> where([](std::weak_ptr<CircuitTerminal> t) {return !t.expired(); })
+			>> to_vector();
+		
+		auto result = 
+			from(terminals)
+			>> select([](std::weak_ptr<CircuitTerminal> t) {return t.lock(); })
+			>> to_vector();
 
-const std::vector<std::shared_ptr<PamolaObject>> CircuitNode::getAdjacentComponents()
-{
-	using namespace cpplinq;
-	auto result =
-		from(terminals)
-		>> select([](std::weak_ptr<CircuitTerminal> t) {return static_cast<std::shared_ptr<PamolaObject>>(t.lock()); })
-		>> to_vector();
+		return result;
+	}
 
-	return result;
-}
+	std::complex<double> CircuitNode::getVoltage()
+	{
+		return voltage;
+	}
 
-PamolaType CircuitNode::getPamolaType()
-{
-	return PamolaType::CircuitNode;
-}
+	bool CircuitNode::setVoltage(std::complex<double> value)
+	{
+		voltage = value;
+		return true;
+	}
 
-int CircuitNode::getDegreesOfFreedom()
-{
-	return (-static_cast<int>(terminals.size()));
+	const std::vector<std::shared_ptr<Object>> CircuitNode::getAdjacentComponents()
+	{
+		using namespace cpplinq;
+		auto result =
+			from(terminals)
+			>> select([](std::weak_ptr<CircuitTerminal> t) {return static_cast<std::shared_ptr<Object>>(t.lock()); })
+			>> to_vector();
+
+		return result;
+	}
+
+	Type CircuitNode::getPamolaType()
+	{
+		return Type::CircuitNode;
+	}
+
+	int CircuitNode::getDegreesOfFreedom()
+	{
+		return (-static_cast<int>(terminals.size()));
+	}
 }

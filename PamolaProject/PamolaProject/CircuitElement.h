@@ -1,52 +1,49 @@
-/**
- * Project PamolaCore
- */
-
 #pragma once
 
 #include "PamolaObject.h"
 #include "CircuitTerminal.h"
 #include <vector>
 
-class CircuitTerminal;
-
-class CircuitElement: public PamolaObject, public std::enable_shared_from_this<CircuitElement> 
+namespace Pamola
 {
-public:
+	class CircuitTerminal;
 
-	using std::enable_shared_from_this<CircuitElement>::shared_from_this;
+	class CircuitElement : public Object, public std::enable_shared_from_this<CircuitElement>
+	{
 
-protected:
+		friend class Engine;
 
-	CircuitElement();
+	public:
 
-public:
+		using std::enable_shared_from_this<CircuitElement>::shared_from_this;
 
-	~CircuitElement();
+	private:
 
-private:
-	
-	//std::vector<std::shared_ptr<CircuitTerminal>> terminals;
-	std::vector<CircuitTerminal &> terminals;
+		std::vector<std::shared_ptr<CircuitTerminal>> terminals;
 
-protected:
+		uint32_t numberOfterminals;
 
-	bool createTerminals(uint32_t);
+	protected:
 
-public: 
-	
-	//const std::vector<std::shared_ptr<CircuitTerminal>> getTerminals();
+		CircuitElement(uint32_t = 0);
 
-	const std::vector<CircuitTerminal &> getTerminals();
+	public:
 
-	// const std::shared_ptr<CircuitTerminal> getTerminal(uint32_t);
+		virtual ~CircuitElement();
 
-	CircuitTerminal & getTerminal(uint32_t);
+	public:
 
-	const std::vector<std::shared_ptr<PamolaObject>> getAdjacentComponents();
+		const std::vector<std::shared_ptr<CircuitTerminal>> getTerminals();
 
-	PamolaType getPamolaType();
+		const std::shared_ptr<CircuitTerminal> getTerminal(uint32_t);
 
-	virtual int getDegreesOfFreedom() = 0;
-	
-};
+		const std::vector<std::shared_ptr<Object>> getAdjacentComponents();
+
+		Type getPamolaType();
+
+		uint32_t getNumberOfTerminals();
+
+		virtual int getDegreesOfFreedom() = 0;
+
+	};
+}

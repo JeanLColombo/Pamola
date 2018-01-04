@@ -2,22 +2,22 @@
 #include "CircuitElementHolder.h"
 
 CircuitElementHolder::CircuitElementHolder()
+	: CircuitElement(2)
 {
-	createTerminals(2);
 }
 
 CircuitElementHolder::~CircuitElementHolder()
 {
 }
 
-std::shared_ptr<CircuitTerminal> CircuitElementHolder::getLeft()
+std::shared_ptr<Pamola::CircuitTerminal> CircuitElementHolder::getLeft()
 {
-	return getTerminal(0).shared_from_this();
+	return getTerminal(0);
 }
 
-std::shared_ptr<CircuitTerminal> CircuitElementHolder::getRight()
+std::shared_ptr<Pamola::CircuitTerminal> CircuitElementHolder::getRight()
 {
-	return getTerminal(1).shared_from_this();
+	return getTerminal(1);
 }
 
 int CircuitElementHolder::getDegreesOfFreedom()

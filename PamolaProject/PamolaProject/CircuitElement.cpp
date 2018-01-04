@@ -1,60 +1,53 @@
-/**
- * Project PamolaCore
- */
-
 #include "stdafx.h"
 #include "CircuitElement.h"
 
-CircuitElement::CircuitElement()
+namespace Pamola
 {
-}
-
-CircuitElement::~CircuitElement()
-{
-}
-
-bool CircuitElement::createTerminals(uint32_t numberOfTerminals)
-{
-	if (numberOfTerminals > 0)
+	CircuitElement::CircuitElement(uint32_t numberOfTerminals)
+		: numberOfterminals(numberOfTerminals)
 	{
-		for (uint32_t i = 0; i < numberOfTerminals; i++)
+		/*const std::shared_ptr<CircuitElement> myElement(this);
+		for (uint32_t index = 0; index < numberOfTerminals; index++)
 		{
-			//std::shared_ptr<CircuitTerminal> terminalInstance{ new CircuitTerminal(this) };
-			//auto terminalInstance = std::make_shared<CircuitTerminal>(this);
-			terminals.push_back(CircuitTerminal(this));
-		}			
-		
-		return true;
-	}	
-	return false;
-}
+			std::shared_ptr<CircuitTerminal> terminalInstance(new CircuitTerminal(myElement));
+			terminals.push_back(std::shared_ptr<CircuitTerminal>(terminalInstance));
+		}*/
 
-//const std::vector<std::shared_ptr<CircuitTerminal>> CircuitElement::getTerminals()
-const std::vector<CircuitTerminal &> CircuitElement::getTerminals()
-{
-	return terminals;
-}
+	}
 
-//const std::shared_ptr<CircuitTerminal> CircuitElement::getTerminal(uint32_t localId)
-CircuitTerminal & CircuitElement::getTerminal(uint32_t localId)
-{
-	return terminals.at(localId);
-}
+	CircuitElement::~CircuitElement()
+	{
+	}
 
-const std::vector<std::shared_ptr<PamolaObject>> CircuitElement::getAdjacentComponents()
-{
-	using namespace cpplinq;
-	auto result =
-		from(terminals)
-		>> select([](CircuitTerminal &t) {return static_cast<std::shared_ptr<PamolaObject>>(t.shared_from_this()); })
-		>> to_vector();
-	
-	auto x1 = shared_from_this();
+	const std::vector<std::shared_ptr<CircuitTerminal>> CircuitElement::getTerminals()
+	{
+		return terminals;
+	}
 
-	return result;
-}
+	const std::shared_ptr<CircuitTerminal> CircuitElement::getTerminal(uint32_t localId)
+	{
+		return terminals.at(localId);
+	}
 
-PamolaType CircuitElement::getPamolaType()
-{
-	return PamolaType::CircuitElement;
+	const std::vector<std::shared_ptr<Object>> CircuitElement::getAdjacentComponents()
+	{
+		using namespace cpplinq;
+		// TODO: Check shared_from_this usage on CircuitTerminal
+		auto result =
+			from(terminals)
+			>> select([](std::shared_ptr<CircuitTerminal> t) {return static_cast<std::shared_ptr<Object>>(t); })
+			>> to_vector();
+
+		return result;
+	}
+
+	Type CircuitElement::getPamolaType()
+	{
+		return Type::CircuitElement;
+	}
+
+	uint32_t CircuitElement::getNumberOfTerminals()
+	{
+		return numberOfterminals;
+	}
 }

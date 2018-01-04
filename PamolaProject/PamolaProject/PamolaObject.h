@@ -7,55 +7,44 @@
 #include <memory>
 #include <cassert>
 #include <cpplinq.hpp>
-#include <unordered_map>
 
 
-//class Circuit;
-
-class PamolaObject : public std::enable_shared_from_this<PamolaObject> 
+namespace Pamola
 {
-	// TODO: Check enable_shared_from_thiss usage
-	using std::enable_shared_from_this<PamolaObject>::enable_shared_from_this;
+	class Engine;
 
-protected:
+	class Object
+	{
+		friend class Engine;
 
-	PamolaObject();
+		// TODO: Check enable_shared_from_thiss usage
 
-public:
+	private:
+		
+		uint32_t id;
 
-	virtual ~PamolaObject();
+		std::weak_ptr<Engine> engine;
 
-private: 
+	protected:
 
-	//static std::unordered_map<uint32_t, std::weak_ptr<PamolaObject>> pamolaInstances;
+		Object();
 
-	static std::unordered_map<uint32_t, PamolaObject*> pamolaInstances;
+	public:
 
-	static uint32_t guid;	
+		virtual ~Object();
 
-	uint32_t id;
+		std::set<uint32_t> getConnectedComponents();
+		std::set<uint32_t> getConnectedComponents(std::set<uint32_t>);
 
-	std::set<uint32_t> getConnectedComponents();
-	std::set<uint32_t> getConnectedComponents(std::set<uint32_t>);
+		const std::shared_ptr<Engine> getEngine();
+		
+		uint32_t getId();
 
-public:
+		virtual const std::vector<std::shared_ptr<Object>> getAdjacentComponents() = 0;
 
-	//static const std::unordered_map<uint32_t, std::weak_ptr<PamolaObject>> & getPamolaInstances();
-	
-	static const std::unordered_map<uint32_t, PamolaObject*> & getPamolaInstances();
+		virtual Type getPamolaType() = 0;
 
-	//static std::weak_ptr<PamolaObject> getPamolaInstance(uint32_t);
+		virtual int getDegreesOfFreedom() = 0;
 
-	static PamolaObject* getPamolaInstance(uint32_t);
-
-	//std::shared_ptr<Circuit> getCircuit();
-
-	uint32_t getId();
-
-	virtual const std::vector<std::shared_ptr<PamolaObject>> getAdjacentComponents() = 0;
-
-	virtual PamolaType getPamolaType() = 0;
-
-	virtual int getDegreesOfFreedom() = 0;
-	
-};
+	};
+}
