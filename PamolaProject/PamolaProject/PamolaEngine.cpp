@@ -5,7 +5,7 @@ namespace Pamola
 {
 	const std::shared_ptr<Engine> Engine::localEngine(new Engine());
 
-	Engine::Engine()
+	Engine::Engine(uint32_t firstId) : guid(firstId)
 	{
 	}
 
@@ -18,14 +18,52 @@ namespace Pamola
 		return localEngine;
 	}
 
-	const std::set<Object*> Engine::getLocalObjects()
+	std::map<uint32_t, std::shared_ptr<Object>> Engine::getLocalObjects()
 	{
-		return localObjects;
+		using namespace cpplinq;
+	
+		localObjects =
+			from(localObjects)
+			>> where([](std::pair<uint32_t, std::weak_ptr<Object>> p) { return !p.second.expired(); })
+			>> select([](std::pair<uint32_t, std::weak_ptr<Object>> p) { return p.second; })
+			>> to_map([](std::weak_ptr<Object> o) {return o.lock()->getId(); });
+		
+		auto result =
+			from(localObjects)
+			>> select([](std::pair<uint32_t, std::weak_ptr<Object>> p) {return p.second.lock(); })
+			>> to_map([](std::shared_ptr<Object> o) {return o->getId(); });
+
+		return result;
 	}
-	Object * Engine::getLocalObject(uint32_t id)
+
+	std::shared_ptr<Object> Engine::getLocalObject(uint32_t id)
 	{
-		for (auto object : localObjects)
-			if (object->getId() == id)
-				return object;
+		return getLocalObjects()[id];
+	}
+	std::vector<std::shared_ptr<CircuitTerminal>> Engine::createTerminalsFor(std::shared_ptr<CircuitElement> element)
+	{
+		std::vector<std::shared_ptr<CircuitTerminal>> result;
+
+		for (uint32_t i = 0; i < element->getNumberOfTerminals(); i++)
+		{
+			std::shared_ptr<CircuitTerminal> terminal(new CircuitTerminal(element));
+			mapObject(terminal);
+			result.push_back(terminal);
+		}
+
+		return result;
+	}
+	std::shared_ptr<CircuitNode> Engine::createNode()
+	{
+		std::shared_ptr<CircuitNode> node(new CircuitNode);
+		mapObject(node);
+
+		return node;
+	}
+	void Engine::mapObject(std::shared_ptr<Object> object)
+	{
+		object->id = guid++;
+		object->engine = shared_from_this();
+		localObjects[object->getId()] = object;
 	}
 }

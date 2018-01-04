@@ -36,13 +36,43 @@ namespace PamolaUT
 	};
 	TEST_CLASS(Connections)
 	{
-		TEST_METHOD(Connection)
+		TEST_METHOD(Connection1)
 		{
 			using namespace Pamola;
 			auto ele1 = createElement<CircuitElementHolder>();
 			auto ele2 = createElement<CircuitElementHolder>();
 
 			ele1->getLeft()->connectTo(ele2->getRight());
+			Assert::AreEqual(2,
+				int(ele1->getLeft()->getNode()->getTerminals().size()),
+				L"Connection fail - terminals count wrong",
+				LINE_INFO());
+		}
+		TEST_METHOD(Connection2)
+		{
+			using namespace Pamola;
+			auto ele1 = createElement<CircuitElementHolder>();
+			auto ele2 = createElement<CircuitElementHolder>();
+			auto ele3 = createElement<CircuitElementHolder>();
+
+			ele1->getLeft()->connectTo(ele2->getRight());
+			ele3->getLeft()->connectTo(ele2->getRight()->getNode());
+			Assert::AreEqual(3,
+				int(ele1->getLeft()->getNode()->getTerminals().size()),
+				L"Connection fail - terminals count wrong",
+				LINE_INFO());
+		}
+		TEST_METHOD(Connection3)
+		{
+			using namespace Pamola;
+			auto ele1 = createElement<CircuitElementHolder>();
+			auto ele2 = createElement<CircuitElementHolder>();
+
+			ele1->getLeft()->connectTo(ele2->getRight());
+			{
+				auto ele3 = createElement<CircuitElementHolder>();
+				ele3->getLeft()->connectTo(ele2->getRight()->getNode());
+			}
 			Assert::AreEqual(2,
 				int(ele1->getLeft()->getNode()->getTerminals().size()),
 				L"Connection fail - terminals count wrong",

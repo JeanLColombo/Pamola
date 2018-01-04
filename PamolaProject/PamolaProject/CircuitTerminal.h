@@ -2,6 +2,7 @@
 
 #include "CircuitNode.h"
 #include "PamolaObject.h"
+#include "PamolaEngine.h"
 #include "CircuitElement.h"
 #include <complex>
 #include <algorithm>
@@ -13,11 +14,7 @@ namespace Pamola
 
 		friend class CircuitElement;
 		friend class Engine;
-
-	public:
-
-		using std::enable_shared_from_this<CircuitTerminal>::shared_from_this;
-
+		
 	private:
 
 		std::shared_ptr<CircuitNode> node = nullptr;
@@ -26,15 +23,11 @@ namespace Pamola
 
 		std::complex<double> current = 0.0;
 
-	private:
-
 		CircuitTerminal(std::weak_ptr<CircuitElement>);
 
 	public:
 
 		~CircuitTerminal();
-
-	public:
 
 		const std::shared_ptr<CircuitElement> getElement();
 

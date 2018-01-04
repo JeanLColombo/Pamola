@@ -12,6 +12,7 @@ namespace Pamola
 	{
 		using std::enable_shared_from_this<CircuitNode>::shared_from_this;
 
+		friend class Engine;
 		friend class CircuitTerminal;
 
 	private:

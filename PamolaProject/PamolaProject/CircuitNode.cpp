@@ -31,7 +31,12 @@ namespace Pamola
 	const std::vector<std::shared_ptr<CircuitTerminal>> CircuitNode::getTerminals()
 	{
 		using namespace cpplinq;
-		auto result =
+		terminals =
+			from(terminals)
+			>> where([](std::weak_ptr<CircuitTerminal> t) {return !t.expired(); })
+			>> to_vector();
+		
+		auto result = 
 			from(terminals)
 			>> select([](std::weak_ptr<CircuitTerminal> t) {return t.lock(); })
 			>> to_vector();
