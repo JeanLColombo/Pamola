@@ -1,26 +1,31 @@
 #pragma once
 #include "PamolaObject.h"
+#include "CircuitElement.h"
 #include <memory>
-#include <set>
+#include <map>
 #include <cassert>
 
 
 namespace Pamola
 {
-	class Engine
-	{
+	class CircuitTerminal;
+	class CircuitElement;
 
-		friend class Object;
+	class Engine : public std::enable_shared_from_this<Engine>
+	{
+		friend class CircuitTerminal;
 
 	private:
 
 		static const std::shared_ptr<Engine> localEngine;
 
-		std::set<Object*> localObjects;
+		std::map<uint32_t, std::weak_ptr<Object>> localObjects;
+
+		uint32_t guid;
 
 	protected:
 
-		Engine();
+		Engine(uint32_t = 0);
 
 	public:
 
@@ -28,11 +33,19 @@ namespace Pamola
 
 		static const std::shared_ptr<Engine> getLocalEngine();
 
-		const std::set<Object*> getLocalObjects();
-
-		Object* getLocalObject(uint32_t);
-
+		std::map<uint32_t, std::shared_ptr<Object>> getLocalObjects();
+		
+		std::shared_ptr<Object> getLocalObject(uint32_t);
+		
 		template <class TCircuitElement> std::shared_ptr<TCircuitElement> createElement();
+
+	private:
+
+		std::vector<std::shared_ptr<CircuitTerminal>> createTerminalsFor(std::shared_ptr<CircuitElement>);
+
+		std::shared_ptr<CircuitNode> createNode();
+
+		void mapObject(std::shared_ptr<Object>);
 	};
 
 	template<class TCircuitElement>
@@ -43,8 +56,9 @@ namespace Pamola
 
 		std::shared_ptr<CircuitElement> newCircuitElement = newElement;
 
-		for (uint32_t i = 0; i < newCircuitElement->getNumberOfTerminals(); i++)
-			newCircuitElement->terminals.push_back(std::shared_ptr<CircuitTerminal>(new CircuitTerminal(newCircuitElement)));
+		mapObject(newCircuitElement);
+
+		newCircuitElement->terminals = createTerminalsFor(newCircuitElement);
 
 		return newElement;
 	}

@@ -1,20 +1,14 @@
 #include "stdafx.h"
-#include "cpplinq.hpp"
 #include "PamolaObject.h"
 
 namespace Pamola
 {
-	uint32_t Object::guid = 0;
-
 	Object::Object()
 	{
-		id = guid++;
-		Engine::getLocalEngine()->localObjects.insert(this);
 	}
 
 	Object::~Object()
 	{
-		Engine::getLocalEngine()->localObjects.erase(this);
 	}
 
 	std::set<uint32_t> Object::getConnectedComponents()
@@ -39,6 +33,11 @@ namespace Pamola
 	std::set<uint32_t> Object::getConnectedComponents(std::set<uint32_t>)
 	{
 		return std::set<uint32_t>();
+	}
+
+	const std::shared_ptr<Engine> Object::getEngine()
+	{
+		return engine.lock();
 	}
 
 	//std::shared_ptr<Circuit> PamolaObject::getCircuit()
