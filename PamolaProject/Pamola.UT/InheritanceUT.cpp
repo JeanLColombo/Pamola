@@ -3,6 +3,7 @@
 #include "PamolaObjectHolder.h"
 #include "CircuitElementHolder.h"
 #include "EmptyCircuitElementHolder.h"
+#include <iostream>
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -86,6 +87,54 @@ namespace PamolaUT
 
 			ele1->getLeft()->connectTo(ele2->getRight());
 			ele1->getLeft()->disconnect();
+		}
+	};
+	TEST_CLASS(EngineBehavior)
+	{
+		TEST_METHOD(MapSize)
+		{
+			using namespace Pamola;
+			int engineSize = Engine::getLocalEngine()->getLocalObjects().size();
+			Assert::AreEqual(0,
+				engineSize,
+				L"Original Engine Size Not 0",
+				LINE_INFO());
+
+			auto ele1 = createElement<CircuitElementHolder>();
+			engineSize = Engine::getLocalEngine()->getLocalObjects().size();
+			Assert::AreEqual(3,
+				engineSize,
+				L"List of objects' size Not 3",
+				LINE_INFO());
+
+			{
+				auto ele2 = createElement<CircuitElementHolder>();
+				engineSize = Engine::getLocalEngine()->getLocalObjects().size();
+				Assert::AreEqual(6,
+					engineSize,
+					L"List of objects' size Not 6",
+					LINE_INFO());
+
+				ele2->getRight()->connectTo(ele1->getLeft());
+				engineSize = Engine::getLocalEngine()->getLocalObjects().size();
+				Assert::AreEqual(7,
+					engineSize,
+					L"List of objects' size Not 7",
+					LINE_INFO());
+
+				ele2->getRight()->disconnect();
+				engineSize = Engine::getLocalEngine()->getLocalObjects().size();
+				Assert::AreEqual(6,
+					engineSize,
+					L"List of objects' size Not 6",
+					LINE_INFO());
+			}
+
+			engineSize = Engine::getLocalEngine()->getLocalObjects().size();
+			Assert::AreEqual(3,
+				engineSize,
+				L"List of objects' size Not 3",
+				LINE_INFO());
 		}
 	};
 }
