@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Circuit.h"
 #include "PamolaTypes.h"
 #include <set>
 #include <vector>
@@ -11,6 +10,7 @@
 namespace Pamola
 {
 	class Engine;
+	class Circuit;
 
 	class Object
 	{
@@ -31,7 +31,14 @@ namespace Pamola
 		virtual ~Object();
 
 		std::set<uint32_t> getConnectedComponents();
-		std::set<uint32_t> getConnectedComponents(std::set<uint32_t>);
+
+	private:
+
+		std::set<uint32_t> getConnectedComponents(std::set<uint32_t> &);
+
+	public:
+
+		std::shared_ptr<Circuit> getCircuit();
 
 		const std::shared_ptr<Engine> getEngine();
 		
@@ -49,7 +56,7 @@ namespace Pamola
 
 		bool operator!=(const Pamola::Object&);
 		
-		virtual const std::vector<std::shared_ptr<Object>> getAdjacentComponents() = 0;
+		virtual const std::set<uint32_t> getAdjacentComponents() = 0;
 
 		virtual Type getPamolaType() = 0;
 

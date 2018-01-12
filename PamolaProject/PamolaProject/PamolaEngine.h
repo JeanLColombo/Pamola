@@ -1,4 +1,6 @@
 #pragma once
+
+#include "CircuitTerminal.h"
 #include "PamolaObject.h"
 #include "CircuitElement.h"
 #include <memory>
@@ -10,10 +12,13 @@ namespace Pamola
 {
 	class CircuitTerminal;
 	class CircuitElement;
+	class Circuit;
+	class Object;
 
 	class Engine : public std::enable_shared_from_this<Engine>
 	{
 		friend class CircuitTerminal;
+		friend class Object;
 
 	private:
 
@@ -43,8 +48,10 @@ namespace Pamola
 
 		std::vector<std::shared_ptr<CircuitTerminal>> createTerminalsFor(std::shared_ptr<CircuitElement>);
 
-		std::shared_ptr<CircuitNode> createNode();
+		std::shared_ptr<Circuit> createCircuit(const std::vector<std::shared_ptr<Object>>);
 
+		std::shared_ptr<CircuitNode> createNode();
+		
 		void mapObject(std::shared_ptr<Object>);
 	};
 

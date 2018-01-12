@@ -255,4 +255,18 @@ namespace PamolaUT
 		}
 	
 	}; 
+	TEST_CLASS(CircuitBehavior)
+	{
+		TEST_METHOD(CreationBasic)
+		{
+			using namespace Pamola;
+			auto ele1 = createElement<CircuitElementHolder>();
+			ele1->getCircuit();
+			int engineSize = Engine::getLocalEngine()->getLocalObjects().size();
+			Assert::AreEqual(4,
+				engineSize,
+				L"Circuit behaviour is abnormal - wrong object count",
+				LINE_INFO());
+		}
+	};	
 }

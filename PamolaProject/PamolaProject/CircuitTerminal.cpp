@@ -112,16 +112,16 @@ namespace Pamola
 		return static_cast<bool>(getNode());
 	}
 
-	const std::vector<std::shared_ptr<Object>> CircuitTerminal::getAdjacentComponents()
+	const std::set<uint32_t> CircuitTerminal::getAdjacentComponents()
 	{
-		std::vector<std::shared_ptr<Object>> result;
+		std::set<uint32_t> adjComponents;
 
-		result.push_back(getElement());
+		adjComponents.insert(getElement()->getId());
 
 		if (isConnected())
-			result.push_back(getNode());
+			adjComponents.insert(getNode()->getId());
 
-		return result;
+		return adjComponents;
 	}
 
 	Type CircuitTerminal::getPamolaType()

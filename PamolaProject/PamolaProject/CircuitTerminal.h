@@ -43,7 +43,7 @@ namespace Pamola
 		bool disconnect();
 		bool isConnected();
 
-		const std::vector<std::shared_ptr<Object>> getAdjacentComponents();
+		const std::set<uint32_t> getAdjacentComponents();
 
 		Type getPamolaType();
 

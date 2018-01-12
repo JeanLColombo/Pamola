@@ -6,7 +6,7 @@ public:
 	PamolaObjectHolder();
 	~PamolaObjectHolder();
 
-	const std::vector<std::shared_ptr<Pamola::Object>> getAdjacentComponents();
+	const std::set<uint32_t> getAdjacentComponents();
 
 	Pamola::Type getPamolaType();
 

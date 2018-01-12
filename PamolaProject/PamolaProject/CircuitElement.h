@@ -38,7 +38,7 @@ namespace Pamola
 
 		const std::shared_ptr<CircuitTerminal> getTerminal(uint32_t);
 
-		const std::vector<std::shared_ptr<Object>> getAdjacentComponents();
+		const std::set<uint32_t> getAdjacentComponents();
 
 		Type getPamolaType();
 

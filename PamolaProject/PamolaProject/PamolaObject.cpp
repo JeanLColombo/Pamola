@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "PamolaObject.h"
+#include "PamolaEngine.h"
 
 namespace Pamola
 {
@@ -13,26 +14,37 @@ namespace Pamola
 
 	std::set<uint32_t> Object::getConnectedComponents()
 	{
-		//TODO: But how?
+		std::set<uint32_t> componentList{ getId() };
 
-		std::set<uint32_t> componentList{ id };
+		for (auto elementId : getAdjacentComponents())
+			componentList = getEngine()->getLocalObject(elementId)->getConnectedComponents(componentList);
 
-		for (auto component : getAdjacentComponents())
-		{
-			if (componentList.find(component->getId()) != componentList.end())
-			{
-
-			}
-			componentList.insert(component->getId());
-		}
-
-
-		return std::set<uint32_t>();
+		return componentList;
 	}
 
-	std::set<uint32_t> Object::getConnectedComponents(std::set<uint32_t>)
+	std::set<uint32_t> Object::getConnectedComponents(std::set<uint32_t> &componentList)
 	{
-		return std::set<uint32_t>();
+		if (componentList.find(getId()) != componentList.end())
+			return componentList;
+		
+		componentList.insert(getId());
+
+		for (auto elementId : getAdjacentComponents())
+			componentList = getEngine()->getLocalObject(elementId)->getConnectedComponents(componentList);
+
+
+		return componentList;
+	}
+
+	std::shared_ptr<Circuit> Object::getCircuit()
+	{
+		using namespace cpplinq;
+		auto circuitList =
+			from(getConnectedComponents())
+			>> select([this](uint32_t i) {return getEngine()->getLocalObject(i); })
+			>> to_vector();
+		
+		return getEngine()->createCircuit(circuitList);
 	}
 
 	const std::shared_ptr<Engine> Object::getEngine()

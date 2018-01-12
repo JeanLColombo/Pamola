@@ -55,15 +55,14 @@ namespace Pamola
 		return true;
 	}
 
-	const std::vector<std::shared_ptr<Object>> CircuitNode::getAdjacentComponents()
+	const std::set<uint32_t> CircuitNode::getAdjacentComponents()
 	{
-		using namespace cpplinq;
-		auto result =
-			from(this->getTerminals())
-			>> select([](std::shared_ptr<CircuitTerminal> t) {return static_cast<std::shared_ptr<Object>>(t); })
-			>> to_vector();
+		std::set<uint32_t> adjComponents;
 
-		return result;
+		for (auto &terminal : getTerminals())
+			adjComponents.insert(terminal->getId());
+
+		return adjComponents;
 	}
 
 	Type CircuitNode::getPamolaType()
