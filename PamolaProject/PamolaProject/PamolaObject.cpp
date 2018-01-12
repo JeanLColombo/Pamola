@@ -12,7 +12,7 @@ namespace Pamola
 	{
 	}
 
-	std::set<uint32_t> Object::getConnectedComponents()
+	const std::set<uint32_t> & Object::getConnectedComponents()
 	{
 		std::set<uint32_t> componentList{ getId() };
 
@@ -22,7 +22,7 @@ namespace Pamola
 		return componentList;
 	}
 
-	std::set<uint32_t> Object::getConnectedComponents(std::set<uint32_t> &componentList)
+	std::set<uint32_t> & Object::getConnectedComponents(std::set<uint32_t> &componentList)
 	{
 		if (componentList.find(getId()) != componentList.end())
 			return componentList;
@@ -31,7 +31,6 @@ namespace Pamola
 
 		for (auto elementId : getAdjacentComponents())
 			componentList = getEngine()->getLocalObject(elementId)->getConnectedComponents(componentList);
-
 
 		return componentList;
 	}
@@ -51,19 +50,7 @@ namespace Pamola
 	{
 		return engine.lock();
 	}
-
-	//std::shared_ptr<Circuit> PamolaObject::getCircuit()
-	//{
-	//	//TODO: Check if it is going to remain a shared_ptr
-	//
-	//	//TODO: std::vector of components
-	//	
-	//	//TODO: Instantiate a new circuit object with std::vector of components
-	//
-	//	//TODO: Return pointer to circuit object
-	//	return nullptr;
-	//}
-
+	
 	uint32_t Object::getId() const
 	{
 		return id;
