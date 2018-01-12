@@ -2,6 +2,7 @@
 
 #include "PamolaObject.h"
 #include "CircuitTerminal.h"
+#include <set>
 #include <vector>
 
 namespace Pamola
@@ -46,4 +47,12 @@ namespace Pamola
 		virtual int getDegreesOfFreedom() = 0;
 
 	};
+	
+	bool operator<(const std::shared_ptr<CircuitElement>, const std::shared_ptr<CircuitElement>);
+	bool operator>(const std::shared_ptr<CircuitElement>, const std::shared_ptr<CircuitElement>);
+	bool operator<=(const std::shared_ptr<CircuitElement>, const std::shared_ptr<CircuitElement>);
+	bool operator>=(const std::shared_ptr<CircuitElement>, const std::shared_ptr<CircuitElement>);
+	bool operator==(const std::shared_ptr<CircuitElement>, const std::shared_ptr<CircuitElement>);
+	bool operator!=(const std::shared_ptr<CircuitElement>, const std::shared_ptr<CircuitElement>);
+
 }

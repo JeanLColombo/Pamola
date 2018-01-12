@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27004.2009
+VisualStudioVersion = 15.0.27130.2010
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PamolaProject", "PamolaProject\PamolaProject.vcxproj", "{AA95A293-596D-496C-9381-62D03F3CA3CC}"
 EndProject
@@ -31,7 +31,6 @@ Global
 		{4511EBA4-D7B9-42B7-8599-96EFA2DF14FE}.Release|x64.ActiveCfg = Release|x64
 		{4511EBA4-D7B9-42B7-8599-96EFA2DF14FE}.Release|x64.Build.0 = Release|x64
 		{4511EBA4-D7B9-42B7-8599-96EFA2DF14FE}.Release|x86.ActiveCfg = Release|Win32
-		{4511EBA4-D7B9-42B7-8599-96EFA2DF14FE}.Release|x86.Build.0 = Release|Win32
 		{E8C836CE-CABC-43F2-A1D1-6B8A9017366E}.Debug|x64.ActiveCfg = Debug|x64
 		{E8C836CE-CABC-43F2-A1D1-6B8A9017366E}.Debug|x64.Build.0 = Debug|x64
 		{E8C836CE-CABC-43F2-A1D1-6B8A9017366E}.Debug|x86.ActiveCfg = Debug|Win32

@@ -52,12 +52,74 @@ namespace Pamola
 	//	return nullptr;
 	//}
 
-	uint32_t Object::getId() {
+	uint32_t Object::getId() const
+	{
 		return id;
+	}
+
+	bool Object::operator<(const Pamola::Object &o)
+	{
+		return getId() < o.getId();
+	}
+
+	bool Object::operator>(const Pamola::Object &o)
+	{
+		return getId() > o.getId();
+	}
+
+	bool Object::operator<=(const Pamola::Object &o)
+	{
+		return getId() <= o.getId();
+	}
+
+	bool Object::operator>=(const Pamola::Object &o)
+	{
+		return getId() >= o.getId();
+	}
+
+	bool Object::operator==(const Pamola::Object &o)
+	{
+		return getId() == o.getId();
+	}
+
+	bool Object::operator!=(const Pamola::Object &o)
+	{
+		return getId() != o.getId();
 	}
 
 	Type Object::getPamolaType()
 	{
 		return Type::Other;
 	}
+
+	bool operator<(const std::shared_ptr<Object> o1, const std::shared_ptr<Object> o2)
+	{
+		return *o1 < *o2;
+	}
+
+	bool operator>(const std::shared_ptr<Object> o1, const std::shared_ptr<Object> o2)
+	{
+		return *o1 > *o2;
+	}
+
+	bool operator<=(const std::shared_ptr<Object> o1, const std::shared_ptr<Object> o2)
+	{
+		return *o1 <= *o2;
+	}
+
+	bool operator>=(const std::shared_ptr<Object> o1, const std::shared_ptr<Object> o2)
+	{
+		return *o1 >= *o2;
+	}
+
+	bool operator==(const std::shared_ptr<Object> o1, const std::shared_ptr<Object> o2)
+	{
+		return *o1 == *o2;
+	}
+
+	bool operator!=(const std::shared_ptr<Object> o1, const std::shared_ptr<Object> o2)
+	{
+		return *o1 != *o2;
+	}
+
 }

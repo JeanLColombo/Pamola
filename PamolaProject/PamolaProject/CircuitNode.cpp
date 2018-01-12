@@ -59,8 +59,8 @@ namespace Pamola
 	{
 		using namespace cpplinq;
 		auto result =
-			from(terminals)
-			>> select([](std::weak_ptr<CircuitTerminal> t) {return static_cast<std::shared_ptr<Object>>(t.lock()); })
+			from(this->getTerminals())
+			>> select([](std::shared_ptr<CircuitTerminal> t) {return static_cast<std::shared_ptr<Object>>(t); })
 			>> to_vector();
 
 		return result;

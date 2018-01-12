@@ -32,7 +32,6 @@ namespace Pamola
 	const std::vector<std::shared_ptr<Object>> CircuitElement::getAdjacentComponents()
 	{
 		using namespace cpplinq;
-		// TODO: Check shared_from_this usage on CircuitTerminal
 		auto result =
 			from(terminals)
 			>> select([](std::shared_ptr<CircuitTerminal> t) {return static_cast<std::shared_ptr<Object>>(t); })
@@ -49,5 +48,35 @@ namespace Pamola
 	uint32_t CircuitElement::getNumberOfTerminals()
 	{
 		return numberOfterminals;
+	}
+
+	bool operator<(const std::shared_ptr<CircuitElement> o1, const std::shared_ptr<CircuitElement> o2)
+	{
+		return *o1 < *o2;
+	}
+
+	bool operator>(const std::shared_ptr<CircuitElement> o1, const std::shared_ptr<CircuitElement> o2)
+	{
+		return *o1 > *o2;
+	}
+
+	bool operator<=(const std::shared_ptr<CircuitElement> o1, const std::shared_ptr<CircuitElement> o2)
+	{
+		return *o1 <= *o2;
+	}
+
+	bool operator>=(const std::shared_ptr<CircuitElement> o1, const std::shared_ptr<CircuitElement> o2)
+	{
+		return *o1 >= *o2;
+	}
+
+	bool operator==(const std::shared_ptr<CircuitElement> o1, const std::shared_ptr<CircuitElement> o2)
+	{
+		return *o1 == *o2;
+	}
+
+	bool operator!=(const std::shared_ptr<CircuitElement> o1, const std::shared_ptr<CircuitElement> o2)
+	{
+		return *o1 != *o2;
 	}
 }

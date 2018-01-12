@@ -8,7 +8,6 @@
 #include <cassert>
 #include <cpplinq.hpp>
 
-
 namespace Pamola
 {
 	class Engine;
@@ -16,9 +15,7 @@ namespace Pamola
 	class Object
 	{
 		friend class Engine;
-
-		// TODO: Check enable_shared_from_thiss usage
-
+		
 	private:
 		
 		uint32_t id;
@@ -38,8 +35,20 @@ namespace Pamola
 
 		const std::shared_ptr<Engine> getEngine();
 		
-		uint32_t getId();
+		uint32_t getId() const;
 
+		bool operator<(const Pamola::Object&);
+
+		bool operator>(const Pamola::Object&);
+
+		bool operator<=(const Pamola::Object&);
+		
+		bool operator>=(const Pamola::Object&);
+		
+		bool operator==(const Pamola::Object&);
+
+		bool operator!=(const Pamola::Object&);
+		
 		virtual const std::vector<std::shared_ptr<Object>> getAdjacentComponents() = 0;
 
 		virtual Type getPamolaType() = 0;
@@ -47,4 +56,11 @@ namespace Pamola
 		virtual int getDegreesOfFreedom() = 0;
 
 	};
+	
+	bool operator<(const std::shared_ptr<Object>, const std::shared_ptr<Object>);
+	bool operator>(const std::shared_ptr<Object>, const std::shared_ptr<Object>);
+	bool operator<=(const std::shared_ptr<Object>, const std::shared_ptr<Object>);
+	bool operator>=(const std::shared_ptr<Object>, const std::shared_ptr<Object>);
+	bool operator==(const std::shared_ptr<Object>, const std::shared_ptr<Object>);
+	bool operator!=(const std::shared_ptr<Object>, const std::shared_ptr<Object>);
 }

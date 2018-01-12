@@ -114,12 +114,12 @@ namespace Pamola
 
 	const std::vector<std::shared_ptr<Object>> CircuitTerminal::getAdjacentComponents()
 	{
-		std::vector<std::shared_ptr<Object>> result(1 + isConnected());
+		std::vector<std::shared_ptr<Object>> result;
 
-		result.at(0) = static_cast<std::shared_ptr<Object>>(getElement());
+		result.push_back(getElement());
 
 		if (isConnected())
-			result.at(1) = node;
+			result.push_back(getNode());
 
 		return result;
 	}
