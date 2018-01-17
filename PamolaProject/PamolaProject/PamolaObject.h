@@ -30,7 +30,7 @@ namespace Pamola
 
 		virtual ~Object();
 
-		const std::set<uint32_t> & getConnectedComponents();
+		std::set<uint32_t> getConnectedComponents();
 
 	private:
 

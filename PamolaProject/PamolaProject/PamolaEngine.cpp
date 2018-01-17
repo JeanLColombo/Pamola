@@ -59,9 +59,11 @@ namespace Pamola
 	std::shared_ptr<Circuit> Engine::createCircuit(const std::vector<std::shared_ptr<Object>> elementList)
 	{
 		auto circuit = std::shared_ptr<Circuit>(new Circuit());
+		
+		mapObject(circuit);
 
 		circuit->setUp(elementList);
-		
+
 		return circuit;
 	}
 

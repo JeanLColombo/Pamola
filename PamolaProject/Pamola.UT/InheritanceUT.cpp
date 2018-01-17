@@ -25,6 +25,7 @@ namespace PamolaUT
 			auto obj = createElement<EmptyCircuitElementHolder>;
 		}
 	};
+
 	TEST_CLASS(PamolaObjectInheritance)
 	{
 		TEST_METHOD(RawCreationDestruction)
@@ -37,6 +38,7 @@ namespace PamolaUT
 			PamolaObjectHolder obj{};
 		}
 	};
+
 	TEST_CLASS(Connections)
 	{
 		TEST_METHOD(Connection1)
@@ -91,6 +93,7 @@ namespace PamolaUT
 			ele1->getLeft()->disconnect();
 		}
 	};
+
 	TEST_CLASS(EngineBehavior)
 	{
 		TEST_METHOD(MapSize)
@@ -147,6 +150,7 @@ namespace PamolaUT
 			}
 		}
 	};
+
 	TEST_CLASS(PamolaObjectComparators)
 	{
 		TEST_METHOD(OperatorLT)
@@ -255,13 +259,14 @@ namespace PamolaUT
 		}
 	
 	}; 
+
 	TEST_CLASS(CircuitBehavior)
 	{
 		TEST_METHOD(CreationBasic)
 		{
 			using namespace Pamola;
 			auto ele1 = createElement<CircuitElementHolder>();
-			ele1->getCircuit();
+			auto cir = ele1->getCircuit();
 			int engineSize = Engine::getLocalEngine()->getLocalObjects().size();
 			Assert::AreEqual(4,
 				engineSize,

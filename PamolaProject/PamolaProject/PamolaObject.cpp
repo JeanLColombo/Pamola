@@ -12,7 +12,7 @@ namespace Pamola
 	{
 	}
 
-	const std::set<uint32_t> & Object::getConnectedComponents()
+	std::set<uint32_t> Object::getConnectedComponents()
 	{
 		std::set<uint32_t> componentList{ getId() };
 
@@ -42,8 +42,9 @@ namespace Pamola
 			from(getConnectedComponents())
 			>> select([this](uint32_t i) {return getEngine()->getLocalObject(i); })
 			>> to_vector();
-		
+
 		return getEngine()->createCircuit(circuitList);
+		//return nullptr;
 	}
 
 	const std::shared_ptr<Engine> Object::getEngine()

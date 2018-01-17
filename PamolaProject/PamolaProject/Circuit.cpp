@@ -9,6 +9,8 @@ namespace Pamola
 
 	Circuit::~Circuit()
 	{
+		//elements = { nullptr };
+		//terminals = { nullptr };
 	}
 
 	const std::set<std::shared_ptr<Object>> Circuit::getElements()
