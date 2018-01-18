@@ -1,8 +1,10 @@
 #pragma once
 
-#include "CircuitTerminal.h"
 #include "PamolaObject.h"
 #include "CircuitElement.h"
+#include "CircuitTerminal.h"
+#include "CircuitNode.h"
+#include "Circuit.h"
 #include <memory>
 #include <map>
 #include <cassert>

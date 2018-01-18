@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Circuit.h"
+#include "CircuitTerminal.h"
 
 namespace Pamola
 {
@@ -9,8 +10,11 @@ namespace Pamola
 
 	Circuit::~Circuit()
 	{
-		//elements = { nullptr };
-		//terminals = { nullptr };
+	}
+
+	const std::set<std::shared_ptr<CircuitTerminal>> Circuit::getTerminals()
+	{
+		return terminals;
 	}
 
 	const std::set<std::shared_ptr<Object>> Circuit::getElements()
@@ -46,8 +50,8 @@ namespace Pamola
 			elements.insert(element);
 			if (element->getPamolaType() == Type::CircuitTerminal)
 			{
-				auto foundTerminal = std::shared_ptr<CircuitTerminal>(&dynamic_cast<CircuitTerminal &>(*element));
-
+				auto foundTerminal = std::dynamic_pointer_cast<CircuitTerminal>(element);
+				
 				if (!foundTerminal->isConnected())
 					terminals.insert(foundTerminal);
 			}

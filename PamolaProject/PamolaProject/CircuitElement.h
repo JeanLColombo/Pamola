@@ -1,7 +1,6 @@
 #pragma once
 
 #include "PamolaObject.h"
-#include "CircuitTerminal.h"
 #include <set>
 #include <vector>
 
@@ -13,7 +12,7 @@ namespace Pamola
 	{
 
 		friend class Engine;
-
+		
 	public:
 
 		using std::enable_shared_from_this<CircuitElement>::shared_from_this;

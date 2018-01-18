@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "PamolaEngine.h"
-#include "Circuit.h"
 
 namespace Pamola
 {

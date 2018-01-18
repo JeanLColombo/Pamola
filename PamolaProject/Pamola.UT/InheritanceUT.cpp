@@ -262,14 +262,79 @@ namespace PamolaUT
 
 	TEST_CLASS(CircuitBehavior)
 	{
-		TEST_METHOD(CreationBasic)
+		TEST_METHOD(CreationScoped)
 		{
 			using namespace Pamola;
 			auto ele1 = createElement<CircuitElementHolder>();
+			ele1->getCircuit();
+			int engineSize = Engine::getLocalEngine()->getLocalObjects().size();
+			Assert::AreEqual(3,
+				engineSize,
+				L"Circuit behaviour is abnormal - wrong object count",
+				LINE_INFO());
+		}
+		TEST_METHOD(CreationFromElement)
+		{
+			using namespace Pamola;
+			auto ele1 = createElement<CircuitElementHolder>();
+			auto ele2 = createElement<CircuitElementHolder>();
+			ele1->getRight()->connectTo(ele2->getRight());
+			ele1->getLeft()->connectTo(ele2->getLeft());
 			auto cir = ele1->getCircuit();
 			int engineSize = Engine::getLocalEngine()->getLocalObjects().size();
-			Assert::AreEqual(4,
+			Assert::AreEqual(9,
 				engineSize,
+				L"Circuit behaviour is abnormal - wrong object count",
+				LINE_INFO());
+		}
+		TEST_METHOD(CreationFromTerminal)
+		{
+			using namespace Pamola;
+			auto ele1 = createElement<CircuitElementHolder>();
+			auto ele2 = createElement<CircuitElementHolder>();
+			ele1->getRight()->connectTo(ele2->getRight());
+			ele1->getLeft()->connectTo(ele2->getLeft());
+			auto cir = ele1->getRight()->getCircuit();
+			int engineSize = Engine::getLocalEngine()->getLocalObjects().size();
+			Assert::AreEqual(9,
+				engineSize,
+				L"Circuit behaviour is abnormal - wrong object count",
+				LINE_INFO());
+		}
+		TEST_METHOD(CreationFromNode)
+		{
+			using namespace Pamola;
+			auto ele1 = createElement<CircuitElementHolder>();
+			auto ele2 = createElement<CircuitElementHolder>();
+			ele1->getRight()->connectTo(ele2->getRight());
+			ele1->getLeft()->connectTo(ele2->getLeft());
+			auto cir = ele1->getRight()->getNode()->getCircuit();
+			int engineSize = Engine::getLocalEngine()->getLocalObjects().size();
+			Assert::AreEqual(9,
+				engineSize,
+				L"Circuit behaviour is abnormal - wrong object count",
+				LINE_INFO());
+		}
+		TEST_METHOD(TerminalsForFurtherConnections)
+		{
+			using namespace Pamola;
+			auto ele1 = createElement<CircuitElementHolder>();
+			auto ele2 = createElement<CircuitElementHolder>();
+			auto cir1 = ele1->getCircuit();
+			ele1->getRight()->connectTo(ele2->getRight());
+			auto cir2 = ele1->getCircuit();
+			ele1->getLeft()->connectTo(ele2->getLeft());
+			auto cir3 = ele1->getCircuit();
+			Assert::AreEqual(2,
+				int(cir1->getTerminals().size()),
+				L"Circuit behaviour is abnormal - wrong object count",
+				LINE_INFO());
+			Assert::AreEqual(2,
+				int(cir2->getTerminals().size()),
+				L"Circuit behaviour is abnormal - wrong object count",
+				LINE_INFO());
+			Assert::AreEqual(0,
+				int(cir3->getTerminals().size()),
 				L"Circuit behaviour is abnormal - wrong object count",
 				LINE_INFO());
 		}

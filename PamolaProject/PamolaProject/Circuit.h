@@ -1,11 +1,13 @@
 #pragma 
 
 #include "PamolaObject.h"
-#include "CircuitElement.h"
 
 namespace Pamola
 {
 	
+	class Engine;
+	class CircuitTerminal;
+
 	class Circuit : public Object
 	{
 		
@@ -22,9 +24,11 @@ namespace Pamola
 	public:
 
 		~Circuit();
+		
+		const std::set<std::shared_ptr<CircuitTerminal>> getTerminals();
 
 		const std::set<std::shared_ptr<Object>> getElements();
-		
+
 		const std::set<uint32_t> getAdjacentComponents();
 
 		Type getPamolaType();

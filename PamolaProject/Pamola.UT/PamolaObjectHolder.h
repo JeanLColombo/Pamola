@@ -1,5 +1,5 @@
 #pragma once
-#include "..\PamolaProject\PamolaObject.h"
+#include "..\PamolaProject\PamolaEngine.h"
 class PamolaObjectHolder : public Pamola::Object
 {
 public:

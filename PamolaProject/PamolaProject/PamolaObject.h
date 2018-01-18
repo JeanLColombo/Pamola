@@ -7,6 +7,7 @@
 #include <cassert>
 #include <cpplinq.hpp>
 
+
 namespace Pamola
 {
 	class Engine;

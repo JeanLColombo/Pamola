@@ -6,6 +6,7 @@
 
 namespace Pamola
 {
+	class Engine;
 	class CircuitTerminal;
 
 	class CircuitNode : public Object, public std::enable_shared_from_this<CircuitNode>

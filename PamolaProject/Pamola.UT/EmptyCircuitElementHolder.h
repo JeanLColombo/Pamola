@@ -1,5 +1,5 @@
 #pragma once
-#include "..\PamolaProject\CircuitElement.h"
+#include "..\PamolaProject\PamolaEngine.h"
 
 class EmptyCircuitElementHolder : public Pamola::CircuitElement
 {
