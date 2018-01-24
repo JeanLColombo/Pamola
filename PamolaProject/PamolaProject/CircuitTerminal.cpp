@@ -1,6 +1,9 @@
 
 #include "stdafx.h"
 #include "CircuitTerminal.h"
+#include "CircuitElement.h"
+#include "CircuitNode.h"
+#include "PamolaEngine.h"
 
 namespace Pamola
 {
@@ -112,16 +115,16 @@ namespace Pamola
 		return static_cast<bool>(getNode());
 	}
 
-	const std::vector<std::shared_ptr<Object>> CircuitTerminal::getAdjacentComponents()
+	const std::set<uint32_t> CircuitTerminal::getAdjacentComponents()
 	{
-		std::vector<std::shared_ptr<Object>> result(1 + isConnected());
+		std::set<uint32_t> adjComponents;
 
-		result.at(0) = static_cast<std::shared_ptr<Object>>(getElement());
+		adjComponents.insert(getElement()->getId());
 
 		if (isConnected())
-			result.at(1) = node;
+			adjComponents.insert(getNode()->getId());
 
-		return result;
+		return adjComponents;
 	}
 
 	Type CircuitTerminal::getPamolaType()

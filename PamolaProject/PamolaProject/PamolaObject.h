@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Circuit.h"
 #include "PamolaTypes.h"
 #include <set>
 #include <vector>
@@ -12,13 +11,12 @@
 namespace Pamola
 {
 	class Engine;
+	class Circuit;
 
 	class Object
 	{
 		friend class Engine;
-
-		// TODO: Check enable_shared_from_thiss usage
-
+		
 	private:
 		
 		uint32_t id;
@@ -34,17 +32,43 @@ namespace Pamola
 		virtual ~Object();
 
 		std::set<uint32_t> getConnectedComponents();
-		std::set<uint32_t> getConnectedComponents(std::set<uint32_t>);
+
+	private:
+
+		std::set<uint32_t> & getConnectedComponents(std::set<uint32_t> &);
+
+	public:
+
+		std::shared_ptr<Circuit> getCircuit();
 
 		const std::shared_ptr<Engine> getEngine();
 		
-		uint32_t getId();
+		uint32_t getId() const;
 
-		virtual const std::vector<std::shared_ptr<Object>> getAdjacentComponents() = 0;
+		bool operator<(const Pamola::Object&);
+
+		bool operator>(const Pamola::Object&);
+
+		bool operator<=(const Pamola::Object&);
+		
+		bool operator>=(const Pamola::Object&);
+		
+		bool operator==(const Pamola::Object&);
+
+		bool operator!=(const Pamola::Object&);
+		
+		virtual const std::set<uint32_t> getAdjacentComponents() = 0;
 
 		virtual Type getPamolaType() = 0;
 
 		virtual int getDegreesOfFreedom() = 0;
 
 	};
+	
+	bool operator<(const std::shared_ptr<Object>, const std::shared_ptr<Object>);
+	bool operator>(const std::shared_ptr<Object>, const std::shared_ptr<Object>);
+	bool operator<=(const std::shared_ptr<Object>, const std::shared_ptr<Object>);
+	bool operator>=(const std::shared_ptr<Object>, const std::shared_ptr<Object>);
+	bool operator==(const std::shared_ptr<Object>, const std::shared_ptr<Object>);
+	bool operator!=(const std::shared_ptr<Object>, const std::shared_ptr<Object>);
 }

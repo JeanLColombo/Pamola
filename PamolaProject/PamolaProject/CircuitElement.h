@@ -1,7 +1,7 @@
 #pragma once
 
 #include "PamolaObject.h"
-#include "CircuitTerminal.h"
+#include <set>
 #include <vector>
 
 namespace Pamola
@@ -12,7 +12,7 @@ namespace Pamola
 	{
 
 		friend class Engine;
-
+		
 	public:
 
 		using std::enable_shared_from_this<CircuitElement>::shared_from_this;
@@ -37,7 +37,7 @@ namespace Pamola
 
 		const std::shared_ptr<CircuitTerminal> getTerminal(uint32_t);
 
-		const std::vector<std::shared_ptr<Object>> getAdjacentComponents();
+		const std::set<uint32_t> getAdjacentComponents();
 
 		Type getPamolaType();
 
@@ -46,4 +46,12 @@ namespace Pamola
 		virtual int getDegreesOfFreedom() = 0;
 
 	};
+	
+	bool operator<(const std::shared_ptr<CircuitElement>, const std::shared_ptr<CircuitElement>);
+	bool operator>(const std::shared_ptr<CircuitElement>, const std::shared_ptr<CircuitElement>);
+	bool operator<=(const std::shared_ptr<CircuitElement>, const std::shared_ptr<CircuitElement>);
+	bool operator>=(const std::shared_ptr<CircuitElement>, const std::shared_ptr<CircuitElement>);
+	bool operator==(const std::shared_ptr<CircuitElement>, const std::shared_ptr<CircuitElement>);
+	bool operator!=(const std::shared_ptr<CircuitElement>, const std::shared_ptr<CircuitElement>);
+
 }

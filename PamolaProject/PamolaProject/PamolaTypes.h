@@ -11,7 +11,7 @@ namespace Pamola
 		CircuitElement,
 		CircuitTerminal,
 		CircuitNode,
-		Circut,
+		Circuit,
 		Other,
 		Error
 	};

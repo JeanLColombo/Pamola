@@ -1,12 +1,12 @@
 #pragma once
-#include "..\PamolaProject\PamolaObject.h"
+#include "..\PamolaProject\PamolaEngine.h"
 class PamolaObjectHolder : public Pamola::Object
 {
 public:
 	PamolaObjectHolder();
 	~PamolaObjectHolder();
 
-	const std::vector<std::shared_ptr<Pamola::Object>> getAdjacentComponents();
+	const std::set<uint32_t> getAdjacentComponents();
 
 	Pamola::Type getPamolaType();
 

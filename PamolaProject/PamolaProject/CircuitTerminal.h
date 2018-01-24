@@ -1,14 +1,16 @@
 #pragma once
 
-#include "CircuitNode.h"
 #include "PamolaObject.h"
-#include "PamolaEngine.h"
-#include "CircuitElement.h"
 #include <complex>
 #include <algorithm>
 
 namespace Pamola
 {
+
+	class Engine;
+	class CircuitNode;
+	class CircuitElement;
+
 	class CircuitTerminal : public Object, public std::enable_shared_from_this<CircuitTerminal>
 	{
 
@@ -43,7 +45,7 @@ namespace Pamola
 		bool disconnect();
 		bool isConnected();
 
-		const std::vector<std::shared_ptr<Object>> getAdjacentComponents();
+		const std::set<uint32_t> getAdjacentComponents();
 
 		Type getPamolaType();
 

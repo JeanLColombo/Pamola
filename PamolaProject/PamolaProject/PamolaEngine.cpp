@@ -40,6 +40,7 @@ namespace Pamola
 	{
 		return getLocalObjects()[id];
 	}
+
 	std::vector<std::shared_ptr<CircuitTerminal>> Engine::createTerminalsFor(std::shared_ptr<CircuitElement> element)
 	{
 		std::vector<std::shared_ptr<CircuitTerminal>> result;
@@ -53,6 +54,18 @@ namespace Pamola
 
 		return result;
 	}
+
+	std::shared_ptr<Circuit> Engine::createCircuit(const std::vector<std::shared_ptr<Object>> elementList)
+	{
+		auto circuit = std::shared_ptr<Circuit>(new Circuit());
+		
+		mapObject(circuit);
+
+		circuit->setUp(elementList);
+
+		return circuit;
+	}
+
 	std::shared_ptr<CircuitNode> Engine::createNode()
 	{
 		std::shared_ptr<CircuitNode> node(new CircuitNode);

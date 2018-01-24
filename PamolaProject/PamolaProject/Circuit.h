@@ -1,23 +1,41 @@
 #pragma 
 
 #include "PamolaObject.h"
-/*
-class Circuit :	public PamolaObject {
+
+namespace Pamola
+{
 	
-protected:
+	class Engine;
+	class CircuitTerminal;
 
-	Circuit(std::vector<PamolaObject*>);
-	~Circuit();
+	class Circuit : public Object
+	{
+		
+		friend class Engine;
 
-private:
+	private:
 
-	const std::vector<PamolaObject*> components;
+		std::set<std::shared_ptr<Object>> elements;
 
-public:
+		std::set<std::shared_ptr<CircuitTerminal>> terminals;
 
-	std::vector<PamolaObject*> getComponents();
+		Circuit();
 
-	//TODO: Override virtual functions
+	public:
 
-};
-*/
+		~Circuit();
+		
+		const std::set<std::shared_ptr<CircuitTerminal>> getTerminals();
+
+		const std::set<std::shared_ptr<Object>> getElements();
+
+		const std::set<uint32_t> getAdjacentComponents();
+
+		Type getPamolaType();
+
+		int getDegreesOfFreedom();
+
+		void setUp(const std::vector<std::shared_ptr<Object>> &);
+	};
+
+}

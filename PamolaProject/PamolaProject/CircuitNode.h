@@ -6,6 +6,7 @@
 
 namespace Pamola
 {
+	class Engine;
 	class CircuitTerminal;
 
 	class CircuitNode : public Object, public std::enable_shared_from_this<CircuitNode>
@@ -37,7 +38,7 @@ namespace Pamola
 
 		bool setVoltage(std::complex<double>);
 
-		const std::vector<std::shared_ptr<Object>> getAdjacentComponents();
+		const std::set<uint32_t> getAdjacentComponents();
 
 		Type getPamolaType();
 

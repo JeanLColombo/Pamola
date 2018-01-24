@@ -9,9 +9,9 @@ PamolaObjectHolder::~PamolaObjectHolder()
 {
 }
 
-const std::vector<std::shared_ptr<Pamola::Object>> PamolaObjectHolder::getAdjacentComponents()
+const std::set<uint32_t> PamolaObjectHolder::getAdjacentComponents()
 {
-	return { nullptr };
+	return std::set<uint32_t>();
 }
 
 Pamola::Type PamolaObjectHolder::getPamolaType()
