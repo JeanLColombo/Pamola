@@ -3,8 +3,11 @@
 #include "PamolaTypes.h"
 #include <set>
 #include <vector>
+#include <string>
 #include <memory>
+#include <complex>
 #include <cassert>
+#include <functional>
 #include <cpplinq.hpp>
 
 
@@ -57,6 +60,10 @@ namespace Pamola
 
 		bool operator!=(const Pamola::Object&);
 		
+		virtual	std::vector<std::function<std::complex<double>(std::map<std::string, std::complex<double>>)>> getEquations();
+
+		virtual std::set<std::string> getVariables() = 0;
+
 		virtual const std::set<uint32_t> getAdjacentComponents() = 0;
 
 		virtual Type getPamolaType() = 0;

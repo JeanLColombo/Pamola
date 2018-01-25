@@ -7,5 +7,7 @@ public:
 	EmptyCircuitElementHolder();
 	~EmptyCircuitElementHolder();
 
+	std::set<std::string> getVariables();
+
 	int getDegreesOfFreedom();
 };

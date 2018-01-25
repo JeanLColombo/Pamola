@@ -26,10 +26,13 @@ namespace Pamola
 		std::complex<double> current = 0.0;
 
 		CircuitTerminal(std::weak_ptr<CircuitElement>);
-
+		
 	public:
 
 		~CircuitTerminal();
+
+		std::string getVoltageVariable();
+		std::string getCurrentVariable();
 
 		const std::shared_ptr<CircuitElement> getElement();
 
@@ -44,6 +47,8 @@ namespace Pamola
 		bool setCurrent(std::complex<double>);
 		bool disconnect();
 		bool isConnected();
+		
+		std::set<std::string> getVariables();
 
 		const std::set<uint32_t> getAdjacentComponents();
 

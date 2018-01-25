@@ -22,6 +22,31 @@ namespace Pamola
 		return elements;
 	}
 
+	std::vector<std::function<std::complex<double>(std::map<std::string, std::complex<double>>)>> Circuit::getEquations()
+	{
+		std::vector<std::function<std::complex<double>(std::map<std::string, std::complex<double>>)>> equations;
+
+		for (auto &element : elements)
+			for (auto &equation : element->getEquations())
+				equations.push_back(equation);
+
+		return equations;
+	}
+
+	std::set<std::string> Circuit::getVariables()
+	{
+		std::set<std::string> setOfVariables;
+		for (auto &element : elements)
+		{
+			for (auto &variable : element->getVariables())
+			{
+				setOfVariables.insert((std::to_string(element->getId()) + "." + variable));
+			}
+		}
+
+		return setOfVariables;
+	}
+
 	const std::set<uint32_t> Circuit::getAdjacentComponents()
 	{
 		//TODO: Check what we desire to output from this method

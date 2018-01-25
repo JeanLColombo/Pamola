@@ -29,6 +29,10 @@ namespace Pamola
 
 		const std::set<std::shared_ptr<Object>> getElements();
 
+		std::vector<std::function<std::complex<double>(std::map<std::string, std::complex<double>>)>> getEquations();
+
+		std::set<std::string> getVariables();
+		
 		const std::set<uint32_t> getAdjacentComponents();
 
 		Type getPamolaType();
