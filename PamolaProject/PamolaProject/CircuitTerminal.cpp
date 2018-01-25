@@ -17,6 +17,16 @@ namespace Pamola
 		disconnect();
 	}
 
+	std::string CircuitTerminal::getVoltageVariable()
+	{
+		return isConnected() ? (std::to_string(getNode()->getId()) + ".E") : (getId() + ".E");
+	}
+
+	std::string CircuitTerminal::getCurrentVariable()
+	{
+		return std::to_string(getId()) + ".I";
+	}
+
 	const std::shared_ptr<CircuitElement> CircuitTerminal::getElement()
 	{
 		return element.lock();

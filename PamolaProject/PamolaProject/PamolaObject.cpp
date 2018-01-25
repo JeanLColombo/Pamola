@@ -44,7 +44,6 @@ namespace Pamola
 			>> to_vector();
 
 		return getEngine()->createCircuit(circuitList);
-		//return nullptr;
 	}
 
 	const std::shared_ptr<Engine> Object::getEngine()
@@ -85,6 +84,11 @@ namespace Pamola
 	bool Object::operator!=(const Pamola::Object &o)
 	{
 		return getId() != o.getId();
+	}
+
+	std::vector<std::function<std::complex<double>(std::map<std::string, std::complex<double>>)>> Object::getEquations()
+	{
+		return {};
 	}
 
 	Type Object::getPamolaType()

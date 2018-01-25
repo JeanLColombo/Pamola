@@ -387,5 +387,130 @@ namespace PamolaUT
 				Logger::WriteMessage(variable.c_str());
 			}
 		}
+
+		TEST_METHOD(RealSystemCreation)
+		{
+			using namespace Pamola;
+			auto res = createElement<Resistor>();
+			auto vdc = createElement<IdealDCSource>();
+			vdc->getPositive()->connectTo(res->getLeft());
+			vdc->getNegative()->connectTo(res->getRight());
+			auto cir = vdc->getCircuit();
+		}
+		TEST_METHOD(RealSystemEquationCount)
+		{
+			using namespace Pamola;
+			auto res = createElement<Resistor>();
+			auto vdc = createElement<IdealDCSource>();
+			vdc->getPositive()->connectTo(res->getLeft());
+			vdc->getNegative()->connectTo(res->getRight());
+			auto cir = vdc->getCircuit();
+			Logger::WriteMessage("Number of Variables in Circuit:");
+			Logger::WriteMessage(std::to_string(cir->getVariables().size()).c_str());
+			Logger::WriteMessage("Number of Equations in Circuit:");
+			Logger::WriteMessage(std::to_string(cir->getEquations().size()).c_str());
+		}
+		TEST_METHOD(RealSystemEquationEvaluation1)
+		{
+			using namespace Pamola;
+			auto res = createElement<Resistor>();
+			auto vdc = createElement<IdealDCSource>();
+			vdc->getPositive()->connectTo(res->getLeft());
+			vdc->getNegative()->connectTo(res->getRight());
+			auto cir = vdc->getCircuit();
+			res->setResistance(2.0);
+			vdc->setVoltage(10.0);
+			std::map<std::string, std::complex<double>> mapOfVariables;
+			mapOfVariables[res->getResistanceVariable()] = 2.0;
+			mapOfVariables[res->getLeft()->getCurrentVariable()] = 5.0;
+			mapOfVariables[res->getRight()->getCurrentVariable()] = -5.0;
+			mapOfVariables[vdc->getVoltageVariable()] = 10.0;
+			mapOfVariables[vdc->getLeft()->getCurrentVariable()] = -5.0;
+			mapOfVariables[vdc->getRight()->getCurrentVariable()] = 5.0;
+			mapOfVariables[vdc->getPositive()->getVoltageVariable()] = 10.0;
+			mapOfVariables[vdc->getNegative()->getVoltageVariable()] = 0.0;
+			Logger::WriteMessage("Evaluation 1 [Must be 0]:");
+			for (auto &equation : cir->getEquations())
+			{
+				Logger::WriteMessage(std::to_string(equation(mapOfVariables).real()).c_str());
+			}
+		}
+		TEST_METHOD(RealSystemEquationEvaluation2)
+		{
+			using namespace Pamola;
+			auto res = createElement<Resistor>();
+			auto vdc = createElement<IdealDCSource>();
+			vdc->getPositive()->connectTo(res->getLeft());
+			vdc->getNegative()->connectTo(res->getRight());
+			auto cir = vdc->getCircuit();
+			res->setResistance(2.0);
+			vdc->setVoltage(10.0);
+			std::map<std::string, std::complex<double>> mapOfVariables;
+			mapOfVariables[res->getResistanceVariable()] = 2.0;
+			mapOfVariables[res->getLeft()->getCurrentVariable()] = 5.0;
+			mapOfVariables[res->getRight()->getCurrentVariable()] = -5.0;
+			mapOfVariables[vdc->getVoltageVariable()] = 10.0;
+			mapOfVariables[vdc->getLeft()->getCurrentVariable()] = -5.0;
+			mapOfVariables[vdc->getRight()->getCurrentVariable()] = 5.0;
+			mapOfVariables[vdc->getPositive()->getVoltageVariable()] = 24.0;
+			mapOfVariables[vdc->getNegative()->getVoltageVariable()] = 14.0;
+			Logger::WriteMessage("Evaluation 2 [Must be 0]:");
+			for (auto &equation : cir->getEquations())
+			{
+				Logger::WriteMessage(std::to_string(equation(mapOfVariables).real()).c_str());
+			}
+		}
+		TEST_METHOD(RealSystemEquationEvaluation3)
+		{
+			using namespace Pamola;
+			auto res = createElement<Resistor>();
+			auto vdc = createElement<IdealDCSource>();
+			vdc->getPositive()->connectTo(res->getLeft());
+			vdc->getNegative()->connectTo(res->getRight());
+			auto cir = vdc->getCircuit();
+			res->setResistance(2.0);
+			vdc->setVoltage(10.0);
+			std::map<std::string, std::complex<double>> mapOfVariables;
+			mapOfVariables[res->getResistanceVariable()] = 2.0;
+			mapOfVariables[res->getLeft()->getCurrentVariable()] = 5.0;
+			mapOfVariables[res->getRight()->getCurrentVariable()] = -5.0;
+			mapOfVariables[vdc->getVoltageVariable()] = 10.0;
+			mapOfVariables[vdc->getLeft()->getCurrentVariable()] = -5.0;
+			mapOfVariables[vdc->getRight()->getCurrentVariable()] = 12.0;
+			mapOfVariables[vdc->getPositive()->getVoltageVariable()] = 20.0;
+			mapOfVariables[vdc->getNegative()->getVoltageVariable()] = 0.0;
+			Logger::WriteMessage("Evaluation 3 [Must NOT be 0]:");
+			for (auto &equation : cir->getEquations())
+			{
+				Logger::WriteMessage(std::to_string(equation(mapOfVariables).real()).c_str());
+			}
+		}
+		TEST_METHOD(RealSystemEquationEvaluation4)
+		{
+			using namespace Pamola;
+			auto res = createElement<Resistor>();
+			auto vdc = createElement<IdealDCSource>();
+			auto gnd = createElement<Ground>();
+			vdc->getPositive()->connectTo(res->getLeft());
+			vdc->getNegative()->connectTo(res->getRight());
+			gnd->getTerminal()->connectTo(vdc->getNegative());
+			auto cir = vdc->getCircuit();
+			res->setResistance(2.0);
+			vdc->setVoltage(10.0);
+			std::map<std::string, std::complex<double>> mapOfVariables;
+			mapOfVariables[res->getResistanceVariable()] = 2.0;
+			mapOfVariables[res->getLeft()->getCurrentVariable()] = 5.0;
+			mapOfVariables[res->getRight()->getCurrentVariable()] = -5.0;
+			mapOfVariables[vdc->getVoltageVariable()] = 10.0;
+			mapOfVariables[vdc->getLeft()->getCurrentVariable()] = -5.0;
+			mapOfVariables[vdc->getRight()->getCurrentVariable()] = 5.0;
+			mapOfVariables[vdc->getPositive()->getVoltageVariable()] = 24.0;
+			mapOfVariables[vdc->getNegative()->getVoltageVariable()] = 14.0;
+			Logger::WriteMessage("Evaluation 4 [Must NOT be 0]:");
+			for (auto &equation : cir->getEquations())
+			{
+				Logger::WriteMessage(std::to_string(equation(mapOfVariables).real()).c_str());
+			}
+		}
 	};
 }

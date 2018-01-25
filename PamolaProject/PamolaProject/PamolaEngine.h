@@ -5,6 +5,10 @@
 #include "CircuitTerminal.h"
 #include "CircuitNode.h"
 #include "Circuit.h"
+#include "Dipole.h"
+#include "Resistor.h"
+#include "IdealDCSource.h"
+#include "Ground.h"
 #include <memory>
 #include <map>
 #include <cassert>

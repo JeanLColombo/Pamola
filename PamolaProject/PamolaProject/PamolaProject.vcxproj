@@ -155,9 +155,13 @@
     <ClInclude Include="CircuitElement.h" />
     <ClInclude Include="CircuitNode.h" />
     <ClInclude Include="CircuitTerminal.h" />
+    <ClInclude Include="Dipole.h" />
+    <ClInclude Include="Ground.h" />
+    <ClInclude Include="IdealDCSource.h" />
     <ClInclude Include="PamolaEngine.h" />
     <ClInclude Include="PamolaObject.h" />
     <ClInclude Include="PamolaTypes.h" />
+    <ClInclude Include="Resistor.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
@@ -172,7 +176,10 @@
     <ClCompile Include="CircuitTerminal.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Dipole.cpp" />
     <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="Ground.cpp" />
+    <ClCompile Include="IdealDCSource.cpp" />
     <ClCompile Include="PamolaEngine.cpp" />
     <ClCompile Include="PamolaObject.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
@@ -180,6 +187,7 @@
     <ClCompile Include="PamolaProject.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Resistor.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
