@@ -6,6 +6,8 @@ public:
 	PamolaObjectHolder();
 	~PamolaObjectHolder();
 
+	std::set<std::string> getVariables();
+
 	const std::set<uint32_t> getAdjacentComponents();
 
 	Pamola::Type getPamolaType();

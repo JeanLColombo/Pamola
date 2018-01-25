@@ -45,6 +45,8 @@ namespace Pamola
 		bool disconnect();
 		bool isConnected();
 
+		std::set<std::string> getVariables();
+
 		const std::set<uint32_t> getAdjacentComponents();
 
 		Type getPamolaType();

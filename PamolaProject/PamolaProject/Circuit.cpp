@@ -22,6 +22,20 @@ namespace Pamola
 		return elements;
 	}
 
+	std::set<std::string> Circuit::getVariables()
+	{
+		std::set<std::string> setOfVariables;
+		for (auto &element : elements)
+		{
+			for (auto &variable : element->getVariables())
+			{
+				setOfVariables.insert((std::to_string(element->getId()) + "." + variable));
+			}
+		}
+
+		return setOfVariables;
+	}
+
 	const std::set<uint32_t> Circuit::getAdjacentComponents()
 	{
 		//TODO: Check what we desire to output from this method

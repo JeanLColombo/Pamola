@@ -9,6 +9,11 @@ PamolaObjectHolder::~PamolaObjectHolder()
 {
 }
 
+std::set<std::string> PamolaObjectHolder::getVariables()
+{
+	return {};
+}
+
 const std::set<uint32_t> PamolaObjectHolder::getAdjacentComponents()
 {
 	return std::set<uint32_t>();

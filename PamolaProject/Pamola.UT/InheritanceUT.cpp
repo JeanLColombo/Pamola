@@ -338,5 +338,54 @@ namespace PamolaUT
 				L"Circuit behaviour is abnormal - wrong object count",
 				LINE_INFO());
 		}
-	};	
+	};
+
+	TEST_CLASS(EquationSystemGeneration)
+	{
+		TEST_METHOD(GetVariables)
+		{
+			using namespace Pamola;
+			auto ele1 = createElement<CircuitElementHolder>();
+			auto ele2 = createElement<CircuitElementHolder>();
+			ele1->getLeft()->connectTo(ele2->getLeft());
+			auto cir = ele1->getCircuit();
+
+			Logger::WriteMessage("List of Circuit Components:");
+			for (auto &element : cir->getElements())
+			{
+				std::string component{ std::to_string(element->getId()) + " = " };
+				switch (element->getPamolaType())
+				{
+				case Pamola::Type::CircuitElement:
+					component += "Element";
+					break;
+				case Pamola::Type::CircuitTerminal:
+					component += "Terminal";
+					break;
+				case Pamola::Type::CircuitNode:
+					component += "Node";
+					break;
+				case Pamola::Type::Circuit:
+					component += "Circuit";
+					break;
+				case Pamola::Type::Other:
+					component += "Other";
+					break;
+				case Pamola::Type::Error:
+					component += "Error";
+					break;
+				default:
+					component += "Default";
+					break;
+				}
+				Logger::WriteMessage(component.c_str());
+			}
+
+			Logger::WriteMessage("List of Variables:");
+			for (auto variable : cir->getVariables())
+			{
+				Logger::WriteMessage(variable.c_str());
+			}
+		}
+	};
 }

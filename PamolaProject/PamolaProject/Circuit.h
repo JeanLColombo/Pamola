@@ -29,6 +29,8 @@ namespace Pamola
 
 		const std::set<std::shared_ptr<Object>> getElements();
 
+		std::set<std::string> getVariables();
+		
 		const std::set<uint32_t> getAdjacentComponents();
 
 		Type getPamolaType();

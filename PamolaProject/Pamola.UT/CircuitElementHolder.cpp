@@ -20,6 +20,11 @@ std::shared_ptr<Pamola::CircuitTerminal> CircuitElementHolder::getRight()
 	return getTerminal(1);
 }
 
+std::set<std::string> CircuitElementHolder::getVariables()
+{
+	return { "R" };
+}
+
 int CircuitElementHolder::getDegreesOfFreedom()
 {
 	return 2;

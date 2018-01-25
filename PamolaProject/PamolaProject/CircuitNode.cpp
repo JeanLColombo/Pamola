@@ -55,6 +55,11 @@ namespace Pamola
 		return true;
 	}
 
+	std::set<std::string> CircuitNode::getVariables()
+	{
+		return { "E" };
+	}
+
 	const std::set<uint32_t> CircuitNode::getAdjacentComponents()
 	{
 		std::set<uint32_t> adjComponents;

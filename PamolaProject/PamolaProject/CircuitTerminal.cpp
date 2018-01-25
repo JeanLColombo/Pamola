@@ -115,6 +115,14 @@ namespace Pamola
 		return static_cast<bool>(getNode());
 	}
 
+	std::set<std::string> CircuitTerminal::getVariables()
+	{
+		if (isConnected())
+			return { "I" };
+
+		return { "E","I" };
+	}
+
 	const std::set<uint32_t> CircuitTerminal::getAdjacentComponents()
 	{
 		std::set<uint32_t> adjComponents;
