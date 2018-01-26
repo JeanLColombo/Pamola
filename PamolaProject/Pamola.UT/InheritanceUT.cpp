@@ -351,9 +351,10 @@ namespace PamolaUT
 			auto cir = ele1->getCircuit();
 
 			Logger::WriteMessage("List of Circuit Components:");
+			std::string component;
 			for (auto &element : cir->getElements())
 			{
-				std::string component{ std::to_string(element->getId()) + " = " };
+				component = std::to_string(element->getId()) + " = ";
 				switch (element->getPamolaType())
 				{
 				case Pamola::Type::CircuitElement:
@@ -510,6 +511,133 @@ namespace PamolaUT
 			for (auto &equation : cir->getEquations())
 			{
 				Logger::WriteMessage(std::to_string(equation(mapOfVariables).real()).c_str());
+			}
+		}
+	};
+
+	TEST_CLASS(Dipole)
+	{
+		TEST_METHOD(OperatorSeries)
+		{
+			using namespace Pamola;
+			auto R1 = createElement<Resistor>();
+			auto R2 = createElement<Resistor>();
+			auto cir = (R1 + R2)->getCircuit();
+			Logger::WriteMessage("List of Circuit Components:");
+			std::string component;
+			for (auto &element : cir->getElements())
+			{
+				component = std::to_string(element->getId()) + " = ";
+				switch (element->getPamolaType())
+				{
+				case Pamola::Type::CircuitElement:
+					component += "Element";
+					break;
+				case Pamola::Type::CircuitTerminal:
+					component += "Terminal";
+					break;
+				case Pamola::Type::CircuitNode:
+					component += "Node";
+					break;
+				case Pamola::Type::Circuit:
+					component += "Circuit";
+					break;
+				case Pamola::Type::Other:
+					component += "Other";
+					break;
+				case Pamola::Type::Error:
+					component += "Error";
+					break;
+				default:
+					component += "Default";
+					break;
+				}
+				Logger::WriteMessage(component.c_str());
+			}
+		}
+		TEST_METHOD(OperatorParallel)
+		{
+			using namespace Pamola;
+			auto R1 = createElement<Resistor>();
+			auto R2 = createElement<Resistor>();
+			R1 || R2;
+			auto cir = R1->getCircuit();
+			Logger::WriteMessage("List of Circuit Components:");
+			std::string component;
+			for (auto &element : cir->getElements())
+			{
+				component = std::to_string(element->getId()) + " = ";
+				switch (element->getPamolaType())
+				{
+				case Pamola::Type::CircuitElement:
+					component += "Element";
+					break;
+				case Pamola::Type::CircuitTerminal:
+					component += "Terminal";
+					break;
+				case Pamola::Type::CircuitNode:
+					component += "Node";
+					break;
+				case Pamola::Type::Circuit:
+					component += "Circuit";
+					break;
+				case Pamola::Type::Other:
+					component += "Other";
+					break;
+				case Pamola::Type::Error:
+					component += "Error";
+					break;
+				default:
+					component += "Default";
+					break;
+				}
+				Logger::WriteMessage(component.c_str());
+			}
+		}
+		TEST_METHOD(ComplexCircuitCreation)
+		{
+			using namespace Pamola;
+			auto R1 = createElement<Resistor>();
+			auto R2 = createElement<Resistor>();
+			auto R3 = createElement<Resistor>();
+			auto R4 = createElement<Resistor>();
+			R1->setResistance(1);
+			R2->setResistance(2);
+			R3->setResistance(3);
+			R4->setResistance(4);
+			auto V1 = createElement<IdealDCSource>();
+			V1 + (R1 || R2);
+			auto cir = V1->getCircuit();
+			Logger::WriteMessage("List of Circuit Components:");
+			std::string component;
+			for (auto &element : cir->getElements())
+			{
+				component = std::to_string(element->getId()) + " = ";
+				switch (element->getPamolaType())
+				{
+				case Pamola::Type::CircuitElement:
+					component += "Element";
+					break;
+				case Pamola::Type::CircuitTerminal:
+					component += "Terminal";
+					break;
+				case Pamola::Type::CircuitNode:
+					component += "Node";
+					break;
+				case Pamola::Type::Circuit:
+					component += "Circuit";
+					break;
+				case Pamola::Type::Other:
+					component += "Other";
+					break;
+				case Pamola::Type::Error:
+					component += "Error";
+					break;
+				default:
+					component += "Default";
+					break;
+				}
+				Logger::WriteMessage(component.c_str());
 			}
 		}
 	};

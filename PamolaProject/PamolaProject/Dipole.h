@@ -22,5 +22,18 @@ namespace Pamola {
 		virtual std::set<std::string> getVariables() = 0;
 
 		virtual int getDegreesOfFreedom() = 0;
+
+		friend std::shared_ptr<Dipole> operator+(std::shared_ptr<Dipole>, std::shared_ptr<Dipole>);
+
+		template <class T>
+		friend std::shared_ptr<Dipole> operator||(std::shared_ptr<T>, std::shared_ptr<T>);
+
 	};
+
+	template<class T>
+	std::shared_ptr<Dipole> operator||(std::shared_ptr<T> firstDipole, std::shared_ptr<T> secondDipole)
+	{
+		return firstDipole + secondDipole + firstDipole;
+	}
+
 }
