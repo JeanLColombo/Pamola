@@ -28,11 +28,16 @@ namespace Pamola {
 		return [this](std::map<std::string, std::complex<double>> m) {
 			return m[std::to_string(getLeft()->getId()) + ".I"]	+ m[std::to_string(getRight()->getId()) + ".I"]; };
 	}
-		
-	std::shared_ptr<Dipole> operator+(std::shared_ptr<Dipole> firstDipole, std::shared_ptr<Dipole> secondDipole)
+
+	void Dipole::connectInSeriesTo(std::shared_ptr<Dipole> dipole)
 	{
-		firstDipole->getRight()->connectTo(secondDipole->getLeft());
-		return secondDipole;
+		getRight()->connectTo(dipole->getLeft());
 	}
 
+	void Dipole::connectInParallelTo(std::shared_ptr<Dipole> dipole)
+	{
+		getRight()->connectTo(dipole->getRight());
+		getLeft()->connectTo(dipole->getLeft());
+	}
+	
 }

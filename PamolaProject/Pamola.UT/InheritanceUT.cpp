@@ -388,7 +388,6 @@ namespace PamolaUT
 				Logger::WriteMessage(variable.c_str());
 			}
 		}
-
 		TEST_METHOD(RealSystemCreation)
 		{
 			using namespace Pamola;
@@ -560,7 +559,7 @@ namespace PamolaUT
 			using namespace Pamola;
 			auto R1 = createElement<Resistor>();
 			auto R2 = createElement<Resistor>();
-			R1 || R2;
+			R1 / R2;
 			auto cir = R1->getCircuit();
 			Logger::WriteMessage("List of Circuit Components:");
 			std::string component;
@@ -606,8 +605,7 @@ namespace PamolaUT
 			R3->setResistance(3);
 			R4->setResistance(4);
 			auto V1 = createElement<IdealDCSource>();
-			V1 + (R1 || R2);
-			auto cir = V1->getCircuit();
+			auto cir = (V1 + R1 / R2 + R3 / R4 + V1)->getCircuit();
 			Logger::WriteMessage("List of Circuit Components:");
 			std::string component;
 			for (auto &element : cir->getElements())
@@ -639,6 +637,72 @@ namespace PamolaUT
 				}
 				Logger::WriteMessage(component.c_str());
 			}
+		}
+		TEST_METHOD(WheatstoneBridge1)
+		{
+			using namespace Pamola;
+			auto R1 = createElement<Resistor>();
+			auto R2 = createElement<Resistor>();
+			auto R3 = createElement<Resistor>();
+			auto R4 = createElement<Resistor>();
+			auto Rb = createElement<Resistor>();
+			auto V1 = createElement<IdealDCSource>();
+			R1->setResistance(1);
+			R2->setResistance(2);
+			R3->setResistance(3);
+			R4->setResistance(4);
+			Rb->setResistance(500);
+			V1->setVoltage(12);
+			auto cir = (R1 + Rb + R4 + V1 + R1 + R2 + R4 + R3 + R1)->getCircuit();
+			Logger::WriteMessage("List of Circuit Components:");
+			std::string component;
+			for (auto &element : cir->getElements())
+			{
+				component = std::to_string(element->getId()) + " = ";
+				switch (element->getPamolaType())
+				{
+				case Pamola::Type::CircuitElement:
+					component += "Element";
+					break;
+				case Pamola::Type::CircuitTerminal:
+					component += "Terminal";
+					break;
+				case Pamola::Type::CircuitNode:
+					component += "Node";
+					break;
+				case Pamola::Type::Circuit:
+					component += "Circuit";
+					break;
+				case Pamola::Type::Other:
+					component += "Other";
+					break;
+				case Pamola::Type::Error:
+					component += "Error";
+					break;
+				default:
+					component += "Default";
+					break;
+				}
+				Logger::WriteMessage(component.c_str());
+			}
+		}
+		TEST_METHOD(WheatstoneBridge2)
+		{
+			using namespace Pamola;
+			auto R1 = createElement<Resistor>();
+			auto R2 = createElement<Resistor>();
+			auto R3 = createElement<Resistor>();
+			auto R4 = createElement<Resistor>();
+			auto Rb = createElement<Resistor>();
+			auto V1 = createElement<IdealDCSource>();
+			R1->setResistance(1);
+			R2->setResistance(2);
+			R3->setResistance(15);
+			R4->setResistance(30);
+			Rb->setResistance(500);
+			V1->setVoltage(12);
+			auto cir = (R1 + Rb + R4 + V1 + R1 + R2 + R4 + R3 + R1)->getCircuit();
+			//TODO: Implement solver on Wheatstone Bridge
 		}
 	};
 }
