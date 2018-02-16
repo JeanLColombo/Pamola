@@ -43,4 +43,4 @@ All memory is handled dynamically through ``std::shared_ptr`` and ``std::weak_pt
 
 | Name                                 | Return Type                           | Description                                                                                                                                                                         |
 |--------------------------------------|---------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| ``createElement<T>()`` | ``std::shared_ptr<T>`` | Global method that access the [Engine][Eng] singleton's ``createElement<T>()`` method. This global method intended use is to simplify the access to the [Engine][Eng] singleton instance.  |
+| ``createElement<T>()``   | ``std::shared_ptr<T>`` | Global method that access the [Engine][Eng] singleton's ``createElement<T>()`` method. This global method intended use is to simplify the access to the [Engine][Eng] singleton instance.  |
