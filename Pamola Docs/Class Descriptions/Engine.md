@@ -29,7 +29,7 @@ All memory is handled dynamically through ``std::shared_ptr`` and ``std::weak_pt
 
 #### Members and Methods
 
-##### Members
+##### Public Methods
 
 | Name                                 | Return Type                                     | Description                                                                                      |
 |--------------------------------------|-------------------------------------------------|--------------------------------------------------------------------------------------------------|
@@ -39,8 +39,8 @@ All memory is handled dynamically through ``std::shared_ptr`` and ``std::weak_pt
 | ``getLocalObject(uint32_t)``         | ``std::shared_ptr<Object>``                     | Return a reference to [Object][Obj] based on its Id                                              |
 | ``createElement<TCircuitElement>()`` | ``std::shared_ptr<TCircuitElement>``           | Creates a new instance of class deriving from [Circuit Element][Ele]                             |
 
-##### Methods
-
 ##### Global Methods
 
-24530100
+| Name                                 | Return Type                           | Description                                                                                                                                                                         |
+|--------------------------------------|---------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| ``createElement<TCircuitElement>()`` | ``std::shared_ptr<TCircuitElement>`` | Global method that access the [Engine][Eng] singleton's createElement() method. This global method intended use is to simplify the access to the [Engine][Eng] singleton instance.  |
