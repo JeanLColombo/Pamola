@@ -37,10 +37,10 @@ All memory is handled dynamically through ``std::shared_ptr`` and ``std::weak_pt
 | ``getLocalEngine()``                 | ``static const std::shared_ptr<Engine>``        | Return a reference to the singleton [Engine][Eng]                                                |
 | ``getLocalObjects()``                | ``std::map<uint32_t, std::shared_ptr<Object>>`` | Return a map containing ``std::shared_ptr``'s to all objects being managed by this [Engine][Eng] |
 | ``getLocalObject(uint32_t)``         | ``std::shared_ptr<Object>``                     | Return a reference to [Object][Obj] based on its Id                                              |
-| ``createElement<TCircuitElement>()`` | ``std::shared_ptr<TCircuitElement>``           | Creates a new instance of class deriving from [Circuit Element][Ele]                             |
+| ``createElement<T>()``               | ``std::shared_ptr<T>``                          | Creates a new instance of a template class T deriving from [Circuit Element][Ele]                |
 
 ##### Global Methods
 
 | Name                                 | Return Type                           | Description                                                                                                                                                                         |
 |--------------------------------------|---------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| ``createElement<TCircuitElement>()`` | ``std::shared_ptr<TCircuitElement>`` | Global method that access the [Engine][Eng] singleton's createElement() method. This global method intended use is to simplify the access to the [Engine][Eng] singleton instance.  |
+| ``createElement<T>()`` | ``std::shared_ptr<T>`` | Global method that access the [Engine][Eng] singleton's ``createElement<T>()`` method. This global method intended use is to simplify the access to the [Engine][Eng] singleton instance.  |
