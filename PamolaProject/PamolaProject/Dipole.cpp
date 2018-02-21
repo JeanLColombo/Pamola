@@ -29,5 +29,15 @@ namespace Pamola {
 			return m[std::to_string(getLeft()->getId()) + ".I"]	+ m[std::to_string(getRight()->getId()) + ".I"]; };
 	}
 
+	void Dipole::connectInSeriesTo(std::shared_ptr<Dipole> dipole)
+	{
+		getRight()->connectTo(dipole->getLeft());
+	}
 
+	void Dipole::connectInParallelTo(std::shared_ptr<Dipole> dipole)
+	{
+		getRight()->connectTo(dipole->getRight());
+		getLeft()->connectTo(dipole->getLeft());
+	}
+	
 }
