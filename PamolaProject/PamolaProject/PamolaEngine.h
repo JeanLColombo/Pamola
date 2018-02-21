@@ -1,5 +1,6 @@
 #pragma once
 
+#include "PamolaTypes.h"
 #include "PamolaObject.h"
 #include "CircuitElement.h"
 #include "CircuitTerminal.h"
@@ -9,6 +10,7 @@
 #include "Resistor.h"
 #include "IdealDCSource.h"
 #include "Ground.h"
+#include "ModelSolver.h"
 #include <memory>
 #include <map>
 #include <cassert>
@@ -32,6 +34,8 @@ namespace Pamola
 
 		std::map<uint32_t, std::weak_ptr<Object>> localObjects;
 
+		std::shared_ptr<ModelSolver> solver;
+
 		uint32_t guid;
 
 	protected:
@@ -47,6 +51,10 @@ namespace Pamola
 		std::map<uint32_t, std::shared_ptr<Object>> getLocalObjects();
 		
 		std::shared_ptr<Object> getLocalObject(uint32_t);
+
+		std::shared_ptr<ModelSolver> getSolver();
+
+		void setSolver(std::shared_ptr<ModelSolver>);
 		
 		template <class TCircuitElement> std::shared_ptr<TCircuitElement> createElement();
 

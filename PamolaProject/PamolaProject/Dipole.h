@@ -15,7 +15,7 @@ namespace Pamola {
 		
 	protected:
 
-		std::function<std::complex<double>(std::map<std::string, std::complex<double>>)> currentCallback();
+		std::function<std::complex<double>(varMap)> currentCallback();
 
 	public:
 

@@ -420,7 +420,7 @@ namespace PamolaUT
 			auto cir = vdc->getCircuit();
 			res->setResistance(2.0);
 			vdc->setVoltage(10.0);
-			std::map<std::string, std::complex<double>> mapOfVariables;
+			varMap mapOfVariables;
 			mapOfVariables[res->getResistanceVariable()] = 2.0;
 			mapOfVariables[res->getLeft()->getCurrentVariable()] = 5.0;
 			mapOfVariables[res->getRight()->getCurrentVariable()] = -5.0;
@@ -445,7 +445,7 @@ namespace PamolaUT
 			auto cir = vdc->getCircuit();
 			res->setResistance(2.0);
 			vdc->setVoltage(10.0);
-			std::map<std::string, std::complex<double>> mapOfVariables;
+			varMap mapOfVariables;
 			mapOfVariables[res->getResistanceVariable()] = 2.0;
 			mapOfVariables[res->getLeft()->getCurrentVariable()] = 5.0;
 			mapOfVariables[res->getRight()->getCurrentVariable()] = -5.0;
@@ -470,7 +470,7 @@ namespace PamolaUT
 			auto cir = vdc->getCircuit();
 			res->setResistance(2.0);
 			vdc->setVoltage(10.0);
-			std::map<std::string, std::complex<double>> mapOfVariables;
+			varMap mapOfVariables;
 			mapOfVariables[res->getResistanceVariable()] = 2.0;
 			mapOfVariables[res->getLeft()->getCurrentVariable()] = 5.0;
 			mapOfVariables[res->getRight()->getCurrentVariable()] = -5.0;
@@ -497,7 +497,7 @@ namespace PamolaUT
 			auto cir = vdc->getCircuit();
 			res->setResistance(2.0);
 			vdc->setVoltage(10.0);
-			std::map<std::string, std::complex<double>> mapOfVariables;
+			varMap mapOfVariables;
 			mapOfVariables[res->getResistanceVariable()] = 2.0;
 			mapOfVariables[res->getLeft()->getCurrentVariable()] = 5.0;
 			mapOfVariables[res->getRight()->getCurrentVariable()] = -5.0;

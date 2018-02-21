@@ -12,7 +12,7 @@ namespace Pamola
 
 		std::shared_ptr<Pamola::CircuitTerminal> getTerminal();
 
-		std::vector<std::function<std::complex<double>(std::map<std::string, std::complex<double>>)>> getEquations();
+		eqMap getEquations();
 
 		std::set<std::string> getVariables();
 		

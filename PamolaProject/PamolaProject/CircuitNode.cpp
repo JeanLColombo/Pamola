@@ -55,9 +55,9 @@ namespace Pamola
 		return true;
 	}
 
-	std::vector<std::function<std::complex<double>(std::map<std::string, std::complex<double>>)>> CircuitNode::getEquations()
+	eqMap CircuitNode::getEquations()
 	{
-		return { [this](std::map<std::string, std::complex<double>> m)
+		return { [this](varMap m)
 		{
 			std::complex<double> s{ 0.0 };
 

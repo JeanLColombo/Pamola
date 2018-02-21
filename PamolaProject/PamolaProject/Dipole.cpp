@@ -23,9 +23,9 @@ namespace Pamola {
 		return getTerminal(1);
 	}
 
-	std::function<std::complex<double>(std::map<std::string, std::complex<double>>)> Dipole::currentCallback()
+	std::function<std::complex<double>(varMap)> Dipole::currentCallback()
 	{
-		return [this](std::map<std::string, std::complex<double>> m) {
+		return [this](varMap m) {
 			return m[std::to_string(getLeft()->getId()) + ".I"]	+ m[std::to_string(getRight()->getId()) + ".I"]; };
 	}
 

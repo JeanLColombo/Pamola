@@ -22,9 +22,9 @@ namespace Pamola
 		return elements;
 	}
 
-	std::vector<std::function<std::complex<double>(std::map<std::string, std::complex<double>>)>> Circuit::getEquations()
+	eqMap Circuit::getEquations()
 	{
-		std::vector<std::function<std::complex<double>(std::map<std::string, std::complex<double>>)>> equations;
+		eqMap equations;
 
 		for (auto &element : elements)
 			for (auto &equation : element->getEquations())

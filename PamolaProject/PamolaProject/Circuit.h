@@ -29,7 +29,7 @@ namespace Pamola
 
 		const std::set<std::shared_ptr<Object>> getElements();
 
-		std::vector<std::function<std::complex<double>(std::map<std::string, std::complex<double>>)>> getEquations();
+		eqMap getEquations();
 
 		std::set<std::string> getVariables();
 		
@@ -38,7 +38,7 @@ namespace Pamola
 		Type getPamolaType();
 
 		int getDegreesOfFreedom();
-
+		
 		void setUp(const std::vector<std::shared_ptr<Object>> &);
 	};
 

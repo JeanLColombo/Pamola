@@ -60,7 +60,7 @@ namespace Pamola
 
 		bool operator!=(const Pamola::Object&);
 		
-		virtual	std::vector<std::function<std::complex<double>(std::map<std::string, std::complex<double>>)>> getEquations();
+		virtual	eqMap getEquations();
 
 		virtual std::set<std::string> getVariables() = 0;
 

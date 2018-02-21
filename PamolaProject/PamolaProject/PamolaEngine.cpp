@@ -41,6 +41,16 @@ namespace Pamola
 		return getLocalObjects()[id];
 	}
 
+	std::shared_ptr<ModelSolver> Engine::getSolver()
+	{
+		return solver;
+	}
+
+	void Engine::setSolver(std::shared_ptr<ModelSolver> externalSolver)
+	{
+		solver = externalSolver;
+	}
+
 	std::vector<std::shared_ptr<CircuitTerminal>> Engine::createTerminalsFor(std::shared_ptr<CircuitElement> element)
 	{
 		std::vector<std::shared_ptr<CircuitTerminal>> result;
