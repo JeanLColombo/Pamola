@@ -69,6 +69,6 @@ int main()
   auto R3 = createElement<Resistor>();                        // Prefered initialization method
   
   // Creating a capacitor (also deriving from Circuit Element)
-  auto C = createElement<Capacitor>():
+  auto C = createElement<Capacitor>();
 }
 ```
