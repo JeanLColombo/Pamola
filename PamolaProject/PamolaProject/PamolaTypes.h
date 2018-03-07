@@ -23,11 +23,13 @@ namespace Pamola
 		Error
 	};
 
-	using varMap = std::map<std::string, std::complex<double>>;
-	using eqMap = std::vector<std::function<std::complex<double>(varMap)>>;
-
+	//using varMap = std::map<std::string, std::complex<double>>;
+	//using eqMap = std::vector<std::function<std::complex<double>(varMap)>>;
+	
 	using setterSign = std::function<void(std::complex<double>)>;
 	using getterSign = std::function<std::complex<double>(void)>;
 
-	using varEqMap = std::map<std::string, std::tuple<setterSign, getterSign, eqMap>>;
+	using varMap = std::map<std::string, std::tuple<setterSign, getterSign>>;
+	using eqMap = std::vector<getterSign>;
+
 }

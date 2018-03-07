@@ -19,8 +19,8 @@ namespace Pamola
 
 	eqMap Ground::getEquations()
 	{
-		return { [this](varMap m){
-			return m[getTerminal()->getVoltageVariable()]; } };
+		return { [this](){
+			return getTerminal()->getVoltage(); } };
 	}
 
 	std::set<std::string> Ground::getVariables()

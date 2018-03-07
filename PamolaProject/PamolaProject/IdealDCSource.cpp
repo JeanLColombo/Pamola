@@ -39,13 +39,8 @@ namespace Pamola
 		equations.push_back(currentCallback());
 
 		equations.push_back(
-			[this](varMap m) {
-			return m[getPositive()->getVoltageVariable()] - m[getNegative()->getVoltageVariable()] - m[getVoltageVariable()];
-		});
-
-		equations.push_back(
-			[this](varMap m) {
-			return m[getVoltageVariable()] - getVoltage();
+			[this]() {
+			return getPositive()->getVoltage() - getNegative()->getVoltage() - getVoltage();
 		});
 
 		return equations;

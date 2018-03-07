@@ -15,7 +15,7 @@ namespace Pamola {
 		
 	protected:
 
-		std::function<std::complex<double>(varMap)> currentCallback();
+		getterSign currentCallback();
 
 	public:
 

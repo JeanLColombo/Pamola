@@ -57,15 +57,16 @@ namespace Pamola
 
 	eqMap CircuitNode::getEquations()
 	{
-		return { [this](varMap m)
-		{
-			std::complex<double> s{ 0.0 };
+		return { [this]()
+			{
+				std::complex<double> s{ 0.0 };
 
-			for (auto t : getTerminals())
-				s += m[t->getCurrentVariable()];
+				for (auto t : getTerminals())
+					s += t->getCurrent();
 
-			return s;
-		} };
+				return s;
+			} 
+		};
 	}
 
 	std::set<std::string> CircuitNode::getVariables()

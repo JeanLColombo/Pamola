@@ -29,14 +29,9 @@ namespace Pamola
 		equations.push_back(currentCallback());
 
 		equations.push_back(
-			[this](varMap m) {
-					return m[getLeft()->getVoltageVariable()] - m[getRight()->getVoltageVariable()] - 
-						(m[getLeft()->getCurrentVariable()] * m[getResistanceVariable()]);
-		});
-
-		equations.push_back(
-			[this](varMap m) {
-			return m[getResistanceVariable()] - getResistance();
+			[this]() {
+					return getLeft()->getVoltage() - getRight()->getVoltage() - 
+						(getLeft()->getCurrent() * getResistance());
 		});
 
 		return equations;
