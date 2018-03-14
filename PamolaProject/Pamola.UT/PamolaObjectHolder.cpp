@@ -9,7 +9,7 @@ PamolaObjectHolder::~PamolaObjectHolder()
 {
 }
 
-std::set<std::string> PamolaObjectHolder::getVariables()
+Pamola::varMap PamolaObjectHolder::getVariables()
 {
 	return {};
 }

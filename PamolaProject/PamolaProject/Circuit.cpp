@@ -33,18 +33,17 @@ namespace Pamola
 		return equations;
 	}
 
-	std::set<std::string> Circuit::getVariables()
+	varMap Circuit::getVariables()
 	{
-		std::set<std::string> setOfVariables;
+		varMap mapOfVariables;
 		for (auto &element : elements)
 		{
 			for (auto &variable : element->getVariables())
 			{
-				setOfVariables.insert((std::to_string(element->getId()) + "." + variable));
+				mapOfVariables.push_back(variable);
 			}
 		}
-
-		return setOfVariables;
+		return mapOfVariables;
 	}
 
 	const std::set<uint32_t> Circuit::getAdjacentComponents()

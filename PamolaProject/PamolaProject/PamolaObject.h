@@ -62,7 +62,7 @@ namespace Pamola
 		
 		virtual	eqMap getEquations();
 
-		virtual std::set<std::string> getVariables() = 0;
+		virtual varMap getVariables() = 0;
 
 		virtual const std::set<uint32_t> getAdjacentComponents() = 0;
 

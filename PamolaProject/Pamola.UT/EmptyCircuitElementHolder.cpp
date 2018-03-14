@@ -9,9 +9,9 @@ EmptyCircuitElementHolder::~EmptyCircuitElementHolder()
 {
 }
 
-std::set<std::string> EmptyCircuitElementHolder::getVariables()
+Pamola::varMap EmptyCircuitElementHolder::getVariables()
 {
-	return { "R" };
+	return { };
 }
 
 int EmptyCircuitElementHolder::getDegreesOfFreedom()

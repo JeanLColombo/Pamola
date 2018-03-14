@@ -46,9 +46,9 @@ namespace Pamola
 		return equations;
 	}
 
-	std::set<std::string> IdealDCSource::getVariables()
+	varMap IdealDCSource::getVariables()
 	{
-		return { "V" };
+		return {};
 	}
 
 	std::string IdealDCSource::getVoltageVariable()

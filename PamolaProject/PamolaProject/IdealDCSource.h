@@ -23,7 +23,7 @@ namespace Pamola
 
 		eqMap getEquations();
 
-		std::set<std::string> getVariables();
+		varMap getVariables();
 
 		std::string getVoltageVariable();
 

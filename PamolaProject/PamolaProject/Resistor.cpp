@@ -37,9 +37,9 @@ namespace Pamola
 		return equations;
 	}
 
-	std::set<std::string> Resistor::getVariables()
+	varMap Resistor::getVariables()
 	{
-		return { "R" };
+		return { };
 	}
 
 	std::string Resistor::getResistanceVariable()

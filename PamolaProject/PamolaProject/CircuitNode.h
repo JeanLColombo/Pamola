@@ -40,7 +40,7 @@ namespace Pamola
 
 		eqMap getEquations() final;
 
-		std::set<std::string> getVariables();
+		varMap getVariables();
 
 		const std::set<uint32_t> getAdjacentComponents();
 

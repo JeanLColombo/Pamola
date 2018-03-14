@@ -69,9 +69,10 @@ namespace Pamola
 		};
 	}
 
-	std::set<std::string> CircuitNode::getVariables()
+	varMap CircuitNode::getVariables()
 	{
-		return { "E" };
+		return { std::make_pair([this](std::complex<double> x) {setVoltage(x); },
+				[this]() {return getVoltage(); }) };
 	}
 
 	const std::set<uint32_t> CircuitNode::getAdjacentComponents()

@@ -22,14 +22,12 @@ namespace Pamola
 		Other,
 		Error
 	};
-
-	//using varMap = std::map<std::string, std::complex<double>>;
-	//using eqMap = std::vector<std::function<std::complex<double>(varMap)>>;
-	
+		
 	using setterSign = std::function<void(std::complex<double>)>;
 	using getterSign = std::function<std::complex<double>(void)>;
 
-	using varMap = std::map<std::string, std::tuple<setterSign, getterSign>>;
+	using ourTuple = std::pair<setterSign, getterSign>;
+	using varMap = std::vector<ourTuple>;
 	using eqMap = std::vector<getterSign>;
-
+	
 }

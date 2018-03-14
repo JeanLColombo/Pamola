@@ -23,7 +23,7 @@ namespace Pamola
 			return getTerminal()->getVoltage(); } };
 	}
 
-	std::set<std::string> Ground::getVariables()
+	varMap Ground::getVariables()
 	{
 		return {};
 	}
