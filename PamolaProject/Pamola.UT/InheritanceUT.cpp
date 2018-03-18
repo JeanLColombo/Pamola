@@ -421,274 +421,270 @@ namespace PamolaUT
 				Logger::WriteMessage(std::to_string(equation().real()).c_str());
 			}
 		}
-		//TEST_METHOD(RealSystemEquationEvaluation2)
-		//{
-		//	using namespace Pamola;
-		//	auto res = createElement<Resistor>();
-		//	auto vdc = createElement<IdealDCSource>();
-		//	vdc->getPositive()->connectTo(res->getLeft());
-		//	vdc->getNegative()->connectTo(res->getRight());
-		//	auto cir = vdc->getCircuit();
-		//	res->setResistance(2.0);
-		//	vdc->setVoltage(10.0);
-		//	varMap mapOfVariables;
-		//	mapOfVariables[res->getResistanceVariable()] = 2.0;
-		//	mapOfVariables[res->getLeft()->getCurrentVariable()] = 5.0;
-		//	mapOfVariables[res->getRight()->getCurrentVariable()] = -5.0;
-		//	mapOfVariables[vdc->getVoltageVariable()] = 10.0;
-		//	mapOfVariables[vdc->getLeft()->getCurrentVariable()] = -5.0;
-		//	mapOfVariables[vdc->getRight()->getCurrentVariable()] = 5.0;
-		//	mapOfVariables[vdc->getPositive()->getVoltageVariable()] = 24.0;
-		//	mapOfVariables[vdc->getNegative()->getVoltageVariable()] = 14.0;
-		//	Logger::WriteMessage("Evaluation 2 [Must be 0]:");
-		//	for (auto &equation : cir->getEquations())
-		//	{
-		//		Logger::WriteMessage(std::to_string(equation(mapOfVariables).real()).c_str());
-		//	}
-		//}
-		//TEST_METHOD(RealSystemEquationEvaluation3)
-		//{
-		//	using namespace Pamola;
-		//	auto res = createElement<Resistor>();
-		//	auto vdc = createElement<IdealDCSource>();
-		//	vdc->getPositive()->connectTo(res->getLeft());
-		//	vdc->getNegative()->connectTo(res->getRight());
-		//	auto cir = vdc->getCircuit();
-		//	res->setResistance(2.0);
-		//	vdc->setVoltage(10.0);
-		//	varMap mapOfVariables;
-		//	mapOfVariables[res->getResistanceVariable()] = 2.0;
-		//	mapOfVariables[res->getLeft()->getCurrentVariable()] = 5.0;
-		//	mapOfVariables[res->getRight()->getCurrentVariable()] = -5.0;
-		//	mapOfVariables[vdc->getVoltageVariable()] = 10.0;
-		//	mapOfVariables[vdc->getLeft()->getCurrentVariable()] = -5.0;
-		//	mapOfVariables[vdc->getRight()->getCurrentVariable()] = 12.0;
-		//	mapOfVariables[vdc->getPositive()->getVoltageVariable()] = 20.0;
-		//	mapOfVariables[vdc->getNegative()->getVoltageVariable()] = 0.0;
-		//	Logger::WriteMessage("Evaluation 3 [Must NOT be 0]:");
-		//	for (auto &equation : cir->getEquations())
-		//	{
-		//		Logger::WriteMessage(std::to_string(equation(mapOfVariables).real()).c_str());
-		//	}
-		//}
-		//TEST_METHOD(RealSystemEquationEvaluation4)
-		//{
-		//	using namespace Pamola;
-		//	auto res = createElement<Resistor>();
-		//	auto vdc = createElement<IdealDCSource>();
-		//	auto gnd = createElement<Ground>();
-		//	vdc->getPositive()->connectTo(res->getLeft());
-		//	vdc->getNegative()->connectTo(res->getRight());
-		//	gnd->getTerminal()->connectTo(vdc->getNegative());
-		//	auto cir = vdc->getCircuit();
-		//	res->setResistance(2.0);
-		//	vdc->setVoltage(10.0);
-		//	varMap mapOfVariables;
-		//	mapOfVariables[res->getResistanceVariable()] = 2.0;
-		//	mapOfVariables[res->getLeft()->getCurrentVariable()] = 5.0;
-		//	mapOfVariables[res->getRight()->getCurrentVariable()] = -5.0;
-		//	mapOfVariables[vdc->getVoltageVariable()] = 10.0;
-		//	mapOfVariables[vdc->getLeft()->getCurrentVariable()] = -5.0;
-		//	mapOfVariables[vdc->getRight()->getCurrentVariable()] = 5.0;
-		//	mapOfVariables[vdc->getPositive()->getVoltageVariable()] = 24.0;
-		//	mapOfVariables[vdc->getNegative()->getVoltageVariable()] = 14.0;
-		//	Logger::WriteMessage("Evaluation 4 [Must NOT be 0]:");
-		//	for (auto &equation : cir->getEquations())
-		//	{
-		//		Logger::WriteMessage(std::to_string(equation(mapOfVariables).real()).c_str());
-		//	}
-		//}
+		TEST_METHOD(RealSystemEquationEvaluation2)
+		{
+			using namespace Pamola;
+			auto res = createElement<Resistor>();
+			auto vdc = createElement<IdealDCSource>();
+			vdc->getPositive()->connectTo(res->getLeft());
+			vdc->getNegative()->connectTo(res->getRight());
+			auto cir = vdc->getCircuit();
+			// Set Parameters
+			res->setResistance(2.0);
+			vdc->setVoltage(10.0);
+			// Set Variables
+			res->getLeft()->setCurrent(5.0);
+			res->getRight()->setCurrent(-5.0);
+			vdc->getLeft()->setCurrent(-5.0);
+			vdc->getRight()->setCurrent(5.0);
+			vdc->getPositive()->getNode()->setVoltage(24.0);
+			vdc->getNegative()->getNode()->setVoltage(14.0);
+			Logger::WriteMessage("Evaluation 2 [Must be 0]:");
+			for (auto &equation : cir->getEquations())
+			{
+				Logger::WriteMessage(std::to_string(equation().real()).c_str());
+			}
+		}
+		TEST_METHOD(RealSystemEquationEvaluation3)
+		{
+			using namespace Pamola;
+			auto res = createElement<Resistor>();
+			auto vdc = createElement<IdealDCSource>();
+			vdc->getPositive()->connectTo(res->getLeft());
+			vdc->getNegative()->connectTo(res->getRight());
+			auto cir = vdc->getCircuit();
+			// Set Parameters
+			res->setResistance(2.0);
+			vdc->setVoltage(10.0);
+			// Set Variables
+			res->getLeft()->setCurrent(5.0);
+			res->getRight()->setCurrent(-5.0);
+			vdc->getLeft()->setCurrent(-5.0);
+			vdc->getRight()->setCurrent(12.0);
+			vdc->getPositive()->getNode()->setVoltage(20.0);
+			vdc->getNegative()->getNode()->setVoltage(0.0);			
+			Logger::WriteMessage("Evaluation 3 [Must NOT be 0]:");
+			for (auto &equation : cir->getEquations())
+			{
+				Logger::WriteMessage(std::to_string(equation().real()).c_str());
+			}
+		}
+		TEST_METHOD(RealSystemEquationEvaluation4)
+		{
+			using namespace Pamola;
+			auto res = createElement<Resistor>();
+			auto vdc = createElement<IdealDCSource>();
+			auto gnd = createElement<Ground>();
+			vdc->getPositive()->connectTo(res->getLeft());
+			vdc->getNegative()->connectTo(res->getRight());
+			gnd->getTerminal()->connectTo(vdc->getNegative());
+			auto cir = vdc->getCircuit();
+			// Set Parameters
+			res->setResistance(2.0);
+			vdc->setVoltage(10.0);
+			// Set Variables
+			res->getLeft()->setCurrent(5.0);
+			res->getRight()->setCurrent(-5.0);
+			vdc->getLeft()->setCurrent(-5.0);
+			vdc->getRight()->setCurrent(5.0);
+			vdc->getPositive()->getNode()->setVoltage(24.0);
+			vdc->getNegative()->getNode()->setVoltage(14.0);
+			Logger::WriteMessage("Evaluation 2 [Must be 0]:");
+			for (auto &equation : cir->getEquations())
+			{
+				Logger::WriteMessage(std::to_string(equation().real()).c_str());
+			}
+		}
 	};
-
-	//TEST_CLASS(Dipole)
-	//{
-	//	TEST_METHOD(OperatorSeries)
-	//	{
-	//		using namespace Pamola;
-	//		auto R1 = createElement<Resistor>();
-	//		auto R2 = createElement<Resistor>();
-	//		auto cir = (R1 + R2)->getCircuit();
-	//		Logger::WriteMessage("List of Circuit Components:");
-	//		std::string component;
-	//		for (auto &element : cir->getElements())
-	//		{
-	//			component = std::to_string(element->getId()) + " = ";
-	//			switch (element->getPamolaType())
-	//			{
-	//			case Pamola::Type::CircuitElement:
-	//				component += "Element";
-	//				break;
-	//			case Pamola::Type::CircuitTerminal:
-	//				component += "Terminal";
-	//				break;
-	//			case Pamola::Type::CircuitNode:
-	//				component += "Node";
-	//				break;
-	//			case Pamola::Type::Circuit:
-	//				component += "Circuit";
-	//				break;
-	//			case Pamola::Type::Other:
-	//				component += "Other";
-	//				break;
-	//			case Pamola::Type::Error:
-	//				component += "Error";
-	//				break;
-	//			default:
-	//				component += "Default";
-	//				break;
-	//			}
-	//			Logger::WriteMessage(component.c_str());
-	//		}
-	//	}
-	//	TEST_METHOD(OperatorParallel)
-	//	{
-	//		using namespace Pamola;
-	//		auto R1 = createElement<Resistor>();
-	//		auto R2 = createElement<Resistor>();
-	//		R1 / R2;
-	//		auto cir = R1->getCircuit();
-	//		Logger::WriteMessage("List of Circuit Components:");
-	//		std::string component;
-	//		for (auto &element : cir->getElements())
-	//		{
-	//			component = std::to_string(element->getId()) + " = ";
-	//			switch (element->getPamolaType())
-	//			{
-	//			case Pamola::Type::CircuitElement:
-	//				component += "Element";
-	//				break;
-	//			case Pamola::Type::CircuitTerminal:
-	//				component += "Terminal";
-	//				break;
-	//			case Pamola::Type::CircuitNode:
-	//				component += "Node";
-	//				break;
-	//			case Pamola::Type::Circuit:
-	//				component += "Circuit";
-	//				break;
-	//			case Pamola::Type::Other:
-	//				component += "Other";
-	//				break;
-	//			case Pamola::Type::Error:
-	//				component += "Error";
-	//				break;
-	//			default:
-	//				component += "Default";
-	//				break;
-	//			}
-	//			Logger::WriteMessage(component.c_str());
-	//		}
-	//	}
-	//	TEST_METHOD(ComplexCircuitCreation)
-	//	{
-	//		using namespace Pamola;
-	//		auto R1 = createElement<Resistor>();
-	//		auto R2 = createElement<Resistor>();
-	//		auto R3 = createElement<Resistor>();
-	//		auto R4 = createElement<Resistor>();
-	//		R1->setResistance(1);
-	//		R2->setResistance(2);
-	//		R3->setResistance(3);
-	//		R4->setResistance(4);
-	//		auto V1 = createElement<IdealDCSource>();
-	//		auto cir = (V1 + R1 / R2 + R3 / R4 + V1)->getCircuit();
-	//		Logger::WriteMessage("List of Circuit Components:");
-	//		std::string component;
-	//		for (auto &element : cir->getElements())
-	//		{
-	//			component = std::to_string(element->getId()) + " = ";
-	//			switch (element->getPamolaType())
-	//			{
-	//			case Pamola::Type::CircuitElement:
-	//				component += "Element";
-	//				break;
-	//			case Pamola::Type::CircuitTerminal:
-	//				component += "Terminal";
-	//				break;
-	//			case Pamola::Type::CircuitNode:
-	//				component += "Node";
-	//				break;
-	//			case Pamola::Type::Circuit:
-	//				component += "Circuit";
-	//				break;
-	//			case Pamola::Type::Other:
-	//				component += "Other";
-	//				break;
-	//			case Pamola::Type::Error:
-	//				component += "Error";
-	//				break;
-	//			default:
-	//				component += "Default";
-	//				break;
-	//			}
-	//			Logger::WriteMessage(component.c_str());
-	//		}
-	//	}
-	//	TEST_METHOD(WheatstoneBridge1)
-	//	{
-	//		using namespace Pamola;
-	//		auto R1 = createElement<Resistor>();
-	//		auto R2 = createElement<Resistor>();
-	//		auto R3 = createElement<Resistor>();
-	//		auto R4 = createElement<Resistor>();
-	//		auto Rb = createElement<Resistor>();
-	//		auto V1 = createElement<IdealDCSource>();
-	//		R1->setResistance(1);
-	//		R2->setResistance(2);
-	//		R3->setResistance(3);
-	//		R4->setResistance(4);
-	//		Rb->setResistance(500);
-	//		V1->setVoltage(12);
-	//		auto cir = (R1 + Rb + R4 + V1 + R1 + R2 + R4 + R3 + R1)->getCircuit();
-	//		Logger::WriteMessage("List of Circuit Components:");
-	//		std::string component;
-	//		for (auto &element : cir->getElements())
-	//		{
-	//			component = std::to_string(element->getId()) + " = ";
-	//			switch (element->getPamolaType())
-	//			{
-	//			case Pamola::Type::CircuitElement:
-	//				component += "Element";
-	//				break;
-	//			case Pamola::Type::CircuitTerminal:
-	//				component += "Terminal";
-	//				break;
-	//			case Pamola::Type::CircuitNode:
-	//				component += "Node";
-	//				break;
-	//			case Pamola::Type::Circuit:
-	//				component += "Circuit";
-	//				break;
-	//			case Pamola::Type::Other:
-	//				component += "Other";
-	//				break;
-	//			case Pamola::Type::Error:
-	//				component += "Error";
-	//				break;
-	//			default:
-	//				component += "Default";
-	//				break;
-	//			}
-	//			Logger::WriteMessage(component.c_str());
-	//		}
-	//	}
-	//	TEST_METHOD(WheatstoneBridge2)
-	//	{
-	//		using namespace Pamola;
-	//		auto R1 = createElement<Resistor>();
-	//		auto R2 = createElement<Resistor>();
-	//		auto R3 = createElement<Resistor>();
-	//		auto R4 = createElement<Resistor>();
-	//		auto Rb = createElement<Resistor>();
-	//		auto V1 = createElement<IdealDCSource>();
-	//		R1->setResistance(1);
-	//		R2->setResistance(2);
-	//		R3->setResistance(15);
-	//		R4->setResistance(30);
-	//		Rb->setResistance(500);
-	//		V1->setVoltage(12);
-	//		auto cir = (R1 + Rb + R4 + V1 + R1 + R2 + R4 + R3 + R1)->getCircuit();
-	//		//TODO: Implement solver on Wheatstone Bridge
-	//	}
-	//};
+	TEST_CLASS(Dipole)
+	{
+		TEST_METHOD(OperatorSeries)
+		{
+			using namespace Pamola;
+			auto R1 = createElement<Resistor>();
+			auto R2 = createElement<Resistor>();
+			auto cir = (R1 + R2)->getCircuit();
+			Logger::WriteMessage("List of Circuit Components:");
+			std::string component;
+			for (auto &element : cir->getElements())
+			{
+				component = std::to_string(element->getId()) + " = ";
+				switch (element->getPamolaType())
+				{
+				case Pamola::Type::CircuitElement:
+					component += "Element";
+					break;
+				case Pamola::Type::CircuitTerminal:
+					component += "Terminal";
+					break;
+				case Pamola::Type::CircuitNode:
+					component += "Node";
+					break;
+				case Pamola::Type::Circuit:
+					component += "Circuit";
+					break;
+				case Pamola::Type::Other:
+					component += "Other";
+					break;
+				case Pamola::Type::Error:
+					component += "Error";
+					break;
+				default:
+					component += "Default";
+					break;
+				}
+				Logger::WriteMessage(component.c_str());
+			}
+		}
+		TEST_METHOD(OperatorParallel)
+		{
+			using namespace Pamola;
+			auto R1 = createElement<Resistor>();
+			auto R2 = createElement<Resistor>();
+			R1 / R2;
+			auto cir = R1->getCircuit();
+			Logger::WriteMessage("List of Circuit Components:");
+			std::string component;
+			for (auto &element : cir->getElements())
+			{
+				component = std::to_string(element->getId()) + " = ";
+				switch (element->getPamolaType())
+				{
+				case Pamola::Type::CircuitElement:
+					component += "Element";
+					break;
+				case Pamola::Type::CircuitTerminal:
+					component += "Terminal";
+					break;
+				case Pamola::Type::CircuitNode:
+					component += "Node";
+					break;
+				case Pamola::Type::Circuit:
+					component += "Circuit";
+					break;
+				case Pamola::Type::Other:
+					component += "Other";
+					break;
+				case Pamola::Type::Error:
+					component += "Error";
+					break;
+				default:
+					component += "Default";
+					break;
+				}
+				Logger::WriteMessage(component.c_str());
+			}
+		}
+		TEST_METHOD(ComplexCircuitCreation)
+		{
+			using namespace Pamola;
+			auto R1 = createElement<Resistor>();
+			auto R2 = createElement<Resistor>();
+			auto R3 = createElement<Resistor>();
+			auto R4 = createElement<Resistor>();
+			R1->setResistance(1);
+			R2->setResistance(2);
+			R3->setResistance(3);
+			R4->setResistance(4);
+			auto V1 = createElement<IdealDCSource>();
+			auto cir = (V1 + R1 / R2 + R3 / R4 + V1)->getCircuit();
+			Logger::WriteMessage("List of Circuit Components:");
+			std::string component;
+			for (auto &element : cir->getElements())
+			{
+				component = std::to_string(element->getId()) + " = ";
+				switch (element->getPamolaType())
+				{
+				case Pamola::Type::CircuitElement:
+					component += "Element";
+					break;
+				case Pamola::Type::CircuitTerminal:
+					component += "Terminal";
+					break;
+				case Pamola::Type::CircuitNode:
+					component += "Node";
+					break;
+				case Pamola::Type::Circuit:
+					component += "Circuit";
+					break;
+				case Pamola::Type::Other:
+					component += "Other";
+					break;
+				case Pamola::Type::Error:
+					component += "Error";
+					break;
+				default:
+					component += "Default";
+					break;
+				}
+				Logger::WriteMessage(component.c_str());
+			}
+		}
+		TEST_METHOD(WheatstoneBridge1)
+		{
+			using namespace Pamola;
+			auto R1 = createElement<Resistor>();
+			auto R2 = createElement<Resistor>();
+			auto R3 = createElement<Resistor>();
+			auto R4 = createElement<Resistor>();
+			auto Rb = createElement<Resistor>();
+			auto V1 = createElement<IdealDCSource>();
+			R1->setResistance(1);
+			R2->setResistance(2);
+			R3->setResistance(3);
+			R4->setResistance(4);
+			Rb->setResistance(500);
+			V1->setVoltage(12);
+			auto cir = (R1 + Rb + R4 + V1 + R1 + R2 + R4 + R3 + R1)->getCircuit();
+			Logger::WriteMessage("List of Circuit Components:");
+			std::string component;
+			for (auto &element : cir->getElements())
+			{
+				component = std::to_string(element->getId()) + " = ";
+				switch (element->getPamolaType())
+				{
+				case Pamola::Type::CircuitElement:
+					component += "Element";
+					break;
+				case Pamola::Type::CircuitTerminal:
+					component += "Terminal";
+					break;
+				case Pamola::Type::CircuitNode:
+					component += "Node";
+					break;
+				case Pamola::Type::Circuit:
+					component += "Circuit";
+					break;
+				case Pamola::Type::Other:
+					component += "Other";
+					break;
+				case Pamola::Type::Error:
+					component += "Error";
+					break;
+				default:
+					component += "Default";
+					break;
+				}
+				Logger::WriteMessage(component.c_str());
+			}
+		}
+		TEST_METHOD(WheatstoneBridge2)
+		{
+			using namespace Pamola;
+			auto R1 = createElement<Resistor>();
+			auto R2 = createElement<Resistor>();
+			auto R3 = createElement<Resistor>();
+			auto R4 = createElement<Resistor>();
+			auto Rb = createElement<Resistor>();
+			auto V1 = createElement<IdealDCSource>();
+			R1->setResistance(1);
+			R2->setResistance(2);
+			R3->setResistance(15);
+			R4->setResistance(30);
+			Rb->setResistance(500);
+			V1->setVoltage(12);
+			auto cir = (R1 + Rb + R4 + V1 + R1 + R2 + R4 + R3 + R1)->getCircuit();
+			//TODO: Implement solver on Wheatstone Bridge
+		}
+	};
 }
