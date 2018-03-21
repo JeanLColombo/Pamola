@@ -416,10 +416,13 @@ namespace PamolaUT
 			vdc->getPositive()->getNode()->setVoltage(10.0);
 			vdc->getNegative()->getNode()->setVoltage(0.0);
 			Logger::WriteMessage("Evaluation 1 [Must be 0]:");
+			double out{ 0.0 };
 			for (auto &equation : cir->getEquations())
 			{
+				out += equation().real()*equation().real();
 				Logger::WriteMessage(std::to_string(equation().real()).c_str());
 			}
+			Assert::IsTrue((0.0 == out), L"Equation Output Undefined Behavior", LINE_INFO());
 		}
 		TEST_METHOD(RealSystemEquationEvaluation2)
 		{
@@ -440,10 +443,13 @@ namespace PamolaUT
 			vdc->getPositive()->getNode()->setVoltage(24.0);
 			vdc->getNegative()->getNode()->setVoltage(14.0);
 			Logger::WriteMessage("Evaluation 2 [Must be 0]:");
+			double out{ 0.0 };
 			for (auto &equation : cir->getEquations())
 			{
+				out += equation().real()*equation().real();
 				Logger::WriteMessage(std::to_string(equation().real()).c_str());
 			}
+			Assert::IsTrue((0.0 == out), L"Equation Output Undefined Behavior", LINE_INFO());
 		}
 		TEST_METHOD(RealSystemEquationEvaluation3)
 		{
@@ -464,10 +470,13 @@ namespace PamolaUT
 			vdc->getPositive()->getNode()->setVoltage(20.0);
 			vdc->getNegative()->getNode()->setVoltage(0.0);			
 			Logger::WriteMessage("Evaluation 3 [Must NOT be 0]:");
+			double out{ 0.0 };
 			for (auto &equation : cir->getEquations())
 			{
+				out += equation().real()*equation().real();
 				Logger::WriteMessage(std::to_string(equation().real()).c_str());
 			}
+			Assert::IsFalse((0.0 == out), L"Equation Output Undefined Behavior", LINE_INFO());
 		}
 		TEST_METHOD(RealSystemEquationEvaluation4)
 		{
@@ -489,13 +498,17 @@ namespace PamolaUT
 			vdc->getRight()->setCurrent(5.0);
 			vdc->getPositive()->getNode()->setVoltage(24.0);
 			vdc->getNegative()->getNode()->setVoltage(14.0);
-			Logger::WriteMessage("Evaluation 2 [Must be 0]:");
+			Logger::WriteMessage("Evaluation 4 [Must NOT be 0]:");
+			double out{ 0.0 };
 			for (auto &equation : cir->getEquations())
 			{
+				out += equation().real()*equation().real();
 				Logger::WriteMessage(std::to_string(equation().real()).c_str());
 			}
+			Assert::IsFalse((0.0 == out), L"Equation Output Undefined Behavior", LINE_INFO());
 		}
 	};
+
 	TEST_CLASS(Dipole)
 	{
 		TEST_METHOD(OperatorSeries)
@@ -686,5 +699,25 @@ namespace PamolaUT
 			auto cir = (R1 + Rb + R4 + V1 + R1 + R2 + R4 + R3 + R1)->getCircuit();
 			//TODO: Implement solver on Wheatstone Bridge
 		}
+	};
+
+	TEST_CLASS(ModelSover)
+	{
+		TEST_METHOD(MockedMS)
+		{
+			using namespace Pamola;
+			auto res = createElement<Resistor>();
+			auto vdc = createElement<IdealDCSource>();
+			auto gnd = createElement<Ground>();
+			vdc->getPositive()->connectTo(res->getLeft());
+			vdc->getNegative()->connectTo(res->getRight());
+			gnd->getTerminal()->connectTo(vdc->getNegative());
+			//Engine::getLocalEngine()->setSolver(MockedModelSolver());
+			auto cir = res->getCircuit();
+			cir->solve();
+			auto mockVolt = vdc->getPositive()->getNode()->getVoltage();
+			Assert::IsTrue(mockVolt.real() == 4.0);
+			Assert::IsTrue(mockVolt.imag() == 3.0);
+		};
 	};
 }

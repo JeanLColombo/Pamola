@@ -1,4 +1,4 @@
-#pragma 
+#pragma once
 
 #include "PamolaObject.h"
 
@@ -40,6 +40,8 @@ namespace Pamola
 		int getDegreesOfFreedom();
 		
 		void setUp(const std::vector<std::shared_ptr<Object>> &);
+
+		void solve();
 	};
 
 }

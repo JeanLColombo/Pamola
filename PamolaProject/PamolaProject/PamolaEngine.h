@@ -11,6 +11,7 @@
 #include "IdealDCSource.h"
 #include "Ground.h"
 #include "ModelSolver.h"
+#include "MockedModelSolver.h"
 #include <memory>
 #include <map>
 #include <cassert>
@@ -56,6 +57,8 @@ namespace Pamola
 
 		void setSolver(std::shared_ptr<ModelSolver>);
 		
+		void callSolver(varMap&, eqMap&);
+
 		template <class TCircuitElement> std::shared_ptr<TCircuitElement> createElement();
 
 	private:

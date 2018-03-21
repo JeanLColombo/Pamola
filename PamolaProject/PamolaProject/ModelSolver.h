@@ -5,12 +5,12 @@ namespace Pamola
 {
 	class ModelSolver
 	{
-	protected:
+	public:
+
 		ModelSolver();
 
-	public:
 		virtual ~ModelSolver();
 		
-		virtual varMap SolveSystem(varMap, eqMap) = 0;
+		virtual bool SolveSystem(varMap&, eqMap&) = 0;
 	};
 }

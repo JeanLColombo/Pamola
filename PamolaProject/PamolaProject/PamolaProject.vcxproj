@@ -158,6 +158,7 @@
     <ClInclude Include="Dipole.h" />
     <ClInclude Include="Ground.h" />
     <ClInclude Include="IdealDCSource.h" />
+    <ClInclude Include="MockedModelSolver.h" />
     <ClInclude Include="ModelSolver.h" />
     <ClInclude Include="PamolaEngine.h" />
     <ClInclude Include="PamolaObject.h" />
@@ -181,6 +182,7 @@
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="Ground.cpp" />
     <ClCompile Include="IdealDCSource.cpp" />
+    <ClCompile Include="MockedModelSolver.cpp" />
     <ClCompile Include="ModelSolver.cpp" />
     <ClCompile Include="PamolaEngine.cpp" />
     <ClCompile Include="PamolaObject.cpp">

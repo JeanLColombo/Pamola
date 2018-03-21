@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Circuit.h"
 #include "CircuitTerminal.h"
+#include "PamolaEngine.h"
 
 namespace Pamola
 {
@@ -80,6 +81,11 @@ namespace Pamola
 					terminals.insert(foundTerminal);
 			}
 		}
+	}
+
+	void Circuit::solve()
+	{
+		getEngine()->callSolver(getVariables(), getEquations());
 	}
 
 }

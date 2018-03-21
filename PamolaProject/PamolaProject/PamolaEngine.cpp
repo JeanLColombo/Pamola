@@ -5,7 +5,7 @@ namespace Pamola
 {
 	const std::shared_ptr<Engine> Engine::localEngine(new Engine());
 
-	Engine::Engine(uint32_t firstId) : guid(firstId)
+	Engine::Engine(uint32_t firstId) : guid(firstId), solver(std::shared_ptr<ModelSolver>(new MockedModelSolver()))
 	{
 	}
 
@@ -88,5 +88,9 @@ namespace Pamola
 		object->id = guid++;
 		object->engine = shared_from_this();
 		localObjects[object->getId()] = object;
+	}
+	void Engine::callSolver(varMap &variables, eqMap &equations)
+	{
+		getSolver()->SolveSystem(variables, equations);
 	}
 }
