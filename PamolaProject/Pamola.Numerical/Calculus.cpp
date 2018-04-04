@@ -10,7 +10,8 @@ Calculus::~Calculus()
 {
 }
 
-double Calculus::deriveAt(double x, SystemSolver::oneVarFunc f, DerivingMode m, double tol)
+double Calculus::deriveAt(double x, SystemSolver::oneVarFunc f, 
+	DerivingMode m, double tol)
 {
 	double xNext = x, xPrev = x, yNext, yPrev;
 
@@ -28,12 +29,13 @@ double Calculus::deriveAt(double x, SystemSolver::oneVarFunc f, DerivingMode m, 
 	return (yNext - yPrev) / (xNext - xPrev);
 }
 
-std::vector<double> Calculus::gradientAt(const std::vector<double>& X, SystemSolver::multVarFunc f, DerivingMode m , double tol)
+std::vector<double> Calculus::gradientAt(const std::vector<double>& X, SystemSolver::multVarFunc f, 
+	DerivingMode m , double tol)
 {
 	std::vector<double> gradient(X.size());
 	std::vector<double> Xaux = X;
 
-	for (int i = 0; i < X.size(); i++)
+	for (int i = 0; i < int(X.size()); i++)
 	{
 		using namespace SystemSolver;
 		oneVarFunc wrap = [&X,&Xaux,i,f](double x) {
@@ -46,5 +48,20 @@ std::vector<double> Calculus::gradientAt(const std::vector<double>& X, SystemSol
 	}
 
 	return gradient;
+}
+
+SystemSolver::matrix Calculus::jacobianAt(const std::vector<double> &X, 
+	std::vector<SystemSolver::multVarFunc> F, 
+	DerivingMode m, double tol)
+{
+	using namespace SystemSolver;
+	matrix jacobian(F.size());
+	
+	for (int i = 0; i < int(F.size()); i++)
+	{
+		jacobian[i] = gradientAt(X, F[i], m, tol);
+	}
+	
+	return jacobian;
 }
 
