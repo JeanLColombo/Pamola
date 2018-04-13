@@ -33,6 +33,9 @@
     <ClInclude Include="Calculus.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Imports.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -47,5 +50,8 @@
     <ClCompile Include="Calculus.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>

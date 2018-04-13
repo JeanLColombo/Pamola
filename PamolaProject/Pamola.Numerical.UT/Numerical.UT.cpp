@@ -64,12 +64,19 @@ namespace PamolaNumericalUT
 					auto X = { pointX,pointY };
 					auto jacobianOfF = Calculus::jacobianAt(X, { f1,f2,f3 });
 					
-					Assert::IsTrue(pow((df1(X)[0] - jacobianOfF[0][0]), 2.0) < pow(10, -5.0));
+					/*Assert::IsTrue(pow((df1(X)[0] - jacobianOfF[0][0]), 2.0) < pow(10, -5.0));
 					Assert::IsTrue(pow((df1(X)[1] - jacobianOfF[0][1]), 2.0) < pow(10, -5.0));
 					Assert::IsTrue(pow((df2(X)[0] - jacobianOfF[1][0]), 2.0) < pow(10, -5.0));
 					Assert::IsTrue(pow((df2(X)[1] - jacobianOfF[1][1]), 2.0) < pow(10, -5.0));
 					Assert::IsTrue(pow((df3(X)[0] - jacobianOfF[2][0]), 2.0) < pow(10, -5.0));
-					Assert::IsTrue(pow((df3(X)[1] - jacobianOfF[2][1]), 2.0) < pow(10, -5.0));
+					Assert::IsTrue(pow((df3(X)[1] - jacobianOfF[2][1]), 2.0) < pow(10, -5.0));*/
+
+					Assert::IsTrue(pow((df1(X)[0] - jacobianOfF(0,0)), 2.0) < pow(10, -5.0));
+					Assert::IsTrue(pow((df1(X)[1] - jacobianOfF(0,1)), 2.0) < pow(10, -5.0));
+					Assert::IsTrue(pow((df2(X)[0] - jacobianOfF(1,0)), 2.0) < pow(10, -5.0));
+					Assert::IsTrue(pow((df2(X)[1] - jacobianOfF(1,1)), 2.0) < pow(10, -5.0));
+					Assert::IsTrue(pow((df3(X)[0] - jacobianOfF(2,0)), 2.0) < pow(10, -5.0));
+					Assert::IsTrue(pow((df3(X)[1] - jacobianOfF(2,1)), 2.0) < pow(10, -5.0));
 				}
 			}
 

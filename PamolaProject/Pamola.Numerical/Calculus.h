@@ -19,10 +19,10 @@ public:
 	static double deriveAt(double, SystemSolver::oneVarFunc,
 		DerivingMode = DerivingMode::Central, double = 1e-6);
 
-	static std::vector<double> gradientAt(const std::vector<double> &, SystemSolver::multVarFunc,
+	static Eigen::VectorXd gradientAt(const std::vector<double> &, SystemSolver::multVarFunc,
 		DerivingMode = DerivingMode::Central, double = 1e-6);
 
-	static SystemSolver::matrix jacobianAt(const std::vector<double> &, std::vector<SystemSolver::multVarFunc>,
+	static Eigen::MatrixXd jacobianAt(const std::vector<double> &, std::vector<SystemSolver::multVarFunc>,
 		DerivingMode = DerivingMode::Central, double = 1e-6);
 
 };

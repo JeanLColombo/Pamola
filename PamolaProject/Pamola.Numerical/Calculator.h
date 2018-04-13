@@ -12,7 +12,7 @@ namespace SystemSolver
 		virtual ~Calculator();
 	
 		virtual double iterate(double, oneVarFunc) = 0;
-		virtual std::vector<double> iterate(const std::vector<double> &, multVarFunc) = 0;
+		virtual std::vector<double> iterate(const std::vector<double> &, const std::vector<multVarFunc> &) = 0;
 	
 	};
 }
