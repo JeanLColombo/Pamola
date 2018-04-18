@@ -29,28 +29,28 @@ double Calculus::deriveAt(double x, SystemSolver::oneVarFunc f,
 	return (yNext - yPrev) / (xNext - xPrev);
 }
 
-Eigen::VectorXd Calculus::gradientAt(const std::vector<double>& X, SystemSolver::multVarFunc f,
+Eigen::VectorXd Calculus::gradientAt(const Eigen::VectorXd &X, SystemSolver::multVarFunc f,
 	DerivingMode m, double tol)
 {
 	Eigen::VectorXd gradient(X.size());
-	std::vector<double> Xaux = X;
+	Eigen::VectorXd Xaux = X;
 
 	for (int i = 0; i < int(X.size()); i++)
 	{
 		using namespace SystemSolver;
 		oneVarFunc wrap = [&X, &Xaux, i, f](double x) {
 			Xaux = X;
-			Xaux.at(i) = x;
+			Xaux(i) = x;
 			return f(Xaux);
 		};
 
-		gradient(i) = deriveAt(X[i], wrap, m, tol);
+		gradient(i) = deriveAt(X(i), wrap, m, tol);
 	}
 
 	return gradient;
 }
 
-Eigen::MatrixXd Calculus::jacobianAt(const std::vector<double> &X,
+Eigen::MatrixXd Calculus::jacobianAt(const Eigen::VectorXd &X,
 	std::vector<SystemSolver::multVarFunc> F, 
 	DerivingMode m, double tol)
 {
