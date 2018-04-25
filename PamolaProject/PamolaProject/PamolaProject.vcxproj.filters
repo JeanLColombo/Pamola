@@ -63,6 +63,9 @@
     <ClInclude Include="MockedModelSolver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="NewtonRaphsonMS.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -108,6 +111,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="MockedModelSolver.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="NewtonRaphsonMS.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

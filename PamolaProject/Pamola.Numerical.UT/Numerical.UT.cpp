@@ -2,6 +2,7 @@
 #include "CppUnitTest.h"
 #include "..\Pamola.Numerical\Calculator.h"
 #include "..\Pamola.Numerical\NewtonRaphson.h"
+#include <complex>
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -10,7 +11,7 @@ namespace PamolaNumericalUT
 	TEST_CLASS(DifferentialCalculus)
 	{
 	public:
-		
+
 		TEST_METHOD(DeriveAt1)
 		{
 			auto square = [](double x) {return x * x; };
@@ -19,10 +20,27 @@ namespace PamolaNumericalUT
 			{
 				auto deriveAtPoint = Calculus::deriveAt(point, square);
 				Logger::WriteMessage((std::to_string(point) + " | " + std::to_string(deriveAtPoint)).c_str());
-				Assert::AreEqual(int(2*point), int(deriveAtPoint));
+				Assert::AreEqual(int(2 * point), int(deriveAtPoint));
 			}
-						
+
 		};
+
+		TEST_METHOD(DeriveAt2)
+		{
+			using namespace std::literals;
+			auto square = [](std::complex<double> x) {return x * (x + 1.0i); };
+			Logger::WriteMessage("DeriveAt2::Results");
+			for (double point = -3.0; point <= 3.0; point++)
+			{
+				auto x = point + 2.0i*point;
+				auto deriveAtPoint = Calculus::deriveAt(x, square);
+				Logger::WriteMessage((std::to_string(x.real()) + " | " + std::to_string(deriveAtPoint.real())).c_str());
+				Assert::AreEqual(int(pow(2.0 * x.real() - deriveAtPoint.real(),2.0)), 0);
+				Logger::WriteMessage((std::to_string(x.imag()) + " | " + std::to_string(deriveAtPoint.imag())).c_str());
+				Assert::AreEqual(int(pow(2.0 * x.imag() + 1.0 - deriveAtPoint.imag(), 2.0)), 0);
+			};
+		};
+
 
 		TEST_METHOD(GradientAt1)
 		{
@@ -33,7 +51,7 @@ namespace PamolaNumericalUT
 				return retX; };
 			Logger::WriteMessage("GradientAt1::Results");
 			Eigen::VectorXd X{ 2 };
-			for (double pointX = -3.0; pointX <= 3.0; pointX+=0.1)
+			for (double pointX = -3.0; pointX <= 3.0; pointX += 0.1)
 			{
 				X(0) = pointX;
 				for (double pointY = -3.0; pointY <= 3.0; pointY += 0.1)
@@ -41,12 +59,37 @@ namespace PamolaNumericalUT
 					X(1) = pointY;
 					auto saddleGrad = Calculus::gradientAt(X, saddle);
 					Assert::IsTrue(pow((saddleGrad(0) - saddleAnalitic(X)(0)), 2.0) < pow(10, -5.0));
-					Assert::IsTrue(pow((saddleGrad(0) - saddleAnalitic(X)(0)), 2.0) < pow(10, -5.0));
+					Assert::IsTrue(pow((saddleGrad(1) - saddleAnalitic(X)(1)), 2.0) < pow(10, -5.0));
 				}
 			}
 		};
 
-		TEST_METHOD(JacobianAt1) 
+		TEST_METHOD(GradientAt2)
+		{
+			using namespace std::literals;
+			auto saddle = [](Eigen::VectorXcd X) {return (X(0) * X(0)) - (X(1) * X(1)) + X(0)*X(1)*1.0i; };
+			auto saddleAnalitic = [](Eigen::VectorXcd X) {
+				Eigen::VectorXcd retX{ 2 };
+				retX << (2.0*X(0) + X(1)*1.0i), (-2.0*X(1) + X(0)*1.0i);
+				return retX; };
+			Logger::WriteMessage("GradientAt2::Results");
+			Eigen::VectorXcd X{ 2 };
+			for (double pointX = -3.0; pointX <= 3.0; pointX += 0.1)
+			{
+				X(0) = pointX * (1.0 + 1.0i);
+				for (double pointY = -3.0; pointY <= 3.0; pointY += 0.1)
+				{
+					X(1) = pointY * (1.0 - 1.0i);
+					auto saddleGrad = Calculus::gradientAt(X, saddle);
+					Assert::IsTrue(pow((saddleGrad(0).real() - saddleAnalitic(X)(0).real()), 2.0) < pow(10, -5.0));
+					Assert::IsTrue(pow((saddleGrad(1).real() - saddleAnalitic(X)(1).real()), 2.0) < pow(10, -5.0));
+					Assert::IsTrue(pow((saddleGrad(0).imag() - saddleAnalitic(X)(0).imag()), 2.0) < pow(10, -5.0));
+					Assert::IsTrue(pow((saddleGrad(1).imag() - saddleAnalitic(X)(1).imag()), 2.0) < pow(10, -5.0));
+				}
+			}
+		};
+
+		TEST_METHOD(JacobianAt1)
 		{
 			auto f1 = [](Eigen::VectorXd X) {return X(0) * X(0) + X(1) * X(1); };
 			auto f2 = [](Eigen::VectorXd X) {return -X(1); };
@@ -57,13 +100,13 @@ namespace PamolaNumericalUT
 				return retX; };
 			auto df2 = [](Eigen::VectorXd X) {
 				Eigen::VectorXd retX{ 2 };
-				retX <<  0, -1 ;
+				retX << 0, -1;
 				return retX; };
 			auto df3 = [](Eigen::VectorXd X) {
 				Eigen::VectorXd retX{ 2 };
 				retX << 2, 0;
 				return retX; };
-			
+
 			for (double pointX = -3.0; pointX <= 3.0; pointX += 0.1)
 			{
 				for (double pointY = -3.0; pointY <= 3.0; pointY += 0.1)
@@ -72,18 +115,65 @@ namespace PamolaNumericalUT
 					X << pointX, pointY;
 					auto jacobianOfF = Calculus::jacobianAt(X, { f1,f2,f3 });
 
-					Assert::IsTrue(pow((df1(X)(0) - jacobianOfF(0,0)), 2.0) < pow(10, -5.0));
-					Assert::IsTrue(pow((df1(X)(1) - jacobianOfF(0,1)), 2.0) < pow(10, -5.0));
-					Assert::IsTrue(pow((df2(X)(0) - jacobianOfF(1,0)), 2.0) < pow(10, -5.0));
-					Assert::IsTrue(pow((df2(X)(1) - jacobianOfF(1,1)), 2.0) < pow(10, -5.0));
-					Assert::IsTrue(pow((df3(X)(0) - jacobianOfF(2,0)), 2.0) < pow(10, -5.0));
-					Assert::IsTrue(pow((df3(X)(1) - jacobianOfF(2,1)), 2.0) < pow(10, -5.0));
+					Assert::IsTrue(pow((df1(X)(0) - jacobianOfF(0, 0)), 2.0) < pow(10, -5.0));
+					Assert::IsTrue(pow((df1(X)(1) - jacobianOfF(0, 1)), 2.0) < pow(10, -5.0));
+					Assert::IsTrue(pow((df2(X)(0) - jacobianOfF(1, 0)), 2.0) < pow(10, -5.0));
+					Assert::IsTrue(pow((df2(X)(1) - jacobianOfF(1, 1)), 2.0) < pow(10, -5.0));
+					Assert::IsTrue(pow((df3(X)(0) - jacobianOfF(2, 0)), 2.0) < pow(10, -5.0));
+					Assert::IsTrue(pow((df3(X)(1) - jacobianOfF(2, 1)), 2.0) < pow(10, -5.0));
+				}
+			}
+
+		};
+
+		TEST_METHOD(JacobianAt2)
+		{
+			using namespace std::literals;
+			auto f1 = [](Eigen::VectorXcd X) {return X(0) * X(0) + (X(1) * X(1))*(1.0i); };
+			auto f2 = [](Eigen::VectorXcd X) {return -X(1) + 1.0i; };
+			auto f3 = [](Eigen::VectorXcd X) {return 2.0 * X(0); };
+			auto df1 = [](Eigen::VectorXcd X) {
+				Eigen::VectorXcd retX{ 2 };
+				retX << (2.0 * X(0)), (2.0i * X(1));
+				return retX; };
+			auto df2 = [](Eigen::VectorXcd X) {
+				Eigen::VectorXcd retX{ 2 };
+				retX << 0.0, -1.0;
+				return retX; };
+			auto df3 = [](Eigen::VectorXcd X) {
+				Eigen::VectorXcd retX{ 2 };
+				retX << 2.0, 0.0;
+				return retX; };
+
+			for (double pointX = -3.0; pointX <= 3.0; pointX += 0.1)
+			{
+				for (double pointY = -3.0; pointY <= 3.0; pointY += 0.1)
+				{
+					Eigen::VectorXcd X{ 2 };
+					X << pointX * (1.0 + 2.0i), pointY*(1.0 - 0.5i);
+					auto jacobianOfF = Calculus::jacobianAt(X, { f1,f2,f3 });
+
+					Assert::IsTrue(pow((df1(X)(0).real() - jacobianOfF(0, 0).real()), 2.0) < pow(10, -5.0));
+					Assert::IsTrue(pow((df1(X)(1).real() - jacobianOfF(0, 1).real()), 2.0) < pow(10, -5.0));
+					Assert::IsTrue(pow((df2(X)(0).real() - jacobianOfF(1, 0).real()), 2.0) < pow(10, -5.0));
+					Assert::IsTrue(pow((df2(X)(1).real() - jacobianOfF(1, 1).real()), 2.0) < pow(10, -5.0));
+					Assert::IsTrue(pow((df3(X)(0).real() - jacobianOfF(2, 0).real()), 2.0) < pow(10, -5.0));
+					Assert::IsTrue(pow((df3(X)(1).real() - jacobianOfF(2, 1).real()), 2.0) < pow(10, -5.0));
+
+					Assert::IsTrue(pow((df1(X)(0).imag() - jacobianOfF(0, 0).imag()), 2.0) < pow(10, -5.0));
+					Assert::IsTrue(pow((df1(X)(1).imag() - jacobianOfF(0, 1).imag()), 2.0) < pow(10, -5.0));
+					Assert::IsTrue(pow((df2(X)(0).imag() - jacobianOfF(1, 0).imag()), 2.0) < pow(10, -5.0));
+					Assert::IsTrue(pow((df2(X)(1).imag() - jacobianOfF(1, 1).imag()), 2.0) < pow(10, -5.0));
+					Assert::IsTrue(pow((df3(X)(0).imag() - jacobianOfF(2, 0).imag()), 2.0) < pow(10, -5.0));
+					Assert::IsTrue(pow((df3(X)(1).imag() - jacobianOfF(2, 1).imag()), 2.0) < pow(10, -5.0));
 				}
 			}
 
 		};
 
 	};
+
+
 	TEST_CLASS(Optimizations)
 	{
 		TEST_METHOD(NewtonRaphsonClassicalOneVar)
@@ -215,4 +305,4 @@ namespace PamolaNumericalUT
 			Logger::WriteMessage(("X(1) = " + std::to_string(X0(1))).c_str());
 		};
 	};
-}
+};
