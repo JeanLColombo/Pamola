@@ -350,43 +350,30 @@ namespace PamolaUT
 			ele1->getLeft()->connectTo(ele2->getLeft());
 			auto cir = ele1->getCircuit();
 
-			Logger::WriteMessage("List of Circuit Components:");
-			std::string component;
-			for (auto &element : cir->getElements())
+			auto variables = cir->getVariables();
+
+			Logger::WriteMessage("Printing Default Variables Values");
+			for (auto &var : variables)
 			{
-				component = std::to_string(element->getId()) + " = ";
-				switch (element->getPamolaType())
-				{
-				case Pamola::Type::CircuitElement:
-					component += "Element";
-					break;
-				case Pamola::Type::CircuitTerminal:
-					component += "Terminal";
-					break;
-				case Pamola::Type::CircuitNode:
-					component += "Node";
-					break;
-				case Pamola::Type::Circuit:
-					component += "Circuit";
-					break;
-				case Pamola::Type::Other:
-					component += "Other";
-					break;
-				case Pamola::Type::Error:
-					component += "Error";
-					break;
-				default:
-					component += "Default";
-					break;
-				}
-				Logger::WriteMessage(component.c_str());
+				Logger::WriteMessage(std::to_string(var.second().real()).c_str());
 			}
 
-			Logger::WriteMessage("List of Variables:");
-			for (auto variable : cir->getVariables())
+			Logger::WriteMessage("Setting Variables:");
+			int temp = 1;
+			for (auto &var : variables)
 			{
-				Logger::WriteMessage(variable.c_str());
+				var.first(temp);
+				temp += int(var.second().real());
 			}
+
+			Logger::WriteMessage("Printing le Fibonacci Variables Values");
+			for (auto &var : variables)
+			{
+				Logger::WriteMessage(std::to_string(var.second().real()).c_str());
+			}
+
+			Logger::WriteMessage("Last check");
+			Logger::WriteMessage(std::to_string(ele1->getLeft()->getNode()->getVoltage().real()).c_str());
 		}
 		TEST_METHOD(RealSystemCreation)
 		{
@@ -418,22 +405,24 @@ namespace PamolaUT
 			vdc->getPositive()->connectTo(res->getLeft());
 			vdc->getNegative()->connectTo(res->getRight());
 			auto cir = vdc->getCircuit();
+			// Set Parameters
 			res->setResistance(2.0);
 			vdc->setVoltage(10.0);
-			std::map<std::string, std::complex<double>> mapOfVariables;
-			mapOfVariables[res->getResistanceVariable()] = 2.0;
-			mapOfVariables[res->getLeft()->getCurrentVariable()] = 5.0;
-			mapOfVariables[res->getRight()->getCurrentVariable()] = -5.0;
-			mapOfVariables[vdc->getVoltageVariable()] = 10.0;
-			mapOfVariables[vdc->getLeft()->getCurrentVariable()] = -5.0;
-			mapOfVariables[vdc->getRight()->getCurrentVariable()] = 5.0;
-			mapOfVariables[vdc->getPositive()->getVoltageVariable()] = 10.0;
-			mapOfVariables[vdc->getNegative()->getVoltageVariable()] = 0.0;
+			// Set Variables
+			res->getLeft()->setCurrent(5.0);
+			res->getRight()->setCurrent(-5.0);
+			vdc->getLeft()->setCurrent(-5.0);
+			vdc->getRight()->setCurrent(5.0);
+			vdc->getPositive()->getNode()->setVoltage(10.0);
+			vdc->getNegative()->getNode()->setVoltage(0.0);
 			Logger::WriteMessage("Evaluation 1 [Must be 0]:");
+			double out{ 0.0 };
 			for (auto &equation : cir->getEquations())
 			{
-				Logger::WriteMessage(std::to_string(equation(mapOfVariables).real()).c_str());
+				out += equation().real()*equation().real();
+				Logger::WriteMessage(std::to_string(equation().real()).c_str());
 			}
+			Assert::IsTrue((0.0 == out), L"Equation Output Undefined Behavior", LINE_INFO());
 		}
 		TEST_METHOD(RealSystemEquationEvaluation2)
 		{
@@ -443,22 +432,24 @@ namespace PamolaUT
 			vdc->getPositive()->connectTo(res->getLeft());
 			vdc->getNegative()->connectTo(res->getRight());
 			auto cir = vdc->getCircuit();
+			// Set Parameters
 			res->setResistance(2.0);
 			vdc->setVoltage(10.0);
-			std::map<std::string, std::complex<double>> mapOfVariables;
-			mapOfVariables[res->getResistanceVariable()] = 2.0;
-			mapOfVariables[res->getLeft()->getCurrentVariable()] = 5.0;
-			mapOfVariables[res->getRight()->getCurrentVariable()] = -5.0;
-			mapOfVariables[vdc->getVoltageVariable()] = 10.0;
-			mapOfVariables[vdc->getLeft()->getCurrentVariable()] = -5.0;
-			mapOfVariables[vdc->getRight()->getCurrentVariable()] = 5.0;
-			mapOfVariables[vdc->getPositive()->getVoltageVariable()] = 24.0;
-			mapOfVariables[vdc->getNegative()->getVoltageVariable()] = 14.0;
+			// Set Variables
+			res->getLeft()->setCurrent(5.0);
+			res->getRight()->setCurrent(-5.0);
+			vdc->getLeft()->setCurrent(-5.0);
+			vdc->getRight()->setCurrent(5.0);
+			vdc->getPositive()->getNode()->setVoltage(24.0);
+			vdc->getNegative()->getNode()->setVoltage(14.0);
 			Logger::WriteMessage("Evaluation 2 [Must be 0]:");
+			double out{ 0.0 };
 			for (auto &equation : cir->getEquations())
 			{
-				Logger::WriteMessage(std::to_string(equation(mapOfVariables).real()).c_str());
+				out += equation().real()*equation().real();
+				Logger::WriteMessage(std::to_string(equation().real()).c_str());
 			}
+			Assert::IsTrue((0.0 == out), L"Equation Output Undefined Behavior", LINE_INFO());
 		}
 		TEST_METHOD(RealSystemEquationEvaluation3)
 		{
@@ -468,22 +459,24 @@ namespace PamolaUT
 			vdc->getPositive()->connectTo(res->getLeft());
 			vdc->getNegative()->connectTo(res->getRight());
 			auto cir = vdc->getCircuit();
+			// Set Parameters
 			res->setResistance(2.0);
 			vdc->setVoltage(10.0);
-			std::map<std::string, std::complex<double>> mapOfVariables;
-			mapOfVariables[res->getResistanceVariable()] = 2.0;
-			mapOfVariables[res->getLeft()->getCurrentVariable()] = 5.0;
-			mapOfVariables[res->getRight()->getCurrentVariable()] = -5.0;
-			mapOfVariables[vdc->getVoltageVariable()] = 10.0;
-			mapOfVariables[vdc->getLeft()->getCurrentVariable()] = -5.0;
-			mapOfVariables[vdc->getRight()->getCurrentVariable()] = 12.0;
-			mapOfVariables[vdc->getPositive()->getVoltageVariable()] = 20.0;
-			mapOfVariables[vdc->getNegative()->getVoltageVariable()] = 0.0;
+			// Set Variables
+			res->getLeft()->setCurrent(5.0);
+			res->getRight()->setCurrent(-5.0);
+			vdc->getLeft()->setCurrent(-5.0);
+			vdc->getRight()->setCurrent(12.0);
+			vdc->getPositive()->getNode()->setVoltage(20.0);
+			vdc->getNegative()->getNode()->setVoltage(0.0);			
 			Logger::WriteMessage("Evaluation 3 [Must NOT be 0]:");
+			double out{ 0.0 };
 			for (auto &equation : cir->getEquations())
 			{
-				Logger::WriteMessage(std::to_string(equation(mapOfVariables).real()).c_str());
+				out += equation().real()*equation().real();
+				Logger::WriteMessage(std::to_string(equation().real()).c_str());
 			}
+			Assert::IsFalse((0.0 == out), L"Equation Output Undefined Behavior", LINE_INFO());
 		}
 		TEST_METHOD(RealSystemEquationEvaluation4)
 		{
@@ -495,22 +488,24 @@ namespace PamolaUT
 			vdc->getNegative()->connectTo(res->getRight());
 			gnd->getTerminal()->connectTo(vdc->getNegative());
 			auto cir = vdc->getCircuit();
+			// Set Parameters
 			res->setResistance(2.0);
 			vdc->setVoltage(10.0);
-			std::map<std::string, std::complex<double>> mapOfVariables;
-			mapOfVariables[res->getResistanceVariable()] = 2.0;
-			mapOfVariables[res->getLeft()->getCurrentVariable()] = 5.0;
-			mapOfVariables[res->getRight()->getCurrentVariable()] = -5.0;
-			mapOfVariables[vdc->getVoltageVariable()] = 10.0;
-			mapOfVariables[vdc->getLeft()->getCurrentVariable()] = -5.0;
-			mapOfVariables[vdc->getRight()->getCurrentVariable()] = 5.0;
-			mapOfVariables[vdc->getPositive()->getVoltageVariable()] = 24.0;
-			mapOfVariables[vdc->getNegative()->getVoltageVariable()] = 14.0;
+			// Set Variables
+			res->getLeft()->setCurrent(5.0);
+			res->getRight()->setCurrent(-5.0);
+			vdc->getLeft()->setCurrent(-5.0);
+			vdc->getRight()->setCurrent(5.0);
+			vdc->getPositive()->getNode()->setVoltage(24.0);
+			vdc->getNegative()->getNode()->setVoltage(14.0);
 			Logger::WriteMessage("Evaluation 4 [Must NOT be 0]:");
+			double out{ 0.0 };
 			for (auto &equation : cir->getEquations())
 			{
-				Logger::WriteMessage(std::to_string(equation(mapOfVariables).real()).c_str());
+				out += equation().real()*equation().real();
+				Logger::WriteMessage(std::to_string(equation().real()).c_str());
 			}
+			Assert::IsFalse((0.0 == out), L"Equation Output Undefined Behavior", LINE_INFO());
 		}
 	};
 
@@ -702,7 +697,29 @@ namespace PamolaUT
 			Rb->setResistance(500);
 			V1->setVoltage(12);
 			auto cir = (R1 + Rb + R4 + V1 + R1 + R2 + R4 + R3 + R1)->getCircuit();
-			//TODO: Implement solver on Wheatstone Bridge
+			cir->solve();
+			Assert::IsTrue(Rb->getRight()->getCurrent().real() < 1.0e-5);
+			Assert::IsTrue(Rb->getRight()->getCurrent().imag() < 1.0e-5);
 		}
+	};
+
+	TEST_CLASS(ModelSover)
+	{
+		TEST_METHOD(MockedMS)
+		{
+			using namespace Pamola;
+			auto res = createElement<Resistor>();
+			auto vdc = createElement<IdealDCSource>();
+			auto gnd = createElement<Ground>();
+			vdc->getPositive()->connectTo(res->getLeft());
+			vdc->getNegative()->connectTo(res->getRight());
+			gnd->getTerminal()->connectTo(vdc->getNegative());
+			Engine::getLocalEngine()->setSolver(std::shared_ptr<ModelSolver>(new MockedModelSolver()));
+			auto cir = res->getCircuit();
+			cir->solve();
+			auto mockVolt = vdc->getPositive()->getNode()->getVoltage();
+			Assert::IsTrue(mockVolt.real() == 4.0);
+			Assert::IsTrue(mockVolt.imag() == 3.0);
+		};
 	};
 }

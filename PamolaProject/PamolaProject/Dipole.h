@@ -15,7 +15,7 @@ namespace Pamola {
 		
 	protected:
 
-		std::function<std::complex<double>(std::map<std::string, std::complex<double>>)> currentCallback();
+		getterSign currentCallback();
 
 	public:
 
@@ -23,7 +23,7 @@ namespace Pamola {
 
 		void connectInParallelTo(std::shared_ptr<Dipole>);
 
-		virtual std::set<std::string> getVariables() = 0;
+		virtual varMap getVariables() = 0;
 
 		virtual int getDegreesOfFreedom() = 0;
 		

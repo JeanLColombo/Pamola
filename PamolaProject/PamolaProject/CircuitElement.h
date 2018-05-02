@@ -43,7 +43,7 @@ namespace Pamola
 
 		uint32_t getNumberOfTerminals();
 		
-		virtual std::set<std::string> getVariables() = 0;
+		virtual varMap getVariables() = 0;
 
 		virtual int getDegreesOfFreedom() = 0;
 

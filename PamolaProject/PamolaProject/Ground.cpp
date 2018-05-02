@@ -17,13 +17,13 @@ namespace Pamola
 		return CircuitElement::getTerminal(0);
 	}
 
-	std::vector<std::function<std::complex<double>(std::map<std::string, std::complex<double>>)>> Ground::getEquations()
+	eqMap Ground::getEquations()
 	{
-		return { [this](std::map<std::string, std::complex<double>> m){
-			return m[getTerminal()->getVoltageVariable()]; } };
+		return { [this](){
+			return getTerminal()->getVoltage(); } };
 	}
 
-	std::set<std::string> Ground::getVariables()
+	varMap Ground::getVariables()
 	{
 		return {};
 	}

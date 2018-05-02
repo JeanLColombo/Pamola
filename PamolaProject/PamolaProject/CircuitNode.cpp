@@ -55,22 +55,24 @@ namespace Pamola
 		return true;
 	}
 
-	std::vector<std::function<std::complex<double>(std::map<std::string, std::complex<double>>)>> CircuitNode::getEquations()
+	eqMap CircuitNode::getEquations()
 	{
-		return { [this](std::map<std::string, std::complex<double>> m)
-		{
-			std::complex<double> s{ 0.0 };
+		return { [this]()
+			{
+				std::complex<double> s{ 0.0 };
 
-			for (auto t : getTerminals())
-				s += m[t->getCurrentVariable()];
+				for (auto t : getTerminals())
+					s += t->getCurrent();
 
-			return s;
-		} };
+				return s;
+			} 
+		};
 	}
 
-	std::set<std::string> CircuitNode::getVariables()
+	varMap CircuitNode::getVariables()
 	{
-		return { "E" };
+		return { std::make_pair([this](std::complex<double> x) {setVoltage(x); },
+				[this]() {return getVoltage(); }) };
 	}
 
 	const std::set<uint32_t> CircuitNode::getAdjacentComponents()

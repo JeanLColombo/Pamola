@@ -32,28 +32,23 @@ namespace Pamola
 		voltage = value;
 	}
 
-	std::vector<std::function<std::complex<double>(std::map<std::string, std::complex<double>>)>> IdealDCSource::getEquations()
+	eqMap IdealDCSource::getEquations()
 	{
-		std::vector<std::function<std::complex<double>(std::map<std::string, std::complex<double>>)>> equations;
+		eqMap equations;
 
 		equations.push_back(currentCallback());
 
 		equations.push_back(
-			[this](std::map<std::string, std::complex<double>> m) {
-			return m[getPositive()->getVoltageVariable()] - m[getNegative()->getVoltageVariable()] - m[getVoltageVariable()];
-		});
-
-		equations.push_back(
-			[this](std::map<std::string, std::complex<double>> m) {
-			return m[getVoltageVariable()] - getVoltage();
+			[this]() {
+			return getPositive()->getVoltage() - getNegative()->getVoltage() - getVoltage();
 		});
 
 		return equations;
 	}
 
-	std::set<std::string> IdealDCSource::getVariables()
+	varMap IdealDCSource::getVariables()
 	{
-		return { "V" };
+		return {};
 	}
 
 	std::string IdealDCSource::getVoltageVariable()

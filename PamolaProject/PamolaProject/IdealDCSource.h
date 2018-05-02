@@ -21,9 +21,9 @@ namespace Pamola
 
 		void setVoltage(double);
 
-		std::vector<std::function<std::complex<double>(std::map<std::string, std::complex<double>>)>> getEquations();
+		eqMap getEquations();
 
-		std::set<std::string> getVariables();
+		varMap getVariables();
 
 		std::string getVoltageVariable();
 

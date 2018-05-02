@@ -38,9 +38,9 @@ namespace Pamola
 
 		bool setVoltage(std::complex<double>);
 
-		std::vector<std::function<std::complex<double>(std::map<std::string, std::complex<double>>)>> getEquations() final;
+		eqMap getEquations() final;
 
-		std::set<std::string> getVariables();
+		varMap getVariables();
 
 		const std::set<uint32_t> getAdjacentComponents();
 

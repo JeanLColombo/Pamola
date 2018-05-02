@@ -5,7 +5,7 @@ namespace Pamola
 {
 	const std::shared_ptr<Engine> Engine::localEngine(new Engine());
 
-	Engine::Engine(uint32_t firstId) : guid(firstId)
+	Engine::Engine(uint32_t firstId) : guid(firstId), solver(std::shared_ptr<ModelSolver>(new NewtonRaphsonMS()))
 	{
 	}
 
@@ -39,6 +39,16 @@ namespace Pamola
 	std::shared_ptr<Object> Engine::getLocalObject(uint32_t id)
 	{
 		return getLocalObjects()[id];
+	}
+
+	std::shared_ptr<ModelSolver> Engine::getSolver()
+	{
+		return solver;
+	}
+
+	void Engine::setSolver(std::shared_ptr<ModelSolver> externalSolver)
+	{
+		solver = externalSolver;
 	}
 
 	std::vector<std::shared_ptr<CircuitTerminal>> Engine::createTerminalsFor(std::shared_ptr<CircuitElement> element)
@@ -78,5 +88,9 @@ namespace Pamola
 		object->id = guid++;
 		object->engine = shared_from_this();
 		localObjects[object->getId()] = object;
+	}
+	void Engine::callSolver(varMap &variables, eqMap &equations)
+	{
+		getSolver()->SolveSystem(variables, equations);
 	}
 }

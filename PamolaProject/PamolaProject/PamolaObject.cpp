@@ -86,7 +86,7 @@ namespace Pamola
 		return getId() != o.getId();
 	}
 
-	std::vector<std::function<std::complex<double>(std::map<std::string, std::complex<double>>)>> Object::getEquations()
+	eqMap Object::getEquations()
 	{
 		return {};
 	}

@@ -22,29 +22,24 @@ namespace Pamola
 		resistance = value;
 	}
 
-	std::vector<std::function<std::complex<double>(std::map<std::string, std::complex<double>>)>> Resistor::getEquations()
+	eqMap Resistor::getEquations()
 	{
-		std::vector<std::function<std::complex<double>(std::map<std::string, std::complex<double>>)>> equations; 
+		eqMap equations; 
 		
 		equations.push_back(currentCallback());
 
 		equations.push_back(
-			[this](std::map<std::string, std::complex<double>> m) {
-					return m[getLeft()->getVoltageVariable()] - m[getRight()->getVoltageVariable()] - 
-						(m[getLeft()->getCurrentVariable()] * m[getResistanceVariable()]);
-		});
-
-		equations.push_back(
-			[this](std::map<std::string, std::complex<double>> m) {
-			return m[getResistanceVariable()] - getResistance();
+			[this]() {
+					return getLeft()->getVoltage() - getRight()->getVoltage() - 
+						(getLeft()->getCurrent() * getResistance());
 		});
 
 		return equations;
 	}
 
-	std::set<std::string> Resistor::getVariables()
+	varMap Resistor::getVariables()
 	{
-		return { "R" };
+		return { };
 	}
 
 	std::string Resistor::getResistanceVariable()

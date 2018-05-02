@@ -23,10 +23,10 @@ namespace Pamola {
 		return getTerminal(1);
 	}
 
-	std::function<std::complex<double>(std::map<std::string, std::complex<double>>)> Dipole::currentCallback()
+	getterSign Dipole::currentCallback()
 	{
-		return [this](std::map<std::string, std::complex<double>> m) {
-			return m[std::to_string(getLeft()->getId()) + ".I"]	+ m[std::to_string(getRight()->getId()) + ".I"]; };
+		return [this]() {
+			return getLeft()->getCurrent() + getRight()->getCurrent(); };
 	}
 
 	void Dipole::connectInSeriesTo(std::shared_ptr<Dipole> dipole)

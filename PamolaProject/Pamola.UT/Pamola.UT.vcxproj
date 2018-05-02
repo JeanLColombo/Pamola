@@ -182,6 +182,7 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="..\packages\cpplinq.2013.08.10\build\native\cpplinq.targets" Condition="Exists('..\packages\cpplinq.2013.08.10\build\native\cpplinq.targets')" />
+    <Import Project="..\packages\Eigen.3.3.3\build\native\Eigen.targets" Condition="Exists('..\packages\Eigen.3.3.3\build\native\Eigen.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -189,5 +190,6 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\cpplinq.2013.08.10\build\native\cpplinq.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\cpplinq.2013.08.10\build\native\cpplinq.props'))" />
     <Error Condition="!Exists('..\packages\cpplinq.2013.08.10\build\native\cpplinq.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\cpplinq.2013.08.10\build\native\cpplinq.targets'))" />
+    <Error Condition="!Exists('..\packages\Eigen.3.3.3\build\native\Eigen.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Eigen.3.3.3\build\native\Eigen.targets'))" />
   </Target>
 </Project>

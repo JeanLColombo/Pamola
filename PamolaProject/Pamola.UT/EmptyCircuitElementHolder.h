@@ -7,7 +7,7 @@ public:
 	EmptyCircuitElementHolder();
 	~EmptyCircuitElementHolder();
 
-	std::set<std::string> getVariables();
+	Pamola::varMap getVariables();
 
 	int getDegreesOfFreedom();
 };
