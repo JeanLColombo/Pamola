@@ -72,7 +72,7 @@ Eigen::VectorXd Calculus::gradientAt(const Eigen::VectorXd &X, SystemSolver::mul
 }
 
 Eigen::VectorXcd Calculus::gradientAt(const Eigen::VectorXcd &X, 
-	std::function<std::complex<double>(Eigen::VectorXcd&)> f, 
+	std::function<std::complex<double>(const Eigen::VectorXcd&)> f, 
 	DerivingMode m, std::complex<double> tol)
 {
 	Eigen::VectorXcd gradient(X.size());
@@ -108,7 +108,7 @@ Eigen::MatrixXd Calculus::jacobianAt(const Eigen::VectorXd &X,
 }
 
 Eigen::MatrixXcd Calculus::jacobianAt(const Eigen::VectorXcd &X, 
-	std::vector<std::function<std::complex<double>(Eigen::VectorXcd&)>> F, 
+	std::vector<std::function<std::complex<double>(const Eigen::VectorXcd&)>> F, 
 	DerivingMode m, std::complex<double> tol)
 {
 	using namespace SystemSolver;

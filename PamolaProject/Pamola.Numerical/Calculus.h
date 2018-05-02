@@ -27,7 +27,7 @@ public:
 		DerivingMode = DerivingMode::Central, double = 1e-6);
 
 	static Eigen::VectorXcd gradientAt(const Eigen::VectorXcd &, 
-		std::function<std::complex<double>(Eigen::VectorXcd &)>,
+		std::function<std::complex<double>(const Eigen::VectorXcd &)>,
 		DerivingMode = DerivingMode::Central, 
 		std::complex<double> = 1e-6*std::complex<double>(1.0, 1.0));
 
@@ -35,7 +35,7 @@ public:
 		DerivingMode = DerivingMode::Central, double = 1e-6);
 
 	static Eigen::MatrixXcd jacobianAt(const Eigen::VectorXcd &, 
-		std::vector<std::function<std::complex<double>(Eigen::VectorXcd &)>>,
+		std::vector<std::function<std::complex<double>(const Eigen::VectorXcd &)>>,
 		DerivingMode = DerivingMode::Central, 
 		std::complex<double> = 1e-6*std::complex<double>(1.0, 1.0));
 };

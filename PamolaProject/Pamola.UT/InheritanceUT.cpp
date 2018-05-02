@@ -697,7 +697,9 @@ namespace PamolaUT
 			Rb->setResistance(500);
 			V1->setVoltage(12);
 			auto cir = (R1 + Rb + R4 + V1 + R1 + R2 + R4 + R3 + R1)->getCircuit();
-			//TODO: Implement solver on Wheatstone Bridge
+			cir->solve();
+			Assert::IsTrue(Rb->getRight()->getCurrent().real() < 1.0e-5);
+			Assert::IsTrue(Rb->getRight()->getCurrent().imag() < 1.0e-5);
 		}
 	};
 
@@ -712,7 +714,7 @@ namespace PamolaUT
 			vdc->getPositive()->connectTo(res->getLeft());
 			vdc->getNegative()->connectTo(res->getRight());
 			gnd->getTerminal()->connectTo(vdc->getNegative());
-			//Engine::getLocalEngine()->setSolver(MockedModelSolver());
+			Engine::getLocalEngine()->setSolver(std::shared_ptr<ModelSolver>(new MockedModelSolver()));
 			auto cir = res->getCircuit();
 			cir->solve();
 			auto mockVolt = vdc->getPositive()->getNode()->getVoltage();

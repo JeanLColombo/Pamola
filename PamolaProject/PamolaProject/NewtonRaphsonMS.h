@@ -4,9 +4,6 @@
 
 namespace Pamola
 {
-	using fType = std::function<double(Eigen::VectorXd)>;
-	using FType = std::vector<fType>;
-
 	class NewtonRaphsonMS : public ModelSolver
 	{
 	private:
@@ -22,8 +19,8 @@ namespace Pamola
 
 	private:
 
-		//fType fWrapper(varMap&, getterSign&);
+		std::function<std::complex<double>(const Eigen::VectorXcd&)> fWrapper(varMap&, getterSign&);
 
-		//FType FWrapper(varMap&, eqMap&);
+		std::vector<std::function<std::complex<double>(const Eigen::VectorXcd&)>> FWrapper(varMap&, eqMap&);
 	};
 }

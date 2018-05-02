@@ -304,5 +304,62 @@ namespace PamolaNumericalUT
 			Logger::WriteMessage(("X(0) = " + std::to_string(X0(0))).c_str());
 			Logger::WriteMessage(("X(1) = " + std::to_string(X0(1))).c_str());
 		};
+
+		TEST_METHOD(NewtonRaphsonClassicalOneVarNonLinearComplex1) 
+		{
+			using namespace SystemSolver;
+			auto roots = [](std::complex<double> x) {return x * x + 2.0; };
+			std::complex<double> x0(-1.0, -1.0);
+			double error = 1.0;
+			int i = 0;
+			NewtonRaphson calculator;
+			while (error >= 1.0e-6 && i < 100)
+			{
+				auto x1 = calculator.iterate(x0, roots);
+				error = pow((x1.real() - x0.real()), 2)/2;
+				error += pow((x1.imag() - x0.imag()), 2)/2;
+				x0 = x1;
+				i++;
+			}
+
+			Logger::WriteMessage(("Root is: " + std::to_string(x0.real()) + " + " + std::to_string(x0.imag()) + "j "
+				+ " | iterations = " + std::to_string(i)).c_str());
+		};
+
+		TEST_METHOD(NewtonRaphsonClassicalMultVarNonLinearComplex1) 
+		{
+			using namespace SystemSolver;
+			using namespace std::literals;
+			auto notLine1 = [](Eigen::VectorXcd X) {
+				return X(0)*X(1)*X(2) - 25.0; };
+			auto notLine2 = [](Eigen::VectorXcd X) {
+				return X(0)*X(0) + X(1)*X(1) + 2.0; };
+			auto notLine3 = [](Eigen::VectorXcd X) {
+				return X(0) - X(1) + 2.0 * X(2) + 30.0; };
+			Eigen::VectorXcd X0{ 3 };
+			X0 << 1.0 + 1.0i, 1.0 + 1.0i, 1.0 + 1.0i;
+			double error = 1.0;
+			int i = 0;
+			NewtonRaphson calculator;
+			std::vector<std::function<std::complex<double>(const Eigen::VectorXcd&)>> F = { notLine1,notLine2,notLine3 };
+			while (error >= 1.0e-6 && i < 100)
+			{
+				auto X1 = calculator.iterate(X0, F);
+				error = pow((X1(0).real() - X0(0).real()), 2) 
+					+ pow((X1(1).real() - X0(1).real()), 2) 
+					+ pow((X1(2).real() - X0(2).real()), 2)/2;
+				error += pow((X1(0).imag() - X0(0).imag()), 2)
+					+ pow((X1(1).imag() - X0(1).imag()), 2)
+					+ pow((X1(2).imag() - X0(2).imag()), 2) / 2;
+				X0 = X1;
+				i++;
+			}
+
+			Logger::WriteMessage("System Solution:");
+			Logger::WriteMessage(("i = " + std::to_string(i)).c_str());
+			Logger::WriteMessage(("X(0) = " + std::to_string(X0(0).real()) + " + " + std::to_string(X0(0).imag()) + "j").c_str());
+			Logger::WriteMessage(("X(1) = " + std::to_string(X0(1).real()) + " + " + std::to_string(X0(1).imag()) + "j").c_str());
+			Logger::WriteMessage(("X(2) = " + std::to_string(X0(2).real()) + " + " + std::to_string(X0(2).imag()) + "j").c_str());
+		};
 	};
 };

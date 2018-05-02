@@ -148,6 +148,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Calculator.h" />
+    <ClInclude Include="CalculatorC.h" />
     <ClInclude Include="Calculus.h" />
     <ClInclude Include="Imports.h" />
     <ClInclude Include="Types.h" />
@@ -157,6 +158,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Calculator.cpp" />
+    <ClCompile Include="CalculatorC.cpp" />
     <ClCompile Include="Calculus.cpp" />
     <ClCompile Include="NewtonRaphson.cpp" />
     <ClCompile Include="stdafx.cpp">

@@ -5,7 +5,7 @@ namespace Pamola
 {
 	const std::shared_ptr<Engine> Engine::localEngine(new Engine());
 
-	Engine::Engine(uint32_t firstId) : guid(firstId), solver(std::shared_ptr<ModelSolver>(new MockedModelSolver()))
+	Engine::Engine(uint32_t firstId) : guid(firstId), solver(std::shared_ptr<ModelSolver>(new NewtonRaphsonMS()))
 	{
 	}
 

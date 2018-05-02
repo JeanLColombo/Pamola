@@ -12,6 +12,7 @@
 #include "Ground.h"
 #include "ModelSolver.h"
 #include "MockedModelSolver.h"
+#include "NewtonRaphsonMS.h"
 #include <memory>
 #include <map>
 #include <cassert>
