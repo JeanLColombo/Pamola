@@ -18,6 +18,9 @@
 #include <map>
 #include <cassert>
 
+//TODO: Separate includes in another file (perhaps hpp)
+//TODO: Test multiple engines, and cross object incorporation
+//TODO: Analyze the removal of static Engine
 
 namespace Pamola
 {
