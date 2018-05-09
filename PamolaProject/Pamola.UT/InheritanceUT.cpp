@@ -698,8 +698,8 @@ namespace PamolaUT
 			V1->setVoltage(12);
 			auto cir = (R1 + Rb + R4 + V1 + R1 + R2 + R4 + R3 + R1)->getCircuit();
 			cir->solve();
-			Assert::IsTrue(Rb->getRight()->getCurrent().real() < 1.0e-5);
-			Assert::IsTrue(Rb->getRight()->getCurrent().imag() < 1.0e-5);
+			Assert::IsTrue(pow(Rb->getRight()->getCurrent().real(), 2.0) < 1.0e-3);
+			Assert::IsTrue(pow(Rb->getRight()->getCurrent().imag(), 2.0) < 1.0e-3);
 		}
 	};
 
@@ -720,6 +720,246 @@ namespace PamolaUT
 			auto mockVolt = vdc->getPositive()->getNode()->getVoltage();
 			Assert::IsTrue(mockVolt.real() == 4.0);
 			Assert::IsTrue(mockVolt.imag() == 3.0);
+		};
+
+		TEST_METHOD(NewtonMScomplex1)
+		{		
+			using namespace Pamola;
+
+			Engine::getLocalEngine()->setSolver(std::shared_ptr<ModelSolver>(new NewtonRaphsonMS()));
+
+			auto R1 = createElement<Resistor>();
+			auto Vcc = createElement<IdealDCSource>();
+
+			auto cir = (R1 + Vcc + R1)->getCircuit();
+
+			Vcc->setVoltage(10.0);
+			R1->setResistance(2.0);
+
+			std::string message{ "\nVariables Before Solving:\n" };
+			for (auto &ele : cir->getElements())
+			{
+				for (auto &var : ele->getVariables())
+				{
+					message += std::to_string(ele->getId()) + "\t" + std::to_string(var.second().real()) + " "
+						+ std::to_string(var.second().imag()) + "j\n";
+				}
+			}
+
+			cir->solve();
+
+			message += "Variables After Solving:\n";
+			for (auto &ele : cir->getElements())
+			{
+				for (auto &var : ele->getVariables())
+				{
+					message += std::to_string(ele->getId()) + "\t" + std::to_string(var.second().real()) + " "
+						+ std::to_string(var.second().imag()) + "j\n";
+				}
+			}
+
+			Logger::WriteMessage(message.c_str());
+
+		};
+
+		TEST_METHOD(NewtonMScomplex2)
+		{
+			using namespace Pamola;
+
+			Engine::getLocalEngine()->setSolver(std::shared_ptr<ModelSolver>(new NewtonRaphsonMS()));
+
+			auto R1 = createElement<Resistor>();
+			auto Vcc = createElement<IdealDCSource>();
+
+			auto gnd = createElement<Ground>();
+
+			R1 + Vcc + R1;
+			auto cir = (R1->getLeft()->connectTo(gnd->getTerminal()))->getCircuit();
+
+			Vcc->setVoltage(10.0);
+			R1->setResistance(2.0);
+
+			std::string message{ "\nVariables Before Solving:\n" };
+			for (auto &ele : cir->getElements())
+			{
+				for (auto &var : ele->getVariables())
+				{
+					message += std::to_string(ele->getId()) + "\t" + std::to_string(var.second().real()) + " "
+						+ std::to_string(var.second().imag()) + "j\n";
+				}
+			}
+
+			cir->solve();
+
+			message += "Variables After Solving:\n";
+			for (auto &ele : cir->getElements())
+			{
+				for (auto &var : ele->getVariables())
+				{
+					message += std::to_string(ele->getId()) + "\t" + std::to_string(var.second().real()) + " "
+						+ std::to_string(var.second().imag()) + "j\n";
+				}
+			}
+
+			Logger::WriteMessage(message.c_str());
+
+		};
+
+		TEST_METHOD(NewtonMScomplex3) 
+		{
+			using namespace Pamola;
+
+			auto R1 = createElement<Resistor>();
+			auto R2 = createElement<Resistor>();
+			auto Vcc = createElement<IdealDCSource>();
+			auto gnd = createElement<Ground>();
+
+			Vcc->getPositive()->connectTo(R1->getLeft());
+			R1->getRight()->connectTo(R2->getLeft());
+			R2->getRight()->connectTo(Vcc->getNegative());
+			Vcc->getNegative()->connectTo(gnd->getTerminal());
+
+			R1->setResistance(4.0);
+			R2->setResistance(6.0);
+			Vcc->setVoltage(100.0);
+
+			auto cir = R1->getCircuit();
+			
+			cir->solve();
+
+			std::string message1 = "\nVoltages in the System:\n";
+			std::string message2 = "\nCurrents in the System:\n";
+			for (auto &ele : cir->getElements())
+			{
+				if (ele->getPamolaType() == Type::CircuitNode)
+				{
+					message1 += std::to_string(ele->getId()) + "\t\t";
+					for (auto &var : ele->getVariables())
+					{
+						message1 += std::to_string(var.second().real()) + "\t" 
+							+ std::to_string(var.second().imag()) + "j\n";
+					}
+				}
+				if (ele->getPamolaType() == Type::CircuitTerminal)
+				{
+					message2 += std::to_string(ele->getId()) + "\t\t";
+					for (auto &var : ele->getVariables())
+					{
+						message2 += std::to_string(var.second().real()) + "\t"
+							+ std::to_string(var.second().imag()) + "j\n";
+					}
+				}
+			}
+
+			Logger::WriteMessage(message1.c_str());
+			Logger::WriteMessage(message2.c_str());
+
+		};
+
+		TEST_METHOD(NewtonMScomplex4)
+		{
+			using namespace Pamola;
+			using namespace std::literals;
+
+			auto R1 = createElement<Resistor>();
+			auto R2 = createElement<Resistor>();
+			auto Vcc = createElement<IdealDCSource>();
+			auto gnd = createElement<Ground>();
+
+			Vcc->getPositive()->connectTo(R1->getLeft());
+			Vcc->getPositive()->connectTo(R2->getLeft());
+			Vcc->getNegative()->connectTo(R1->getRight());
+			Vcc->getNegative()->connectTo(R2->getRight());
+			Vcc->getNegative()->connectTo(gnd->getTerminal());
+
+			R1->setResistance(2.0);
+			R2->setResistance(5.0);
+			Vcc->setVoltage(100.0);
+
+			auto cir = R1->getCircuit();
+
+			cir->solve();
+
+			std::string message1 = "\nVoltages in the System:\n";
+			std::string message2 = "\nCurrents in the System:\n";
+			for (auto &ele : cir->getElements())
+			{
+				if (ele->getPamolaType() == Type::CircuitNode)
+				{
+					message1 += std::to_string(ele->getId()) + "\t\t";
+					for (auto &var : ele->getVariables())
+					{
+						message1 += std::to_string(var.second().real()) + "\t"
+							+ std::to_string(var.second().imag()) + "j\n";
+					}
+				}
+				if (ele->getPamolaType() == Type::CircuitTerminal)
+				{
+					message2 += std::to_string(ele->getId()) + "\t\t";
+					for (auto &var : ele->getVariables())
+					{
+						message2 += std::to_string(var.second().real()) + "\t"
+							+ std::to_string(var.second().imag()) + "j\n";
+					}
+				}
+			}
+
+			Logger::WriteMessage(message1.c_str());
+			Logger::WriteMessage(message2.c_str());
+
+		};
+
+		TEST_METHOD(NewtonMScomplex5)
+		{
+			using namespace Pamola;
+			using namespace std::literals;
+
+			auto R1 = createElement<Resistor>();
+			auto R2 = createElement<Resistor>();
+			auto Icc = createElement<IdealDCCurrentSource>();
+			auto gnd = createElement<Ground>();
+
+			Icc->getPositive()->connectTo(R1->getLeft());
+			Icc->getPositive()->connectTo(R2->getLeft());
+			Icc->getNegative()->connectTo(R1->getRight());
+			Icc->getNegative()->connectTo(R2->getRight());
+			Icc->getNegative()->connectTo(gnd->getTerminal());
+
+			R1->setResistance(3.0);
+			R2->setResistance(9.0);
+			Icc->setCurrent(30);
+
+			auto cir = R1->getCircuit();
+
+			cir->solve();
+
+			std::string message1 = "\nVoltages in the System:\n";
+			std::string message2 = "\nCurrents in the System:\n";
+			for (auto &ele : cir->getElements())
+			{
+				if (ele->getPamolaType() == Type::CircuitNode)
+				{
+					message1 += std::to_string(ele->getId()) + "\t\t";
+					for (auto &var : ele->getVariables())
+					{
+						message1 += std::to_string(var.second().real()) + "\t"
+							+ std::to_string(var.second().imag()) + "j\n";
+					}
+				}
+				if (ele->getPamolaType() == Type::CircuitTerminal)
+				{
+					message2 += std::to_string(ele->getId()) + "\t\t";
+					for (auto &var : ele->getVariables())
+					{
+						message2 += std::to_string(var.second().real()) + "\t"
+							+ std::to_string(var.second().imag()) + "j\n";
+					}
+				}
+			}
+
+			Logger::WriteMessage(message1.c_str());
+			Logger::WriteMessage(message2.c_str());
+
 		};
 	};
 }

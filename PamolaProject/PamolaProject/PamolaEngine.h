@@ -13,6 +13,7 @@
 #include "ModelSolver.h"
 #include "MockedModelSolver.h"
 #include "NewtonRaphsonMS.h"
+#include "IdealDCCurrentSource.h"
 #include <memory>
 #include <map>
 #include <cassert>
