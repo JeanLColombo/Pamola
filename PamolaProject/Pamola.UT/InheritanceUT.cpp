@@ -507,6 +507,8 @@ namespace PamolaUT
 			}
 			Assert::IsFalse((0.0 == out), L"Equation Output Undefined Behavior", LINE_INFO());
 		}
+
+		
 	};
 
 	TEST_CLASS(Dipole)
@@ -930,6 +932,56 @@ namespace PamolaUT
 			Icc->setCurrent(30);
 
 			auto cir = R1->getCircuit();
+
+			cir->solve();
+
+			std::string message1 = "\nVoltages in the System:\n";
+			std::string message2 = "\nCurrents in the System:\n";
+			for (auto &ele : cir->getElements())
+			{
+				if (ele->getPamolaType() == Type::CircuitNode)
+				{
+					message1 += std::to_string(ele->getId()) + "\t\t";
+					for (auto &var : ele->getVariables())
+					{
+						message1 += std::to_string(var.second().real()) + "\t"
+							+ std::to_string(var.second().imag()) + "j\n";
+					}
+				}
+				if (ele->getPamolaType() == Type::CircuitTerminal)
+				{
+					message2 += std::to_string(ele->getId()) + "\t\t";
+					for (auto &var : ele->getVariables())
+					{
+						message2 += std::to_string(var.second().real()) + "\t"
+							+ std::to_string(var.second().imag()) + "j\n";
+					}
+				}
+			}
+
+			Logger::WriteMessage(message1.c_str());
+			Logger::WriteMessage(message2.c_str());
+
+		};
+
+		TEST_METHOD(NewtonMScomplex6)
+		{
+			using namespace Pamola;
+			using namespace std::literals;
+
+			auto Ind = createElement<Impedance>();
+			auto V = createElement<IdealDCSource>();
+			auto gnd1 = createElement<Ground>();
+			auto gnd2 = createElement<Ground>();
+
+			V->getPositive()->connectTo(Ind->getLeft());
+			V->getNegative()->connectTo(gnd1->getTerminal());
+			Ind->getRight()->connectTo(gnd2->getTerminal());
+
+			Ind->setImpedance(0.0 + 22.0i);
+			V->setVoltage(220);
+
+			auto cir = Ind->getCircuit();
 
 			cir->solve();
 

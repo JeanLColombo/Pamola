@@ -159,6 +159,7 @@
     <ClInclude Include="Ground.h" />
     <ClInclude Include="IdealDCCurrentSource.h" />
     <ClInclude Include="IdealDCSource.h" />
+    <ClInclude Include="Impedance.h" />
     <ClInclude Include="MockedModelSolver.h" />
     <ClInclude Include="ModelSolver.h" />
     <ClInclude Include="NewtonRaphsonMS.h" />
@@ -185,6 +186,7 @@
     <ClCompile Include="Ground.cpp" />
     <ClCompile Include="IdealDCCurrentSource.cpp" />
     <ClCompile Include="IdealDCSource.cpp" />
+    <ClCompile Include="Impedance.cpp" />
     <ClCompile Include="MockedModelSolver.cpp" />
     <ClCompile Include="ModelSolver.cpp" />
     <ClCompile Include="NewtonRaphsonMS.cpp" />

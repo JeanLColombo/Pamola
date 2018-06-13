@@ -14,6 +14,7 @@
 #include "MockedModelSolver.h"
 #include "NewtonRaphsonMS.h"
 #include "IdealDCCurrentSource.h"
+#include "Impedance.h"
 #include <memory>
 #include <map>
 #include <cassert>

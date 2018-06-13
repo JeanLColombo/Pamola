@@ -125,12 +125,5 @@
       <FileName>Resistor.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Enum Name="Pamola::Type" Collapsed="true">
-    <Position X="10.5" Y="0.5" Width="3" />
-    <TypeIdentifier>
-      <HashCode>BAAAAAAAAAAAAQQAACAEAAAAAAAAAAAAAAAAAACAAAA=</HashCode>
-      <FileName>PamolaTypes.h</FileName>
-    </TypeIdentifier>
-  </Enum>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>
