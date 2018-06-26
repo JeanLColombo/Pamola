@@ -5,14 +5,11 @@
 
 namespace Pamola
 {
-	namespace Transient
+	class TransientElement : public Pamola::CircuitElement
 	{
-		class Element : public Pamola::CircuitElement
-		{
-		public:
-			virtual ~Element();
+	public:
+		virtual ~TransientElement();
 
-			virtual std::vector<transientVariable> getTransientVariables() = 0;
-		};
-	}
+		virtual std::vector<transientVariable> getTransientVariables() = 0;
+	};
 }

@@ -3,10 +3,7 @@
 
 namespace Pamola
 {
-	namespace Transient
+	TransientElement::~TransientElement()
 	{
-		Element::~Element()
-		{
-		}
 	}
 }

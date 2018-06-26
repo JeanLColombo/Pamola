@@ -151,6 +151,8 @@
     <ClInclude Include="Element.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="TransientFacade.h" />
+    <ClInclude Include="TransientModelSolver.h" />
     <ClInclude Include="Types.h" />
   </ItemGroup>
   <ItemGroup>
@@ -161,6 +163,8 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="TransientFacade.cpp" />
+    <ClCompile Include="TransientModelSolver.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PamolaProject\PamolaProject.vcxproj">
@@ -168,6 +172,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="ClassDiagram.cd" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
