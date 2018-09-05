@@ -20,6 +20,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Engine.TS.cpp" />
     <ClCompile Include="Object.TS.cpp" />
     <ClCompile Include="ObjectHolder.cpp" />
     <ClCompile Include="PamolaProject.UT.cpp" />
