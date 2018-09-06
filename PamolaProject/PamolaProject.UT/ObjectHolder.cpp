@@ -3,20 +3,23 @@
 
 namespace Pamola
 {
-	varMap ObjectHolder::getVariables()
+	namespace UT
 	{
-		return {};
-	}
-	const std::set<uint32_t> ObjectHolder::getAdjacentComponents()
-	{
-		return {};
-	}
-	Type ObjectHolder::getPamolaType()
-	{
-		return Type::Other;
-	}
-	int ObjectHolder::getDegreesOfFreedom()
-	{
-		return 0;
+		varMap ObjectHolder::getVariables()
+		{
+			return {};
+		}
+		const std::set<uint32_t> ObjectHolder::getAdjacentComponents()
+		{
+			return {};
+		}
+		Type ObjectHolder::getPamolaType()
+		{
+			return Type::Other;
+		}
+		int ObjectHolder::getDegreesOfFreedom()
+		{
+			return 0;
+		}
 	}
 }

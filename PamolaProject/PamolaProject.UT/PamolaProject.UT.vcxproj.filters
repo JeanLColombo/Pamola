@@ -35,5 +35,11 @@
     <ClInclude Include="ObjectHolder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="EngineHolder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ElementHolder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

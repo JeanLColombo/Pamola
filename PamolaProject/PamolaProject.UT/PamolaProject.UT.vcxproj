@@ -34,6 +34,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ElementHolder.h" />
+    <ClInclude Include="EngineHolder.h" />
     <ClInclude Include="ObjectHolder.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
