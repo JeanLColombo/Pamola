@@ -22,7 +22,7 @@
   <ItemGroup>
     <ClCompile Include="Engine.TS.cpp" />
     <ClCompile Include="Object.TS.cpp" />
-    <ClCompile Include="ObjectHolder.cpp" />
+    <ClCompile Include="MockedObject.cpp" />
     <ClCompile Include="PamolaProject.UT.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -34,9 +34,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ElementHolder.h" />
-    <ClInclude Include="EngineHolder.h" />
-    <ClInclude Include="ObjectHolder.h" />
+    <ClInclude Include="MockedElement.h" />
+    <ClInclude Include="MockedEngine.h" />
+    <ClInclude Include="MockedObject.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

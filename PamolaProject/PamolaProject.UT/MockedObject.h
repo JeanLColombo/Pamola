@@ -5,7 +5,7 @@ namespace Pamola
 {
 	namespace UT
 	{
-		class ObjectHolder : public Object
+		class MockedObject : public Object
 		{
 		public:
 

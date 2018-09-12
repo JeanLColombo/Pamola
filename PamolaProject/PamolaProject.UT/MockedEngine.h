@@ -5,11 +5,11 @@ namespace Pamola
 {
 	namespace UT
 	{
-		class EngineHolder : public Engine
+		class MockedEngine : public Engine
 		{
 		public:
-			EngineHolder() {}
-			~EngineHolder() {}
+			MockedEngine() : Engine(0) {}
+			~MockedEngine() {}
 		};
 	}
 }

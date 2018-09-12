@@ -18,13 +18,13 @@
     <ClCompile Include="PamolaProject.UT.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ObjectHolder.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Object.TS.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Engine.TS.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MockedObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -32,13 +32,13 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ObjectHolder.h">
+    <ClInclude Include="MockedElement.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="EngineHolder.h">
+    <ClInclude Include="MockedEngine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ElementHolder.h">
+    <ClInclude Include="MockedObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
