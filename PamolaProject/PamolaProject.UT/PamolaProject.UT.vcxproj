@@ -36,6 +36,7 @@
   <ItemGroup>
     <ClInclude Include="MockedElement.h" />
     <ClInclude Include="MockedEngine.h" />
+    <ClInclude Include="MockedModelSolver.h" />
     <ClInclude Include="MockedObject.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

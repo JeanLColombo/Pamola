@@ -41,5 +41,8 @@
     <ClInclude Include="MockedObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="MockedModelSolver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

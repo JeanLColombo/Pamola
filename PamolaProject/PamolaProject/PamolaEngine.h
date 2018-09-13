@@ -67,6 +67,8 @@ namespace Pamola
 
 		template <class TCircuitElement> std::shared_ptr<TCircuitElement> createElement();
 
+		template <class TCircuitElement,class Targ> std::shared_ptr<TCircuitElement> createElement(Targ);
+
 	private:
 
 		std::vector<std::shared_ptr<CircuitTerminal>> createTerminalsFor(std::shared_ptr<CircuitElement>);
@@ -93,9 +95,30 @@ namespace Pamola
 		return newElement;
 	}
 
+	template<class TCircuitElement, class Targ>
+	inline std::shared_ptr<TCircuitElement> Engine::createElement(Targ arg)
+	{
+		std::shared_ptr<TCircuitElement> newElement(new TCircuitElement(arg));
+		assert(static_cast<std::shared_ptr<CircuitElement>>(newElement) && "TCircuitElement must inherit from CircuitElement");
+
+		std::shared_ptr<CircuitElement> newCircuitElement = newElement;
+
+		mapObject(newCircuitElement);
+
+		newCircuitElement->terminals = createTerminalsFor(newCircuitElement);
+
+		return newElement;
+	}
+
 	template<class TCircuitElement>
 	std::shared_ptr<TCircuitElement> createElement()
 	{
 		return Engine::getLocalEngine()->createElement<TCircuitElement>();
+	}
+
+	template<class TCircuitElement, class Targ>
+	std::shared_ptr<TCircuitElement> createElement(Targ arg)
+	{
+		return Engine::getLocalEngine()->createElement<TCircuitElement>(arg);
 	}
 }

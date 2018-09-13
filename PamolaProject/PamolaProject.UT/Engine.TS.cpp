@@ -6,6 +6,7 @@
 #include <iostream>
 #include "MockedEngine.h"
 #include "MockedElement.h"
+#include "MockedModelSolver.h"
 
 namespace bdata = boost::unit_test::data;
 
@@ -18,12 +19,14 @@ namespace Pamola
 		{
 			class EngineTestClass
 			{
+			private:
+
+				std::shared_ptr<MockedEngine> scopedMockedEngine;
+
 			public:
 
 				EngineTestClass() : scopedMockedEngine(std::shared_ptr<Pamola::UT::MockedEngine>(new Pamola::UT::MockedEngine())) {}
 				~EngineTestClass() {}
-
-				std::shared_ptr<MockedEngine> scopedMockedEngine;
 
 				void testFunctionGetLocalObjects(
 					bool scoped,
@@ -46,12 +49,12 @@ namespace Pamola
 						if (scoped)
 						{
 							BOOST_TEST(scopedMockedEngine->getLocalObjects().size() == numberOfObjects);
-							BOOST_TEST(static_cast<std::shared_ptr<Object>>(MockedElementVector.at(randomObject)) == scopedMockedEngine->getLocalObject(randomObject));
+							BOOST_TEST(MockedElementVector.at(randomObject) == scopedMockedEngine->getLocalObject(randomObject));
 						}
 						else
 						{
 							BOOST_TEST(Engine::getLocalEngine()->getLocalObjects().size() == numberOfObjects);
-							BOOST_TEST(static_cast<std::shared_ptr<Object>>(MockedElementVector.at(randomObject)) == Engine::getLocalEngine()->getLocalObject(randomObject));
+							BOOST_TEST(MockedElementVector.at(randomObject) == Engine::getLocalEngine()->getLocalObject(MockedElementVector.at(randomObject)->getId()));
 						}
 
 					}
@@ -126,5 +129,66 @@ BOOST_DATA_TEST_CASE(
 		numberOfObjects, 
 		randomIndex*numberOfObjects / 1000);
 }
+
+BOOST_TEST_DECORATOR(*boost::unit_test::label("EngineMethods"))
+BOOST_AUTO_TEST_CASE(getSetModelSolver)
+{
+	auto mockedMS = std::shared_ptr<Pamola::UT::MockedModelSolver>(new Pamola::UT::MockedModelSolver);
+	BOOST_TEST(Pamola::Engine::getLocalEngine()->getSolver() != mockedMS);
+	Pamola::Engine::getLocalEngine()->setSolver(mockedMS);
+	BOOST_TEST(Pamola::Engine::getLocalEngine()->getSolver() == mockedMS);
+}
+
+BOOST_TEST_DECORATOR(*boost::unit_test::label("EngineMethods"))
+BOOST_DATA_TEST_CASE(
+	createTerminalsFor,
+	bdata::make({ true,false }) ^ bdata::random(1, 100),
+	typeOfEngine, numberOfTerminals)
+{
+	std::shared_ptr<Pamola::Engine> testEngine;
+
+	if (typeOfEngine)
+	{
+		testEngine = std::shared_ptr<Pamola::UT::MockedEngine>(new Pamola::UT::MockedEngine);
+		std::cout << "ScopedEngine: Creating a mocked object with " << numberOfTerminals << " terminals." << std::endl;
+	}
+	else
+	{
+		testEngine = Pamola::Engine::getLocalEngine();
+		std::cout << "StaticEngine: Creating a mocked object with " << numberOfTerminals << " terminals." << std::endl;
+	}
+
+	auto mockedElement = testEngine->createElement<Pamola::UT::MockedElement>(numberOfTerminals);
+	   	 
+	BOOST_TEST(testEngine->getLocalObjects().size() == (numberOfTerminals + 1));
+}
+
+BOOST_TEST_DECORATOR(*boost::unit_test::label("EngineMethods"))
+BOOST_AUTO_TEST_CASE(createNode)
+{
+	auto mockedElement1 = Pamola::createElement<Pamola::UT::MockedElement>(1);
+	auto mockedElement2 = Pamola::createElement<Pamola::UT::MockedElement>(1);
+
+	auto node = mockedElement1->getTerminal(0)->connectTo(mockedElement1->getTerminal(0));
+
+	BOOST_TEST(node != nullptr);
+	BOOST_TEST(Pamola::Engine::getLocalEngine()->getLocalObjects().size() == 5);
+	BOOST_TEST(node == Pamola::Engine::getLocalEngine()->getLocalObject(node->getId()));
+}
+
+BOOST_TEST_DECORATOR(*boost::unit_test::label("EngineMethods"))
+BOOST_AUTO_TEST_CASE(createCircuit)
+{
+	auto mockedElement1 = Pamola::createElement<Pamola::UT::MockedElement>(1);
+	auto mockedElement2 = Pamola::createElement<Pamola::UT::MockedElement>(1);
+
+	auto circuit = mockedElement1->getTerminal(0)->connectTo(mockedElement1->getTerminal(0))->getCircuit();
+
+	BOOST_TEST(circuit != nullptr);
+	BOOST_TEST(Pamola::Engine::getLocalEngine()->getLocalObjects().size() == 6);
+	BOOST_TEST(circuit == Pamola::Engine::getLocalEngine()->getLocalObject(circuit->getId()));
+}
+
+
 
 BOOST_AUTO_TEST_SUITE_END()
