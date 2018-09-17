@@ -31,9 +31,6 @@ namespace Pamola
 
 		~CircuitTerminal();
 
-		std::string getVoltageVariable();
-		std::string getCurrentVariable();
-
 		const std::shared_ptr<CircuitElement> getElement();
 
 		std::shared_ptr<CircuitNode> getNode();
@@ -53,8 +50,6 @@ namespace Pamola
 		const std::set<uint32_t> getAdjacentComponents();
 
 		Type getPamolaType();
-
-		int getDegreesOfFreedom();
 
 	};
 }

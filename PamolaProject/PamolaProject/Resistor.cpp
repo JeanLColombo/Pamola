@@ -42,14 +42,4 @@ namespace Pamola
 		return { };
 	}
 
-	std::string Resistor::getResistanceVariable()
-	{
-		return std::to_string(getId()) + ".R";
-	}
-
-	int Resistor::getDegreesOfFreedom()
-	{
-		return 2;
-	}
-
 }

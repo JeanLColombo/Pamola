@@ -44,8 +44,5 @@ namespace Pamola
 	{
 		return {};
 	}
-	int IdealDCCurrentSource::getDegreesOfFreedom()
-	{
-		return 2;
-	}
+	
 }

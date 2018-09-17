@@ -16,8 +16,6 @@ namespace Pamola
 
 		varMap getVariables();
 		
-		int getDegreesOfFreedom();
-
 	};
 }
 

@@ -182,7 +182,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Dipole.cpp" />
-    <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="Ground.cpp" />
     <ClCompile Include="IdealDCCurrentSource.cpp" />
     <ClCompile Include="IdealDCSource.cpp" />
@@ -192,9 +191,6 @@
     <ClCompile Include="NewtonRaphsonMS.cpp" />
     <ClCompile Include="PamolaEngine.cpp" />
     <ClCompile Include="PamolaObject.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="PamolaProject.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Resistor.cpp" />

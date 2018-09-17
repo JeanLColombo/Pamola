@@ -46,7 +46,5 @@ namespace Pamola
 
 		Type getPamolaType();
 
-		int getDegreesOfFreedom();
-
 	};
 }

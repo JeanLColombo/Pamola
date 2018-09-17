@@ -24,9 +24,7 @@ namespace Pamola
 		eqMap getEquations();
 
 		varMap getVariables();
-
-		int getDegreesOfFreedom();
-	
+			
 	};
 }
 

@@ -20,7 +20,7 @@
 #include <cassert>
 
 //TODO: Separate includes in another file (perhaps hpp)
-//TODO: Test multiple engines, and cross object incorporation
+//TODO: Test cross object incorporation
 //TODO: Analyze the removal of static Engine
 
 namespace Pamola
@@ -119,6 +119,6 @@ namespace Pamola
 	template<class TCircuitElement, class Targ>
 	std::shared_ptr<TCircuitElement> createElement(Targ arg)
 	{
-		return Engine::getLocalEngine()->createElement<TCircuitElement>(arg);
+		return Engine::getLocalEngine()->createElement<TCircuitElement, Targ>(arg);
 	}
 }

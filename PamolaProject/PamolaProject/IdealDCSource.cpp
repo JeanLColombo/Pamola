@@ -51,13 +51,4 @@ namespace Pamola
 		return {};
 	}
 
-	std::string IdealDCSource::getVoltageVariable()
-	{
-		return std::to_string(getId()) + ".V";
-	}
-
-	int IdealDCSource::getDegreesOfFreedom()
-	{
-		return 2;
-	}
 }

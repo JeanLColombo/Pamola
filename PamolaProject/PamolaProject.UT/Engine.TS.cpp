@@ -158,7 +158,7 @@ BOOST_DATA_TEST_CASE(
 		std::cout << "StaticEngine: Creating a mocked object with " << numberOfTerminals << " terminals." << std::endl;
 	}
 
-	auto mockedElement = testEngine->createElement<Pamola::UT::MockedElement>(numberOfTerminals);
+	auto mockedElement = testEngine->createElement<Pamola::UT::MockedElement, int>(numberOfTerminals);
 	   	 
 	BOOST_TEST(testEngine->getLocalObjects().size() == (numberOfTerminals + 1));
 }
@@ -166,8 +166,8 @@ BOOST_DATA_TEST_CASE(
 BOOST_TEST_DECORATOR(*boost::unit_test::label("EngineMethods"))
 BOOST_AUTO_TEST_CASE(createNode)
 {
-	auto mockedElement1 = Pamola::createElement<Pamola::UT::MockedElement>(1);
-	auto mockedElement2 = Pamola::createElement<Pamola::UT::MockedElement>(1);
+	auto mockedElement1 = Pamola::createElement<Pamola::UT::MockedElement, int>(1);
+	auto mockedElement2 = Pamola::createElement<Pamola::UT::MockedElement, int>(1);
 
 	auto node = mockedElement1->getTerminal(0)->connectTo(mockedElement1->getTerminal(0));
 
@@ -179,8 +179,8 @@ BOOST_AUTO_TEST_CASE(createNode)
 BOOST_TEST_DECORATOR(*boost::unit_test::label("EngineMethods"))
 BOOST_AUTO_TEST_CASE(createCircuit)
 {
-	auto mockedElement1 = Pamola::createElement<Pamola::UT::MockedElement>(1);
-	auto mockedElement2 = Pamola::createElement<Pamola::UT::MockedElement>(1);
+	auto mockedElement1 = Pamola::createElement<Pamola::UT::MockedElement, int>(1);
+	auto mockedElement2 = Pamola::createElement<Pamola::UT::MockedElement, int>(1);
 
 	auto circuit = mockedElement1->getTerminal(0)->connectTo(mockedElement1->getTerminal(0))->getCircuit();
 
@@ -189,6 +189,20 @@ BOOST_AUTO_TEST_CASE(createCircuit)
 	BOOST_TEST(circuit == Pamola::Engine::getLocalEngine()->getLocalObject(circuit->getId()));
 }
 
+BOOST_TEST_DECORATOR(*boost::unit_test::label("EngineMethods"))
+BOOST_AUTO_TEST_CASE(callSolver)
+{
+	auto mockedMS = std::shared_ptr<Pamola::UT::MockedModelSolver>(new Pamola::UT::MockedModelSolver);
+	auto mockedElement = Pamola::createElement<Pamola::UT::MockedElement>();
+	
+	BOOST_TEST(mockedElement->getVar().real() == 0.0, 1e-12);
+	BOOST_TEST(mockedElement->getVar().imag() == 0.0, 1e-12);
 
+	Pamola::Engine::getLocalEngine()->setSolver(mockedMS);
+	Pamola::Engine::getLocalEngine()->callSolver(*&mockedElement->getVariables(), *&mockedElement->getEquations());
+
+	BOOST_TEST(mockedElement->getVar().real() == 4.0, 1e-12);
+	BOOST_TEST(mockedElement->getVar().imag() == 3.0, 1e-12);
+}
 
 BOOST_AUTO_TEST_SUITE_END()

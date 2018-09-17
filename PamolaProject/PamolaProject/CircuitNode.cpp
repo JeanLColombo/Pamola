@@ -89,9 +89,4 @@ namespace Pamola
 	{
 		return Type::CircuitNode;
 	}
-
-	int CircuitNode::getDegreesOfFreedom()
-	{
-		return (-static_cast<int>(terminals.size()));
-	}
 }

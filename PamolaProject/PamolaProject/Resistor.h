@@ -22,9 +22,5 @@ namespace Pamola
 		eqMap getEquations();
 
 		varMap getVariables();
-
-		std::string getResistanceVariable();
-
-		int getDegreesOfFreedom();
 	};
 }

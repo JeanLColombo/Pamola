@@ -33,8 +33,4 @@ namespace Pamola
 	{
 		return {};
 	}
-	int Impedance::getDegreesOfFreedom()
-	{
-		return 2;
-	}
 }

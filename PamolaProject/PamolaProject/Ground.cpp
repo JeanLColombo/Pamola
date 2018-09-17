@@ -27,8 +27,5 @@ namespace Pamola
 	{
 		return {};
 	}
-	int Ground::getDegreesOfFreedom()
-	{
-		return -1;
-	}
+
 }

@@ -24,10 +24,7 @@ namespace Pamola
 		eqMap getEquations();
 
 		varMap getVariables();
-
-		std::string getVoltageVariable();
-
-		int getDegreesOfFreedom();
+		
 
 	};
 }

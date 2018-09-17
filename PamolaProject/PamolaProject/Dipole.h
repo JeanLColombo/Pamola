@@ -24,8 +24,6 @@ namespace Pamola {
 		void connectInParallelTo(std::shared_ptr<Dipole>);
 
 		virtual varMap getVariables() = 0;
-
-		virtual int getDegreesOfFreedom() = 0;
 		
 		template<class T1, class T2>
 		friend std::shared_ptr<Dipole> operator+(std::shared_ptr<T1>, std::shared_ptr<T2>);

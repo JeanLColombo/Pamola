@@ -67,9 +67,6 @@ namespace Pamola
 		virtual const std::set<uint32_t> getAdjacentComponents() = 0;
 
 		virtual Type getPamolaType() = 0;
-
-		virtual int getDegreesOfFreedom() = 0;
-
 	};
 	
 	bool operator<(const std::shared_ptr<Object>, const std::shared_ptr<Object>);

@@ -58,16 +58,7 @@ namespace Pamola
 		return Type::Circuit;
 	}
 
-	int Circuit::getDegreesOfFreedom()
-	{
-		int result(0);
-
-		for (auto &element : getElements())
-			result += element->getDegreesOfFreedom();
-
-		return result;
-	}
-
+	
 	void Circuit::setUp(const std::vector<std::shared_ptr<Object>> &circuitList)
 	{
 		for (const auto &element : circuitList)

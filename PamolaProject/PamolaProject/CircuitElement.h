@@ -45,8 +45,6 @@ namespace Pamola
 		
 		virtual varMap getVariables() = 0;
 
-		virtual int getDegreesOfFreedom() = 0;
-
 	};
 	
 	bool operator<(const std::shared_ptr<CircuitElement>, const std::shared_ptr<CircuitElement>);

@@ -36,8 +36,6 @@ namespace Pamola
 		const std::set<uint32_t> getAdjacentComponents();
 
 		Type getPamolaType();
-
-		int getDegreesOfFreedom();
 		
 		void setUp(const std::vector<std::shared_ptr<Object>> &);
 
