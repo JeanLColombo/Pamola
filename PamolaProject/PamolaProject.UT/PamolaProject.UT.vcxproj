@@ -20,9 +20,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CircuitElement.TS.cpp" />
+    <ClCompile Include="CircuitTerminal.TS.cpp" />
     <ClCompile Include="Engine.TS.cpp" />
     <ClCompile Include="Object.TS.cpp" />
-    <ClCompile Include="MockedObject.cpp" />
     <ClCompile Include="PamolaProject.UT.cpp" />
   </ItemGroup>
   <ItemGroup>

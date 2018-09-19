@@ -24,7 +24,10 @@
     <ClCompile Include="Engine.TS.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MockedObject.cpp">
+    <ClCompile Include="CircuitElement.TS.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CircuitTerminal.TS.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

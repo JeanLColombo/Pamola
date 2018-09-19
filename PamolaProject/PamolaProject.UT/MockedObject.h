@@ -9,13 +9,13 @@ namespace Pamola
 		{
 		public:
 
-			varMap getVariables();
+			varMap getVariables() { return {}; }
 
-			const std::set<uint32_t> getAdjacentComponents();
+			const std::set<uint32_t> getAdjacentComponents() { return {}; }
 
-			Type getPamolaType();
+			Type getPamolaType() { return Type::Error; }
 
-			int getDegreesOfFreedom();
+			Type getBasePamolaType() { return Object::getPamolaType(); }
 		};
 	}
 }

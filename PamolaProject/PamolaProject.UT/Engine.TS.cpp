@@ -69,6 +69,7 @@ namespace Pamola
 				std::vector<std::shared_ptr<Pamola::UT::MockedElement>> massCreateMockedElements(
 					bool scoped,
 					int numberOfObjects) {
+
 					std::vector<std::shared_ptr<Pamola::UT::MockedElement>> output;
 
 					for (int i = 0; i < numberOfObjects; i++)

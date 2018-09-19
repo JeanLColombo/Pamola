@@ -23,8 +23,6 @@ namespace Pamola
 					[this]() {return getVar(); }) }; }
 
 			eqMap getEquations() { return {}; }
-			
-			int getDegreesOfFreedom() { return 0; }
 		};
 	}
 }

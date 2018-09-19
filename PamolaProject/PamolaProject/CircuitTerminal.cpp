@@ -120,7 +120,6 @@ namespace Pamola
 	{
 		return { std::make_pair([this](std::complex<double> x) {setCurrent(x); },
 			[this]() {return getCurrent(); }) };
-
 	}
 
 	const std::set<uint32_t> CircuitTerminal::getAdjacentComponents()

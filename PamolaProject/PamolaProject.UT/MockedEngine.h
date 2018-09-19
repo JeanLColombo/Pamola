@@ -8,7 +8,7 @@ namespace Pamola
 		class MockedEngine : public Engine
 		{
 		public:
-			MockedEngine() : Engine(0) {}
+			MockedEngine(int startGuid = 0) : Engine(startGuid) {}
 			~MockedEngine() {}
 		};
 	}
