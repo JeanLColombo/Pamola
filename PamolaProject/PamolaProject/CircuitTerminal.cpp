@@ -30,6 +30,9 @@ namespace Pamola
 
 	std::shared_ptr<CircuitNode> CircuitTerminal::connectTo(std::shared_ptr<CircuitTerminal> terminal)
 	{	
+		if (terminal == shared_from_this())
+			return getNode();
+
 		switch (isConnected() * 2 + terminal->isConnected())
 		{
 		case 0:
@@ -47,8 +50,9 @@ namespace Pamola
 			if (this->getNode() != terminal->getNode())
 				this->getNode()->connectTo(terminal->getNode());
 			break;
-		default:
-			assert("Impossible value on terminal connection");
+		/*default:
+		 This snippet of code is impossible to reach! By construction. Unless memory is currupted during its execution.
+			assert("Impossible value on terminal connection");*/
 		}
 
 		return getNode();
@@ -56,12 +60,13 @@ namespace Pamola
 
 	std::shared_ptr<CircuitNode> CircuitTerminal::connectTo(std::shared_ptr<CircuitNode> node)
 	{
+
 		if (isConnected())
 		{
 			if (node == getNode())
 				return node;
 
-			disconnect();
+			return getNode()->connectTo(node);
 		}
 
 		this->node = node;
@@ -78,7 +83,7 @@ namespace Pamola
 	std::complex<double> CircuitTerminal::getVoltage()
 	{
 		if (!isConnected())
-			return std::complex<double> NAN;
+			return std::complex<double>(NAN, NAN);
 
 		return node->getVoltage();
 	}

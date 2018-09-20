@@ -170,7 +170,7 @@ BOOST_AUTO_TEST_CASE(createNode)
 	auto mockedElement1 = Pamola::createElement<Pamola::UT::MockedElement, int>(1);
 	auto mockedElement2 = Pamola::createElement<Pamola::UT::MockedElement, int>(1);
 
-	auto node = mockedElement1->getTerminal(0)->connectTo(mockedElement1->getTerminal(0));
+	auto node = mockedElement1->getTerminal(0)->connectTo(mockedElement2->getTerminal(0));
 
 	BOOST_TEST(node != nullptr);
 	BOOST_TEST(Pamola::Engine::getLocalEngine()->getLocalObjects().size() == 5);
@@ -183,7 +183,7 @@ BOOST_AUTO_TEST_CASE(createCircuit)
 	auto mockedElement1 = Pamola::createElement<Pamola::UT::MockedElement, int>(1);
 	auto mockedElement2 = Pamola::createElement<Pamola::UT::MockedElement, int>(1);
 
-	auto circuit = mockedElement1->getTerminal(0)->connectTo(mockedElement1->getTerminal(0))->getCircuit();
+	auto circuit = mockedElement1->getTerminal(0)->connectTo(mockedElement2->getTerminal(0))->getCircuit();
 
 	BOOST_TEST(circuit != nullptr);
 	BOOST_TEST(Pamola::Engine::getLocalEngine()->getLocalObjects().size() == 6);
