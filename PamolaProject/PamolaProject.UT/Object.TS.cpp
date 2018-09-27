@@ -50,21 +50,21 @@ BOOST_TEST_DECORATOR(*boost::unit_test::label("Object") *boost::unit_test::descr
 BOOST_AUTO_TEST_SUITE(ObjectTestSuite)
 
 BOOST_TEST_DECORATOR(*boost::unit_test::label("LifetimeManagement"))
-BOOST_AUTO_TEST_CASE(RawObjectCreationDestruction)
+BOOST_AUTO_TEST_CASE(rawObjectCreationDestruction)
 {
 	Pamola::UT::MockedObject *obj = new Pamola::UT::MockedObject;
 	delete obj;
 }
 
 BOOST_TEST_DECORATOR(*boost::unit_test::label("LifetimeManagement"))
-BOOST_AUTO_TEST_CASE(ScopedObjectCreationDestruction)
+BOOST_AUTO_TEST_CASE(scopedObjectCreationDestruction)
 {
 	Pamola::UT::MockedObject obj{};
 	obj.getVariables();
 	obj.getAdjacentComponents();
 }
 
-BOOST_TEST_DECORATOR(*boost::unit_test::label("ObjectMethods"))
+BOOST_TEST_DECORATOR(*boost::unit_test::label("Methods"))
 BOOST_AUTO_TEST_CASE(getEngine)
 {
 	auto eng = std::shared_ptr<Pamola::UT::MockedEngine>(new Pamola::UT::MockedEngine);
@@ -75,7 +75,7 @@ BOOST_AUTO_TEST_CASE(getEngine)
 	BOOST_TEST(elem2->getEngine() == Pamola::Engine::getLocalEngine());
 }
 
-BOOST_TEST_DECORATOR(*boost::unit_test::label("ObjectMethods"))
+BOOST_TEST_DECORATOR(*boost::unit_test::label("Methods"))
 BOOST_AUTO_TEST_CASE(getId)
 {
 	Pamola::UT::MockedObject obj1{};
@@ -87,7 +87,7 @@ BOOST_AUTO_TEST_CASE(getId)
 	BOOST_TEST(elem2->getId() == 1);
 }
 
-BOOST_TEST_DECORATOR(*boost::unit_test::label("ObjectMethods"))
+BOOST_TEST_DECORATOR(*boost::unit_test::label("Methods"))
 BOOST_AUTO_TEST_CASE(getPamolaType)
 {
 	Pamola::UT::MockedObject obj{};
@@ -95,14 +95,14 @@ BOOST_AUTO_TEST_CASE(getPamolaType)
 	BOOST_TEST(static_cast<int>(obj.getBasePamolaType()) == static_cast<int>(Pamola::Type::Other));
 }
 
-BOOST_TEST_DECORATOR(*boost::unit_test::label("ObjectMethods"))
+BOOST_TEST_DECORATOR(*boost::unit_test::label("Methods"))
 BOOST_AUTO_TEST_CASE(getEquations)
 {
 	Pamola::UT::MockedObject obj{};
 	BOOST_TEST(obj.getEquations().size() == 0);
 }
 
-BOOST_TEST_DECORATOR(*boost::unit_test::label("ObjectMethods"))
+BOOST_TEST_DECORATOR(*boost::unit_test::label("Methods"))
 BOOST_DATA_TEST_CASE(getConnectedComponents,
 	bdata::make({ 0,1,2,3 }),
 	numberOfterminals)
@@ -113,14 +113,10 @@ BOOST_DATA_TEST_CASE(getConnectedComponents,
 	auto connected1 = mockedElement1->getConnectedComponents();
 
 	BOOST_TEST(connected1.size() == (1 + numberOfterminals));
-	bool check1 = connected1.find(mockedElement1->getId()) != connected1.end();
-	BOOST_TEST(check1, "Checking if mockedElement1 is inside connected1 list");
+	BOOST_TEST((connected1.find(mockedElement1->getId()) != connected1.end()));
 
 	for (auto &terminal : mockedElement1->getTerminals())
-	{
-		bool check2 = connected1.find(terminal->getId()) != connected1.end();
-		BOOST_TEST(check2, "Checking if mockedElement1's terminals are inside connected1 list");
-	}
+		BOOST_TEST((connected1.find(terminal->getId()) != connected1.end()));
 
 	if (numberOfterminals != 0)
 	{
@@ -129,16 +125,13 @@ BOOST_DATA_TEST_CASE(getConnectedComponents,
 		auto connected2 = mockedElement1->getConnectedComponents();
 	
 		BOOST_TEST(connected2.size() == (4 + numberOfterminals));
-		bool check3 = connected2.find(mockedElement2->getId()) != connected2.end();
-		BOOST_TEST(check3, "Checking if mockedElement2 is inside connected2 list");
-		bool check4 = connected2.find(mockedElement2->getTerminal(0)->getId()) != connected2.end();
-		BOOST_TEST(check4, "Checking if mockedElement2's terminal is inside connected2 list");
-		bool check5 = connected2.find(node->getId()) != connected2.end();
-		BOOST_TEST(check5, "Checking if node is inside connected2 list");
+		BOOST_TEST((connected2.find(mockedElement2->getId()) != connected2.end()));
+		BOOST_TEST((connected2.find(mockedElement2->getTerminal(0)->getId()) != connected2.end()));
+		BOOST_TEST((connected2.find(node->getId()) != connected2.end()));
 	}
 }
 
-BOOST_TEST_DECORATOR(*boost::unit_test::label("ObjectMethods"))
+BOOST_TEST_DECORATOR(*boost::unit_test::label("Methods"))
 BOOST_DATA_TEST_CASE(getCircuit,
 	bdata::make({ 1,2,3 }),
 	numberOfterminals)
@@ -151,14 +144,11 @@ BOOST_DATA_TEST_CASE(getCircuit,
 	auto connected1 = mockedElement1->getConnectedComponents();
 	
 	for (auto &element : cir->getElements())
-	{
-		bool check = connected1.find(element->getId()) != connected1.end();
-		BOOST_TEST(check, "Checking all elements are inside the circuit");
-	}
+		BOOST_TEST((connected1.find(element->getId()) != connected1.end()));
 }
 
-BOOST_TEST_DECORATOR(*boost::unit_test::label("ObjectMethods"))
-BOOST_AUTO_TEST_CASE(OperatorOverloadsInequalities)
+BOOST_TEST_DECORATOR(*boost::unit_test::label("Methods"))
+BOOST_AUTO_TEST_CASE(operatorOverloadsInequalities)
 {
 	std::shared_ptr<Pamola::Object> mockedElement1 = Pamola::createElement<Pamola::UT::MockedElement>();
 	std::shared_ptr<Pamola::Object> mockedElement2 = Pamola::createElement<Pamola::UT::MockedElement>();
@@ -176,8 +166,8 @@ BOOST_AUTO_TEST_CASE(OperatorOverloadsInequalities)
 	BOOST_TEST(mockedElement2 >= mockedElement1);
 }
 
-BOOST_TEST_DECORATOR(*boost::unit_test::label("ObjectMethods"))
-BOOST_AUTO_TEST_CASE(OperatorOverloadsEqualities)
+BOOST_TEST_DECORATOR(*boost::unit_test::label("Methods"))
+BOOST_AUTO_TEST_CASE(operatorOverloadsEqualities)
 {
 	std::shared_ptr<Pamola::Object> mockedElement1 = Pamola::createElement<Pamola::UT::MockedElement>();
 	std::shared_ptr<Pamola::Object> mockedElement2 = Pamola::createElement<Pamola::UT::MockedElement>();
@@ -199,6 +189,5 @@ BOOST_AUTO_TEST_CASE(OperatorOverloadsEqualities)
 	BOOST_TEST(!(mockedElement3 >= mockedElement2));
 
 }
-
 
 BOOST_AUTO_TEST_SUITE_END()

@@ -3,13 +3,12 @@
 #include "MockedEngine.h"
 #include "MockedElement.h"
 
-
 /*Test Cases*/
 BOOST_TEST_DECORATOR(*boost::unit_test::label("CircuitElement") *boost::unit_test::description("Testing the Pamola::CircuitElement Class"))
 BOOST_AUTO_TEST_SUITE(CircuitElementTestSuite)
 
-BOOST_TEST_DECORATOR(*boost::unit_test::label("CircuitElementMethods"))
-BOOST_AUTO_TEST_CASE(CircuitElementMainMethods)
+BOOST_TEST_DECORATOR(*boost::unit_test::label("Methods"))
+BOOST_AUTO_TEST_CASE(circuitElementMainMethods)
 {
 	auto eng = std::shared_ptr<Pamola::UT::MockedEngine>(new Pamola::UT::MockedEngine());
 
@@ -42,17 +41,15 @@ BOOST_AUTO_TEST_CASE(CircuitElementMainMethods)
 	}
 }
 
-
-BOOST_TEST_DECORATOR(*boost::unit_test::label("CircuitElementMethods"))
-BOOST_AUTO_TEST_CASE(GetPamolaType)
+BOOST_TEST_DECORATOR(*boost::unit_test::label("Methods"))
+BOOST_AUTO_TEST_CASE(getPamolaType)
 {
 	auto mockedElement = Pamola::createElement<Pamola::UT::MockedElement>();
 	BOOST_TEST(static_cast<int>(mockedElement->getPamolaType()) == static_cast<int>(Pamola::Type::CircuitElement));
 }
 
-
-BOOST_TEST_DECORATOR(*boost::unit_test::label("CircuitElementMethods"))
-BOOST_AUTO_TEST_CASE(OperatorOverloadsInequalities)
+BOOST_TEST_DECORATOR(*boost::unit_test::label("Methods"))
+BOOST_AUTO_TEST_CASE(operatorOverloadsInequalities)
 {
 	std::shared_ptr<Pamola::CircuitElement> mockedElement1 = Pamola::createElement<Pamola::UT::MockedElement>();
 	std::shared_ptr<Pamola::CircuitElement> mockedElement2 = Pamola::createElement<Pamola::UT::MockedElement>();
@@ -70,8 +67,8 @@ BOOST_AUTO_TEST_CASE(OperatorOverloadsInequalities)
 	BOOST_TEST(mockedElement2 >= mockedElement1);
 }
 
-BOOST_TEST_DECORATOR(*boost::unit_test::label("CircuitElementMethods"))
-BOOST_AUTO_TEST_CASE(OperatorOverloadsEqualities)
+BOOST_TEST_DECORATOR(*boost::unit_test::label("Methods"))
+BOOST_AUTO_TEST_CASE(operatorOverloadsEqualities)
 {
 	std::shared_ptr<Pamola::CircuitElement> mockedElement1 = Pamola::createElement<Pamola::UT::MockedElement>();
 	std::shared_ptr<Pamola::CircuitElement> mockedElement2 = Pamola::createElement<Pamola::UT::MockedElement>();

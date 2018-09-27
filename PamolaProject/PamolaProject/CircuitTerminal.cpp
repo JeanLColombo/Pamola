@@ -17,7 +17,7 @@ namespace Pamola
 		disconnect();
 	}
 
-	
+	 
 	const std::shared_ptr<CircuitElement> CircuitTerminal::getElement()
 	{
 		return element.lock();
@@ -50,9 +50,6 @@ namespace Pamola
 			if (this->getNode() != terminal->getNode())
 				this->getNode()->connectTo(terminal->getNode());
 			break;
-		/*default:
-		 This snippet of code is impossible to reach! By construction. Unless memory is currupted during its execution.
-			assert("Impossible value on terminal connection");*/
 		}
 
 		return getNode();

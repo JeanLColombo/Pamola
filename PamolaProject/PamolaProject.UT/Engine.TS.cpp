@@ -94,32 +94,32 @@ BOOST_TEST_DECORATOR(*boost::unit_test::label("Engine") *boost::unit_test::descr
 BOOST_AUTO_TEST_SUITE(EngineTestSuite)
 
 BOOST_TEST_DECORATOR(*boost::unit_test::label("LifetimeManagement"))
-BOOST_AUTO_TEST_CASE(StaticEngineCreation)
+BOOST_AUTO_TEST_CASE(staticEngineCreation)
 {
 	BOOST_TEST(Pamola::Engine::getLocalEngine() != nullptr);
 }
 
 BOOST_TEST_DECORATOR(*boost::unit_test::label("LifetimeManagement"))
-BOOST_AUTO_TEST_CASE(RawEngineCreationDestruction)
+BOOST_AUTO_TEST_CASE(rawEngineCreationDestruction)
 {
 	Pamola::UT::MockedEngine *eng = new Pamola::UT::MockedEngine;
 	delete eng;
 }
 
 BOOST_TEST_DECORATOR(*boost::unit_test::label("LifetimeManagement"))
-BOOST_AUTO_TEST_CASE(ScopedEngineCreationDestruction)
+BOOST_AUTO_TEST_CASE(scopedEngineCreationDestruction)
 {
 	Pamola::UT::MockedEngine eng{};
 }
 
-BOOST_TEST_DECORATOR(*boost::unit_test::label("EngineMethods"))
+BOOST_TEST_DECORATOR(*boost::unit_test::label("Methods"))
 BOOST_AUTO_TEST_CASE(getLocalEngineTest)
 {
 	auto eng = std::shared_ptr<Pamola::UT::MockedEngine>(new Pamola::UT::MockedEngine());
 	BOOST_TEST(Pamola::Engine::getLocalEngine() == eng->getLocalEngine());
 }
 
-BOOST_TEST_DECORATOR(*boost::unit_test::label("EngineMethods"))
+BOOST_TEST_DECORATOR(*boost::unit_test::label("Methods"))
 BOOST_DATA_TEST_CASE(
 	getLocalObjects,
 	bdata::make({true,false}) ^ bdata::random(1,100) ^ bdata::random(0, 1000),
@@ -131,7 +131,7 @@ BOOST_DATA_TEST_CASE(
 		randomIndex*numberOfObjects / 1000);
 }
 
-BOOST_TEST_DECORATOR(*boost::unit_test::label("EngineMethods"))
+BOOST_TEST_DECORATOR(*boost::unit_test::label("Methods"))
 BOOST_AUTO_TEST_CASE(getSetModelSolver)
 {
 	auto mockedMS = std::shared_ptr<Pamola::UT::MockedModelSolver>(new Pamola::UT::MockedModelSolver);
@@ -140,7 +140,7 @@ BOOST_AUTO_TEST_CASE(getSetModelSolver)
 	BOOST_TEST(Pamola::Engine::getLocalEngine()->getSolver() == mockedMS);
 }
 
-BOOST_TEST_DECORATOR(*boost::unit_test::label("EngineMethods"))
+BOOST_TEST_DECORATOR(*boost::unit_test::label("Methods"))
 BOOST_DATA_TEST_CASE(
 	createTerminalsFor,
 	bdata::make({ true,false }) ^ bdata::random(1, 100),
@@ -164,7 +164,7 @@ BOOST_DATA_TEST_CASE(
 	BOOST_TEST(testEngine->getLocalObjects().size() == (numberOfTerminals + 1));
 }
 
-BOOST_TEST_DECORATOR(*boost::unit_test::label("EngineMethods"))
+BOOST_TEST_DECORATOR(*boost::unit_test::label("Methods"))
 BOOST_AUTO_TEST_CASE(createNode)
 {
 	auto mockedElement1 = Pamola::createElement<Pamola::UT::MockedElement, int>(1);
@@ -177,7 +177,7 @@ BOOST_AUTO_TEST_CASE(createNode)
 	BOOST_TEST(node == Pamola::Engine::getLocalEngine()->getLocalObject(node->getId()));
 }
 
-BOOST_TEST_DECORATOR(*boost::unit_test::label("EngineMethods"))
+BOOST_TEST_DECORATOR(*boost::unit_test::label("Methods"))
 BOOST_AUTO_TEST_CASE(createCircuit)
 {
 	auto mockedElement1 = Pamola::createElement<Pamola::UT::MockedElement, int>(1);
@@ -190,7 +190,7 @@ BOOST_AUTO_TEST_CASE(createCircuit)
 	BOOST_TEST(circuit == Pamola::Engine::getLocalEngine()->getLocalObject(circuit->getId()));
 }
 
-BOOST_TEST_DECORATOR(*boost::unit_test::label("EngineMethods"))
+BOOST_TEST_DECORATOR(*boost::unit_test::label("Methods"))
 BOOST_AUTO_TEST_CASE(callSolver)
 {
 	auto mockedMS = std::shared_ptr<Pamola::UT::MockedModelSolver>(new Pamola::UT::MockedModelSolver);
