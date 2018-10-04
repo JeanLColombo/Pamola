@@ -46,7 +46,9 @@ namespace Pamola
 }
 
 /*Test Cases*/
-BOOST_TEST_DECORATOR(*boost::unit_test::label("Object") *boost::unit_test::description("Testing the Pamola::Object Class"))
+BOOST_TEST_DECORATOR(*boost::unit_test::label("Object") 
+	*boost::unit_test::description("Testing the Pamola::Object Class")
+	*boost::unit_test::tolerance(1e-100))
 BOOST_AUTO_TEST_SUITE(ObjectTestSuite)
 
 BOOST_TEST_DECORATOR(*boost::unit_test::label("LifetimeManagement"))

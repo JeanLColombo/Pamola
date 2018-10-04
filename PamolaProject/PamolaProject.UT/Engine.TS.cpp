@@ -90,7 +90,9 @@ namespace Pamola
 }
 
 /*Test Cases*/
-BOOST_TEST_DECORATOR(*boost::unit_test::label("Engine") *boost::unit_test::description("Testing the Pamola::Engine Class"))
+BOOST_TEST_DECORATOR(*boost::unit_test::label("Engine") 
+	*boost::unit_test::description("Testing the Pamola::Engine Class")
+	*boost::unit_test::tolerance(1e-100))
 BOOST_AUTO_TEST_SUITE(EngineTestSuite)
 
 BOOST_TEST_DECORATOR(*boost::unit_test::label("LifetimeManagement"))

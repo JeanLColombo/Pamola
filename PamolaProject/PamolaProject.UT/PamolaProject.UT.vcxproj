@@ -21,6 +21,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CircuitElement.TS.cpp" />
+    <ClCompile Include="CircuitNode.TS.cpp" />
     <ClCompile Include="CircuitTerminal.TS.cpp" />
     <ClCompile Include="Engine.TS.cpp" />
     <ClCompile Include="Object.TS.cpp" />

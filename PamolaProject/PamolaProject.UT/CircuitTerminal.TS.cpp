@@ -9,7 +9,9 @@
 namespace bdata = boost::unit_test::data;
 
 /*Test Cases*/
-BOOST_TEST_DECORATOR(*boost::unit_test::label("CircuitTerminal") *boost::unit_test::description("Testing the Pamola::CircuitTerminal Class"))
+BOOST_TEST_DECORATOR(*boost::unit_test::label("CircuitTerminal") 
+	*boost::unit_test::description("Testing the Pamola::CircuitTerminal Class")
+	*boost::unit_test::tolerance(1e-100))
 BOOST_AUTO_TEST_SUITE(CircuitTerminalTestSuite)
 
 BOOST_TEST_DECORATOR(*boost::unit_test::label("Methods"))
@@ -166,13 +168,13 @@ BOOST_DATA_TEST_CASE(getSetCurrent,
 	auto mockedElement1 = Pamola::createElement<Pamola::UT::MockedElement>(1);
 	auto terminal = mockedElement1->getTerminal(0);
 
-	BOOST_TEST(terminal->getCurrent().real() == 0.0, 1e-25);
-	BOOST_TEST(terminal->getCurrent().imag() == 0.0, 1e-25);
+	BOOST_TEST(terminal->getCurrent().real() == 0.0);
+	BOOST_TEST(terminal->getCurrent().imag() == 0.0);
 
 	terminal->setCurrent(std::complex<double>(realValue, imagValue));
 
-	BOOST_TEST(terminal->getCurrent().real() == realValue, 1e-25);
-	BOOST_TEST(terminal->getCurrent().imag() == imagValue, 1e-25);
+	BOOST_TEST(terminal->getCurrent().real() == realValue);
+	BOOST_TEST(terminal->getCurrent().imag() == imagValue);
 }
 
 BOOST_TEST_DECORATOR(*boost::unit_test::label("Methods"))
@@ -185,8 +187,8 @@ BOOST_AUTO_TEST_CASE(getVoltage)
 
 	auto node1 = mockedElement1->getTerminal(0)->connectTo(mockedElement1->getTerminal(1));
 
-	BOOST_TEST(mockedElement1->getTerminal(0)->getVoltage().real() == 0.0, 1e-25);
-	BOOST_TEST(mockedElement1->getTerminal(0)->getVoltage().imag() == 0.0, 1e-25);
+	BOOST_TEST(mockedElement1->getTerminal(0)->getVoltage().real() == 0.0);
+	BOOST_TEST(mockedElement1->getTerminal(0)->getVoltage().imag() == 0.0);
 	
 	BOOST_TEST(!isnan(mockedElement1->getTerminal(0)->getVoltage().real()));
 	BOOST_TEST(!isnan(mockedElement1->getTerminal(0)->getVoltage().imag()));
@@ -257,13 +259,13 @@ BOOST_AUTO_TEST_CASE(getVariables)
 	auto mockedElement1 = Pamola::createElement<Pamola::UT::MockedElement>(1);
 	auto terminalVariables = mockedElement1->getTerminal(0)->getVariables();
 
-	BOOST_TEST(terminalVariables.at(0).second().real() == mockedElement1->getTerminal(0)->getCurrent().real(), 1e-25);
-	BOOST_TEST(terminalVariables.at(0).second().imag() == mockedElement1->getTerminal(0)->getCurrent().imag(), 1e-25);
+	BOOST_TEST(terminalVariables.at(0).second().real() == mockedElement1->getTerminal(0)->getCurrent().real());
+	BOOST_TEST(terminalVariables.at(0).second().imag() == mockedElement1->getTerminal(0)->getCurrent().imag());
 
 	terminalVariables.at(0).first(std::complex<double>(2.0, 4.0));
 
-	BOOST_TEST(mockedElement1->getTerminal(0)->getCurrent().real() == 2.0, 1e-25);
-	BOOST_TEST(mockedElement1->getTerminal(0)->getCurrent().imag() == 4.0, 1e-25);
+	BOOST_TEST(mockedElement1->getTerminal(0)->getCurrent().real() == 2.0);
+	BOOST_TEST(mockedElement1->getTerminal(0)->getCurrent().imag() == 4.0);
 }
 
 BOOST_TEST_DECORATOR(*boost::unit_test::label("Methods"))

@@ -4,7 +4,9 @@
 #include "MockedElement.h"
 
 /*Test Cases*/
-BOOST_TEST_DECORATOR(*boost::unit_test::label("CircuitElement") *boost::unit_test::description("Testing the Pamola::CircuitElement Class"))
+BOOST_TEST_DECORATOR(*boost::unit_test::label("CircuitElement") 
+	*boost::unit_test::description("Testing the Pamola::CircuitElement Class")
+	*boost::unit_test::tolerance(1e-100))
 BOOST_AUTO_TEST_SUITE(CircuitElementTestSuite)
 
 BOOST_TEST_DECORATOR(*boost::unit_test::label("Methods"))
